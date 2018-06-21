@@ -155,6 +155,7 @@ export class YourReviewsScreen extends React.Component {
                         review = {fav}
                         user = {this.state.user}
                         breweryName = {fav.breweryName}
+                        navigation = {this.props.navigation}
                     />
                 );
             });
