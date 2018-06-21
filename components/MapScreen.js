@@ -30,6 +30,7 @@ import FAB from 'react-native-fab';
 import StarRating from 'react-native-star-rating';
 import current_location from '../current_location.png';
 import ModalDropdown from 'react-native-modal-dropdown';
+import { BreweryCard } from './BreweryCard'
 
 
 export class MapScreen extends React.Component {
@@ -63,7 +64,7 @@ export class MapScreen extends React.Component {
     componentDidMount() {
         this.setState({breweries: global.breweries, lat: global.lat, lng: global.lng});
     }
-    
+
     _getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
@@ -71,17 +72,17 @@ export class MapScreen extends React.Component {
         this.state.lat = location.coords.latitude;
         this.state.lng = location.coords.longitude;
         global.ulat = location.coords.latitude;
-        global.ulong = location.coords.longitude;        
+        global.ulong = location.coords.longitude;
         global.lat = location.coords.latitude;
         global.lng = location.coords.longitude;
     }
-    
+
 
     render() {
         return (
             <Container>
             <View style={{flex: 1, backgroundColor:'white'}}>
-                {global.mapVisible && this.state.lat != null && this.state.lng != null && this.state.lat != 0 && <MapView 
+                {global.mapVisible && this.state.lat != null && this.state.lng != null && this.state.lat != 0 && <MapView
                     style={styles.map}
 
                     region={{latitude: this.state.lat,
@@ -97,20 +98,20 @@ export class MapScreen extends React.Component {
                             name={"Your Location"}
                             image={current_location}
                         ></MapView.Marker>
-                
+
                 </MapView>}
-                {!global.mapVisible && 
+                {!global.mapVisible &&
                     <ScrollView style={{marginTop: 60}}>
                     <List style={styles.listStyle}>
                             {this.renderListView()}
                         <List>
                         </List>
-                    </List> 
-                    </ScrollView> 
+                    </List>
+                    </ScrollView>
                 }
 
                 <View style={{bottom: 0, right: 0, position: 'absolute'}}>
-                    <FAB 
+                    <FAB
                         buttonColor="blue"
                         iconTextColor="#FFFFFF"
                         onClickAction={this.searchLocalBreweries.bind(this)}
@@ -119,7 +120,7 @@ export class MapScreen extends React.Component {
                         iconTextComponent={<Icon name="md-pin"/>} />
                 </View>
 
-                
+
 
                 <View style={styles.searchWrapper}>
                     <TextInput style={styles.search}
@@ -130,7 +131,7 @@ export class MapScreen extends React.Component {
                     <View style={{flex: 1}}/>
                     <Button style={styles.searchButton} title="Search" onPress={this.search.bind(this)}></Button>
                 </View>
-                
+
             </View>
             <Footer style={{width: '100%'}}>
                 {this.props.renderTabs()}
@@ -171,7 +172,7 @@ export class MapScreen extends React.Component {
     }
 
     search() {
-        
+
         fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.query + '&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI')
             .then((r) => r.json().then((d) => {
                 location = {};
@@ -199,7 +200,7 @@ export class MapScreen extends React.Component {
                 var results = JSON.parse(JSON.stringify(data)).results;
                 results.forEach((val) => {
                     var b = new Brewery();
-                    
+
                     b.merge(val);
                     res.push(b);
                 });
@@ -241,7 +242,7 @@ export class MapScreen extends React.Component {
                 var y = global.ulong;
                 var dist1 = geolib.getDistance({latitude: x, longitude: y}, {latitude: a.latitude, longitude: a.longitude});
                 var dist2 = geolib.getDistance({latitude: x, longitude: y}, {latitude: b.latitude, longitude: b.longitude});
-                return (dist1 < dist2) ? -1 : (dist1 > dist2) ? 1 : 0;               
+                return (dist1 < dist2) ? -1 : (dist1 > dist2) ? 1 : 0;
             })
         } else if(this.props.sort === "Rating") {
             this.state.breweries.sort(function(a, b){
@@ -253,26 +254,34 @@ export class MapScreen extends React.Component {
         return _.map(this.state.breweries, (b) => {
             counter = counter + 1;
             return (
-                <ListItem 
-                style={{display:'flex'}}
-                key={counter} onPress={() => this.props.navigation.navigate("Brewery", {navigation: this.props.navigation, brewery: b})}>
-                    <View style={{flexDirection:'column'}}>
-                    <Text style={{width: '100%'}}>{b.name}</Text>
-                    <Text style={{width:'100%', color:'gray', fontSize:11}}>
-                        Distance:   
-                            {(this.state.lat || this.state.lng) 
-                            ? ' ' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong}, 
-                            {latitude: b.latitude, longitude: b.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
-                    </Text>
-                    </View>    
-                </ListItem>
+                // <ListItem
+                // style={{display:'flex'}}
+                // key={counter} onPress={() => this.props.navigation.navigate("Brewery", {navigation: this.props.navigation, brewery: b})}>
+                //     <View style={{flexDirection:'column'}}>
+                //     <Text style={{width: '100%'}}>{b.name}</Text>
+                //     <Text style={{width:'100%', color:'gray', fontSize:11}}>
+                //         Distance:
+                //             {(this.state.lat || this.state.lng)
+                //             ? ' ' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
+                //             {latitude: b.latitude, longitude: b.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
+                //     </Text>
+                //     </View>
+                // </ListItem>
+                <BreweryCard
+                  curBrew = {b} //need to pass in the current brewery...
+                  curBrewName = {b.name}
+                  curBrewRating = {b.genRating}
+                  //get brewery reviews --> calculate --- lib/firebasehelpers.js -- get average of review.overallRating
+                  //curBrewDist =
+                  //curBrewLocation =
+                />
             );
         });
     }
 
     mapToggle() {
         this.setState({mapVisible: !this.state.mapVisible});
-        global.mapVisible = !global.mapVisible; 
+        global.mapVisible = !global.mapVisible;
     }
 }
 
