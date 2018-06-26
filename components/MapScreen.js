@@ -271,7 +271,6 @@ export class MapScreen extends React.Component {
                   curBrew = {b} //need to pass in the current brewery...
                   curBrewName = {b.name}
                   curBrewRating = {b.genRating}
-                  //get brewery reviews --> calculate --- lib/firebasehelpers.js -- get average of review.overallRating
                   //curBrewDist =
                   //curBrewLocation =
                 />
