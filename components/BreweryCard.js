@@ -4,9 +4,26 @@ import { View, Image, TouchableOpacity } from 'react-native';
 import StarRating from 'react-native-star-rating';
 
 export class BreweryCard extends React.Component {
+
+    constructor(){
+        super();
+          this.state ={
+              status:true
+          }
+    }
+
+    ShowHideBreweryCard = () =>{
+        if(this.state.status == true) {
+            this.setState({status: false})
+        }
+        else {
+            this.setState({status: true})
+        }
+    }
+
     render() {
         return (
-					<View style = {{flexDirection: 'row', borderRadius:5, borderWidth: 1}}>
+					<View style = {{flexDirection: 'row', borderRadius:5, backgroundColor:'white'}}>
 
 							<View style={{flex: 3, borderRadius: 5, backgroundColor: 'powderblue'}} />
 

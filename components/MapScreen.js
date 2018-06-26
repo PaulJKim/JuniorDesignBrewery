@@ -44,6 +44,7 @@ export class MapScreen extends React.Component {
             lat: 0,
             lng: 0,
             mapVisible: true,
+            selectedBrewery: null,
         }
         if(global.ulat == null || global.ulong == null) {
             global.ulat = 0;
@@ -81,61 +82,75 @@ export class MapScreen extends React.Component {
     render() {
         return (
             <Container>
-            <View style={{flex: 1, backgroundColor:'white'}}>
-                {global.mapVisible && this.state.lat != null && this.state.lng != null && this.state.lat != 0 && <MapView
-                    style={styles.map}
+                <View style={{flex: 1, backgroundColor:'white'}}>
+                    {global.mapVisible && this.state.lat != null && this.state.lng != null && this.state.lat != 0 &&
+                      <MapView style={styles.map}
 
-                    region={{latitude: this.state.lat,
-                    longitude: this.state.lng,
-                    latitudeDelta: 0.6,
-                    longitudeDelta: 0.6,}}
-                    >
+                        region={{latitude: this.state.lat,
+                        longitude: this.state.lng,
+                        latitudeDelta: 0.6,
+                        longitudeDelta: 0.6,}}
+                        >
 
-                    {this.renderMapViewMarkers()}
+                        {this.renderMapViewMarkers()}
 
-                    <MapView.Marker
-                            coordinate={{latitude: global.lat, longitude: global.lng}}
-                            name={"Your Location"}
-                            image={current_location}
-                        ></MapView.Marker>
+                        <MapView.Marker
+                                coordinate={{latitude: global.lat, longitude: global.lng}}
+                                name={"Your Location"}
+                                image={current_location}
+                            ></MapView.Marker>
 
-                </MapView>}
-                {!global.mapVisible &&
-                    <ScrollView style={{marginTop: 60}}>
-                    <List style={styles.listStyle}>
-                            {this.renderListView()}
-                        <List>
+                      </MapView>}
+                    {!global.mapVisible &&
+                        <ScrollView style={{marginTop: 60}}>
+                        <List style={styles.listStyle}>
+                                {this.renderListView()}
+                            <List>
+                            </List>
                         </List>
-                    </List>
-                    </ScrollView>
+                        </ScrollView>
+                    }
+
+                    {this.state.selectedBrewery == null &&
+                        <View style={{bottom: 0, right: 0, position: 'absolute'}}>
+                            <FAB
+                                buttonColor="blue"
+                                iconTextColor="#FFFFFF"
+                                onClickAction={this.searchLocalBreweries.bind(this)}
+                                visible={true}
+                                style={{ position: 'absolute', marginRight: 100}}
+                                iconTextComponent={<Icon name="md-pin"/>} />
+                        </View>
+                    }
+
+                    <View style={styles.searchWrapper}>
+                        <TextInput style={styles.search}
+                                placeholder="Search by city..."
+                                onChangeText={(query) => this.setState({query})}
+                                value={this.state.query}
+                        ></TextInput>
+                        <View style={{flex: 1}}/>
+                        <Button style={styles.searchButton} title="Search" onPress={this.search.bind(this)}></Button>
+                    </View>
+                </View>
+
+                {this.state.selectedBrewery != null &&
+                    <View style={{marginBottom:10, marginLeft:5, marginRight:10, bottom:50, position: 'absolute', width: '100%'}}>
+                        <BreweryCard
+                              curBrew = {this.state.selectedBrewery}
+                              curBrewName = {this.state.selectedBrewery.name}
+                              curBrewRating = {this.state.selectedBrewery.genRating}
+                              curBrewDist = {(this.state.lat || this.state.lng)
+                                            ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
+                                            {latitude: this.state.selectedBrewery.latitude, longitude: this.state.selectedBrewery.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
+                        />
+                    </View>
                 }
 
-                <View style={{bottom: 0, right: 0, position: 'absolute'}}>
-                    <FAB
-                        buttonColor="blue"
-                        iconTextColor="#FFFFFF"
-                        onClickAction={this.searchLocalBreweries.bind(this)}
-                        visible={true}
-                        style={{ position: 'absolute', marginRight: 100}}
-                        iconTextComponent={<Icon name="md-pin"/>} />
-                </View>
 
-
-
-                <View style={styles.searchWrapper}>
-                    <TextInput style={styles.search}
-                            placeholder="Search by city..."
-                            onChangeText={(query) => this.setState({query})}
-                            value={this.state.query}
-                    ></TextInput>
-                    <View style={{flex: 1}}/>
-                    <Button style={styles.searchButton} title="Search" onPress={this.search.bind(this)}></Button>
-                </View>
-
-            </View>
-            <Footer style={{width: '100%'}}>
-                {this.props.renderTabs()}
-            </Footer>
+                <Footer style={{width: '100%'}}>
+                    {this.props.renderTabs()}
+                </Footer>
             </Container>
         )
     }
@@ -150,21 +165,23 @@ export class MapScreen extends React.Component {
                             key={val.latitude + val.longitude}
                             name={val.name}
                             pinColor={'#2196F3'}
-                            onCalloutPress={() => this.props.navigation.navigate("Brewery", {navigation: this.props.navigation, brewery: val})}
-                        >
-                            <MapView.Callout>
-                                <Text style={{fontSize: 15, fontWeight: 'bold'}}>{val.name}</Text>
-                                {val.price && <Text>{'$'.repeat(val.price)}</Text>}
-                                <View style={{width: '50%'}}>
-                                <StarRating
-                                    maxStars={5}
-                                    rating={parseInt(val.genRating)}
-                                    fullStarColor={'#eaaa00'}
-                                    starSize={20}
-                                />
-                                </View>
-                            </MapView.Callout>
-                        </MapView.Marker>
+                            // onCalloutPress={() => this.props.navigation.navigate("Brewery", {navigation: this.props.navigation, brewery: val})}
+                            onPress = {() => this.setState({selectedBrewery : val})} //hide currently selected breweryCard, show new BreweryCard
+                        />
+
+                            // <MapView.Callout>
+                            //     <Text style={{fontSize: 15, fontWeight: 'bold'}}>{val.name}</Text>
+                            //     {val.price && <Text>{'$'.repeat(val.price)}</Text>}
+                            //     <View style={{width: '50%'}}>
+                            //     <StarRating
+                            //         maxStars={5}
+                            //         rating={parseInt(val.genRating)}
+                            //         fullStarColor={'#eaaa00'}
+                            //         starSize={20}
+                            //     />
+                            //     </View>
+                            // </MapView.Callout>
+                        //</MapView.Marker>
                     )
                 })
             )
@@ -272,8 +289,8 @@ export class MapScreen extends React.Component {
                   curBrewName = {b.name}
                   curBrewRating = {b.genRating}
                   curBrewDist = {(this.state.lat || this.state.lng)
-                              ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
-                              {latitude: b.latitude, longitude: b.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
+                                ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
+                                {latitude: b.latitude, longitude: b.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
                   //curBrewLocation =
                 />
             );
