@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import { Card, CardItem, Text, Body, Icon, Button } from 'native-base';
 import { View, Image, TouchableOpacity } from 'react-native';
 import StarRating from 'react-native-star-rating';
@@ -34,25 +33,3 @@ export class BreweryCard extends React.Component {
         )
     }
 }
-=======
-import StarRating from 'react-native-star-rating';
-import { Footer, Container, Icon, List, ListItem } from 'native-base';
-
-
-export class BreweryCard extends React.Component {
-
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
-	
-		return(
-			title = 
-		);
-	}
-
-
-
-}
->>>>>>> 91f424d8687981ac17da19c9aacea4431700db20
