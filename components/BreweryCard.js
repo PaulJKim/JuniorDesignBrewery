@@ -23,7 +23,7 @@ export class BreweryCard extends React.Component {
 
     render() {
         return (
-					<View style = {{flexDirection: 'row', borderRadius:5, backgroundColor:'white'}}>
+					<View style = {{flexDirection: 'row', borderRadius:5, backgroundColor:'white', marginBottom: 10}}>
 
 							<View style={{flex: 3, borderRadius: 5, backgroundColor: 'powderblue'}} />
 

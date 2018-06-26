@@ -22,7 +22,7 @@
 import React from 'react';
 import { MapView, Constants, Location, Permissions } from 'expo';
 import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView } from 'react-native';
-import { Footer, Container, Icon, List, ListItem } from 'native-base';
+import { Footer, Container, Icon, List, ListItem, SwipeRow, Content} from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
 import firebaseApp from '../firebase';
@@ -135,18 +135,49 @@ export class MapScreen extends React.Component {
                 </View>
 
                 {this.state.selectedBrewery != null &&
-                    <View style={{marginBottom:10, marginLeft:5, marginRight:10, bottom:50, position: 'absolute', width: '100%'}}>
-                        <BreweryCard
-                              curBrew = {this.state.selectedBrewery}
-                              curBrewName = {this.state.selectedBrewery.name}
-                              curBrewRating = {this.state.selectedBrewery.genRating}
-                              curBrewDist = {(this.state.lat || this.state.lng)
-                                            ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
-                                            {latitude: this.state.selectedBrewery.latitude, longitude: this.state.selectedBrewery.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
-                        />
+                    <View style={{bottom:50, position: 'absolute', width: '100%'}}>
+
+                        <Content scrollEnabled={false}>
+                            <SwipeRow
+                              leftOpenValue={75}
+                              rightOpenValue={-75}
+
+                              left={
+                                  // <Text> hello </Text>
+                                  <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column'}}>
+                                      <Button
+                                        onPress={() => this.setState({selectedBrewery:null})}
+                                        title="X"
+                                        color="white"
+                                      />
+                                  </View>
+                              }
+                              body={
+                                <BreweryCard
+                                      curBrew = {this.state.selectedBrewery}
+                                      curBrewName = {this.state.selectedBrewery.name}
+                                      curBrewRating = {this.state.selectedBrewery.genRating}
+                                      curBrewDist = {(this.state.lat || this.state.lng)
+                                                    ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
+                                                    {latitude: this.state.selectedBrewery.latitude, longitude: this.state.selectedBrewery.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
+                                />
+                              }
+                              right={
+                                //<View style={{flexDirection: 'row', backgroundColor: 'red'}} />
+                                // <Text> goodbye </Text>
+                                //this.setState({selectedBrewery:null})
+                                <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column'}}>
+                                    <Button
+                                      onPress={() => this.setState({selectedBrewery:null})}
+                                      title="X1"
+                                      color="white"
+                                    />
+                                </View>
+                              }
+                            />
+                        </Content>
                     </View>
                 }
-
 
                 <Footer style={{width: '100%'}}>
                     {this.props.renderTabs()}

@@ -44,7 +44,7 @@ export class MainScreen extends React.Component {
         headerTitleStyle: { color: "#FFFFFF" },
         headerTintColor: "white",
         headerLeft: (
-            <TouchableOpacity onPress={() => {                
+            <TouchableOpacity onPress={() => {
                 Alert.alert(
                 'Log Out',
                 'Are you sure you want to log out?',
@@ -63,16 +63,16 @@ export class MainScreen extends React.Component {
             <View style={{width:80, display:'flex', flexDirection:'row'}}>
 
                 <TouchableOpacity style={{flex: 1}}
-                    onPress={() => {global.mapVisible = !global.mapVisible; navigation.state.params.parent.setState({}); navigation.setParams({});}}>                 
+                    onPress={() => {global.mapVisible = !global.mapVisible; navigation.state.params.parent.setState({}); navigation.setParams({});}}>
                 <Icon name={(global.mapVisible) ? "list" : "md-map"} style={{color: [(navigation.state.params.tab == MAP_TAB) ? 'white' : '#2196F3']}}/>
                 </TouchableOpacity>
 
                 <View style={{flex:1, marginRight: 15}}>
-                {(navigation.state.params.tab !== PROFILE_TAB && navigation.state.params.tab !== FAVORITES_TAB) 
-                        && <ModalDropdown dropdownStyle = {{flexDirection:'row', height:127}} 
+                {(navigation.state.params.tab !== PROFILE_TAB && navigation.state.params.tab !== FAVORITES_TAB)
+                        && <ModalDropdown dropdownStyle = {{flexDirection:'row', height:127}}
                         dropdownTextStyle={{fontWeight:'bold', fontSize:16, color:'black'}}
                         options={['Distance', 'Name', 'Rating']}
-                        onSelect = {(index, value) => {navigation.state.params.sortClick(index)}}>                        
+                        onSelect = {(index, value) => {navigation.state.params.sortClick(index)}}>
                         <Icon style={{paddingLeft: 20, color:"#FFFFFF"}}name="md-more"/>
                     </ModalDropdown>}
                 </View>
@@ -80,7 +80,7 @@ export class MainScreen extends React.Component {
     });
     componentDidMount() {
         // set handler method with setParams
-        this.props.navigation.setParams({ 
+        this.props.navigation.setParams({
           sortClick: this._sortClick.bind(this),
           tab: this.state.selectedTab,
           parent: this,
@@ -92,7 +92,7 @@ export class MainScreen extends React.Component {
             } else {
                 global.main = false;
             }
-          });  
+          });
     }
   constructor(props) {
     super(props);
@@ -108,7 +108,7 @@ export class MainScreen extends React.Component {
   componentWillMount() {
     t = this;
     if(Platform.OS === 'android') {
-        BackHandler.addEventListener('hardwareBackPress', function() {          
+        BackHandler.addEventListener('hardwareBackPress', function() {
               if(global.main) {
                 Alert.alert(
                     'Log Out',
@@ -118,10 +118,10 @@ export class MainScreen extends React.Component {
                     {text: 'Yes', onPress: () => {t.signOutUser()}},
                     ],
                     { cancelable: false }
-                );        
+                );
             } else {
                 t.props.navigation.dispatch(NavigationActions.back());
-            } 
+            }
             return true;
         }.bind(this));
     }
@@ -132,7 +132,7 @@ export class MainScreen extends React.Component {
     else if(index == 1)
         this.setState({sort:"Alphabetical"})
     else if(index == 2)
-        this.setState({sort:"Rating"})    
+        this.setState({sort:"Rating"})
     this.forceUpdate()
   }
 
@@ -160,8 +160,8 @@ export class MainScreen extends React.Component {
   }
 
   renderPageContent() {
-    // this.props.navigation.setParams({ 
-    //     tab: this.state.selectedTab          
+    // this.props.navigation.setParams({
+    //     tab: this.state.selectedTab
     // });
         switch (this.state.selectedTab) {
             case MAP_TAB:
@@ -198,7 +198,7 @@ export class MainScreen extends React.Component {
 
             default: return null;
         }
-    
+
   }
 
   renderTabs() {
@@ -274,7 +274,7 @@ export class MainScreen extends React.Component {
       </Container>
     );
   }
-  
+
   changeTab(tabName) {
     this.props.navigation.setParams({tab: tabName})
         this.setState({selectedTab: tabName, title: tabName});
