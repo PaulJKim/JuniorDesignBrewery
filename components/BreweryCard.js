@@ -23,7 +23,7 @@ export class BreweryCard extends React.Component {
 													starSize={20} />
 									</View>
 									<View style={{flex: 1, flexDirection: 'row'}}>
-											<Text> Distance </Text>
+											<Text> {this.props.curBrewDist} </Text>
 									</View>
 									<View style={{flex: 1, flexDirection: 'row'}}>
 											<Text> City, ST </Text>

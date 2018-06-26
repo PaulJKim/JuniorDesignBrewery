@@ -271,7 +271,9 @@ export class MapScreen extends React.Component {
                   curBrew = {b} //need to pass in the current brewery...
                   curBrewName = {b.name}
                   curBrewRating = {b.genRating}
-                  //curBrewDist =
+                  curBrewDist = {(this.state.lat || this.state.lng)
+                              ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
+                              {latitude: b.latitude, longitude: b.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
                   //curBrewLocation =
                 />
             );
