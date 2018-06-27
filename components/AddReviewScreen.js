@@ -167,7 +167,7 @@ export class AddReviewScreen extends React.Component {
                             <CheckBox checked={false} />
                         </View>
                         <View style={{flex: 10}}>
-                            <View style= {{width: 100, right: 4em}} />
+                            <View style= {{width: 100, right: 4}} />
                                 <Text> Stroller Kids </Text>
                         </View>
                     </View>
