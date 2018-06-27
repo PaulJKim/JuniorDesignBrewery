@@ -30,6 +30,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
  } from 'react-native';
+import { CheckBox, ListItem } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import firebaseApp from '../firebase';
 
@@ -55,7 +56,9 @@ export class RegisterScreen extends React.Component {
       username: "",
       registerClicked: false,
       registerFailed: false,
-      errorMessage: ""
+      errorMessage: "",
+      ageAgreementChecked: false,
+      userPolicyChecked: false,
     };
   }
 
@@ -85,6 +88,18 @@ export class RegisterScreen extends React.Component {
             value={this.state.password}
             secureTextEntry={true} 
             placeholder="Password" />
+
+          <View style={styles.checkboxContainer}>
+            <CheckBox checked={this.state.ageAgreementChecked} 
+                      onpress={this.ageBoxCheck()}/>
+            <Text style={styles.checkboxText}>I am 18 years or older</Text>
+          </View>
+          <View style={styles.checkboxContainer}>
+            <CheckBox checked={this.state.userPolicyChecked}
+                      onpress={this.userPolicyBoxCheck()} />
+            <Text style={styles.checkboxText}>I have read and agree to the user and privacy policies</Text>
+          </View>
+          
 
           { this.state.registerClicked && <ActivityIndicator size="large" style={{marginTop: 10}} color="#00ff00"/>}
           <TouchableOpacity 
@@ -156,6 +171,15 @@ export class RegisterScreen extends React.Component {
           this.setState({errorMessage: error.message})
       });
   }
+
+ageBoxCheck() {
+  this.setState({ageAgreementChecked: !this.state.ageAgreementChecked});
+}
+
+userPolicyBoxCheck() {
+ this.setState({userPolicyChecked: !this.state.userPolicyChecked});
+}
+
 }
 
 const styles = StyleSheet.create({
@@ -165,6 +189,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height:'100%'
+  },
+  checkboxContainer: {
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    minWidth: '80%',
+    maxWidth: '80%',
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 10
+  },
+  checkbox: {
+    marginRight: 5,
+    marginLeft: 5
+  },
+  checkboxText: {
+    maxWidth: '100%',
+    marginLeft: 20,
+    fontSize: 12
   },
   textinput: {
     height: 58,
