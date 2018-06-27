@@ -91,13 +91,17 @@ export class RegisterScreen extends React.Component {
 
           <View style={styles.checkboxContainer}>
             <CheckBox checked={this.state.ageAgreementChecked} 
-                      onpress={this.ageBoxCheck()}/>
+                      onPress={()=>this.setState({ageAgreementChecked: !this.state.ageAgreementChecked})} />
             <Text style={styles.checkboxText}>I am 18 years or older</Text>
           </View>
           <View style={styles.checkboxContainer}>
             <CheckBox checked={this.state.userPolicyChecked}
-                      onpress={this.userPolicyBoxCheck()} />
-            <Text style={styles.checkboxText}>I have read and agree to the user and privacy policies</Text>
+                      onPress={()=>this.setState({userPolicyChecked: !this.state.userPolicyChecked})} />
+            <Text style={styles.checkboxText}>I have read and agree to the&nbsp;
+              <Text onPress={()=>console.log("hello")} style={styles.policyLinks}>user</Text>&nbsp;and&nbsp; 
+              <Text onPress={()=>console.log("hello")} style={styles.policyLinks}>privacy</Text> &nbsp; 
+            policies
+            </Text>
           </View>
           
 
@@ -128,11 +132,18 @@ export class RegisterScreen extends React.Component {
     }
 
   register() {
+
       if(!this.state.username || this.state.username.trim().length == 0) {
         this.setState({errorMessage: "Please enter a username", registerFailed: true});
         return;
+      } else if(!this.state.ageAgreementChecked)  {
+        this.setState({errorMessage: "Please confirm you are over 18 years old", registerFailed: true});
+        return;
+      } else if(!this.state.userPolicyChecked) {
+        this.setState({errorMessage: "Please agree to the user and privacy agreements", registerFailed: true});
+        return;
       }
-      this.setState({registerClicked: true, registerFailed: false});      
+      this.setState({registerClicked: true, registerFailed: false});
       var s = firebaseApp.auth().createUserWithEmailAndPassword(this.state.email.trim(), this.state.password).then(() => {
         currentUser = firebaseApp.auth().currentUser;
         av = []
@@ -172,14 +183,6 @@ export class RegisterScreen extends React.Component {
       });
   }
 
-ageBoxCheck() {
-  this.setState({ageAgreementChecked: !this.state.ageAgreementChecked});
-}
-
-userPolicyBoxCheck() {
- this.setState({userPolicyChecked: !this.state.userPolicyChecked});
-}
-
 }
 
 const styles = StyleSheet.create({
@@ -217,6 +220,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     borderColor: 'gray', 
     borderWidth: 0
+  },
+  policyLinks: {
+    color:"blue", 
+    textDecorationLine: "underline"
   },
   button: { 
     height: 40, 
