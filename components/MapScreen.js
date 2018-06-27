@@ -60,6 +60,8 @@ export class MapScreen extends React.Component {
         if (global.breweries.length == 0) {
             this.searchLocalBreweries();
         }
+        this.mapsApiKey = Expo.Constants.manifest.android.config.googleMaps.apiKey;
+        console.log(this.mapsApiKey);
     }
 
     componentDidMount() {
@@ -216,8 +218,8 @@ export class MapScreen extends React.Component {
     }
 
     search() {
-
-        fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.query + '&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI')
+        console.log('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.query + '&key=' + this.mapsApiKey);
+        fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.query + '&key=' + this.mapsApiKey)
             .then((r) => r.json().then((d) => {
                 location = {};
 
@@ -225,6 +227,8 @@ export class MapScreen extends React.Component {
                 this.state.lng = d.results[0].geometry.location.lng;
             })).then(() => {
                 this.searchBreweries(this.state.lat, this.state.lng)
+            }).catch((error) => {
+                console.log(error)
             })
     }
 
@@ -235,8 +239,12 @@ export class MapScreen extends React.Component {
     }
 
     searchBreweriesOnPress(lat, lng) {
+        console.log('https://maps.googleapis.com/maps/api/place/nearbysearch/'
+                    + 'json?key=' + this.mapsApiKey
+                    + '&location=' + `${lat}` + ',' + `${lng}`
+                    + '&radius=50000&name=brewery&keyword=brewery');
         fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/'
-                    + 'json?key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI'
+                    + 'json?key=' + this.mapsApiKey
                     + '&location=' + `${lat}` + ',' + `${lng}`
                     + '&radius=50000&name=brewery&keyword=brewery')
             .then((response) => response.json().then(data => {
@@ -255,7 +263,7 @@ export class MapScreen extends React.Component {
 
     searchBreweries(lat, lng) {
         fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/'
-                    + 'json?key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI'
+                    + 'json?key=' + this.mapsApiKey 
                     + '&location=' + `${lat}` + ',' + `${lng}`
                     + '&radius=50000&name=brewery&keyword=brewery')
             .then((response) => response.json().then(data => {
