@@ -60,12 +60,13 @@ export class MainScreen extends React.Component {
             </TouchableOpacity>
         ),
          headerRight: (
-            <View style={{width:80, display:'flex', flexDirection:'row'}}>
-
-                <TouchableOpacity style={{flex: 1}}
-                    onPress={() => {global.mapVisible = !global.mapVisible; navigation.state.params.parent.setState({}); navigation.setParams({});}}>
-                <Icon name={(global.mapVisible) ? "list" : "md-map"} style={{color: [(navigation.state.params.tab == MAP_TAB) ? 'white' : '#2196F3']}}/>
-                </TouchableOpacity>
+            <View style={{flexDirection:'row', justifyContent:'flex-end'}}>
+                {navigation.state.params.tab == MAP_TAB && 
+                    <TouchableOpacity style={{flex: 1, marginRight: 15}}
+                        onPress={() => {global.mapVisible = !global.mapVisible; navigation.state.params.parent.setState({}); navigation.setParams({});}}>
+                        <Icon name={(global.mapVisible) ? "list" : "md-map"} style={{color: [(navigation.state.params.tab == MAP_TAB) ? 'white' : '#2196F3']}}/>
+                    </TouchableOpacity>
+                }
 
                 <View style={{flex:1, marginRight: 15}}>
                 {(navigation.state.params.tab !== PROFILE_TAB && navigation.state.params.tab !== FAVORITES_TAB)
