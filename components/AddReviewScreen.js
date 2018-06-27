@@ -56,7 +56,7 @@ export class AddReviewScreen extends React.Component {
 
             //kid friendly
             kidFriendly: 0,
-            strollerKids: 0,
+            strollerKids: false,
             kThroughSix: 0,
             teenagers: 0,
 
@@ -163,7 +163,7 @@ export class AddReviewScreen extends React.Component {
                                 <View style={{flex: 10}}>
                                     <View style={{marginLeft: 10}} />
 
-                                        <CheckBox checked={false} />
+                                        <CheckBox checked={this.state.strollerKids} onPress = {() => this.setState({strollerKids: !this.state.strollerKids})} />
                                 </View>
                             </View>
 
