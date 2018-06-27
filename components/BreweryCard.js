@@ -23,30 +23,30 @@ export class BreweryCard extends React.Component {
 
     render() {
         return (
-					<View style = {{flexDirection: 'row', borderRadius:5, backgroundColor:'white', marginBottom: 10}}>
-
-							<View style={{flex: 3, borderRadius: 5, backgroundColor: 'powderblue'}} />
-
-							<View style = {{flex: 7, flexDirection: 'column', padding: 5}}>
-									<View style={{flex: 1, flexDirection: 'row'}}>
-											<Text> {this.props.curBrewName} </Text>
-									</View>
-									<View style={{flex: 1, flexDirection: 'row'}}>
-											<StarRating
-													disabled={true}
-													maxStars={5}
-													rating={this.props.curBrewRating}
-													fullStarColor={'#4D97E1'}
-													starSize={20} />
-									</View>
-									<View style={{flex: 1, flexDirection: 'row'}}>
-											<Text> {this.props.curBrewDist} </Text>
-									</View>
-									<View style={{flex: 1, flexDirection: 'row'}}>
-											<Text> City, ST </Text>
-									</View>
-							</View>
-					</View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("Brewery", {navigation: this.props.navigation, brewery: this.props.curBrew})}>
+              <View style = {{flexDirection: 'row', borderRadius:5, backgroundColor:'white', marginBottom: 10, marginLeft: 10}}>
+    							<View style={{flex: 3, borderRadius: 5, backgroundColor: 'powderblue'}} />
+    							<View style = {{flex: 7, flexDirection: 'column', padding: 5}}>
+    									<View style={{flex: 1, flexDirection: 'row'}}>
+    											<Text> {this.props.curBrewName} </Text>
+    									</View>
+    									<View style={{flex: 1, flexDirection: 'row'}}>
+    											<StarRating
+    													disabled={true}
+    													maxStars={5}
+    													rating={this.props.curBrewRating}
+    													fullStarColor={'#4D97E1'}
+    													starSize={20} />
+    									</View>
+    									<View style={{flex: 1, flexDirection: 'row'}}>
+    											<Text> {this.props.curBrewDist} </Text>
+    									</View>
+    									<View style={{flex: 1, flexDirection: 'row'}}>
+    											<Text> City, ST </Text>
+    									</View>
+    							</View>
+    					</View>
+            </TouchableOpacity>
         )
     }
 }

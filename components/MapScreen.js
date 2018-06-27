@@ -111,7 +111,7 @@ export class MapScreen extends React.Component {
                         </ScrollView>
                     }
 
-                    {this.state.selectedBrewery == null &&
+                    {this.state.selectedBrewery == null && global.mapVisible &&
                         <View style={{bottom: 0, right: 0, position: 'absolute'}}>
                             <FAB
                                 buttonColor="blue"
@@ -134,23 +134,22 @@ export class MapScreen extends React.Component {
                     </View>
                 </View>
 
+
                 {this.state.selectedBrewery != null &&
                     <View style={{bottom:50, position: 'absolute', width: '100%'}}>
-
                         <Content scrollEnabled={false}>
                             <SwipeRow
                               leftOpenValue={75}
                               rightOpenValue={-75}
 
                               left={
-                                  // <Text> hello </Text>
-                                  <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column'}}>
-                                      <Button
-                                        onPress={() => this.setState({selectedBrewery:null})}
-                                        title="X"
-                                        color="white"
-                                      />
-                                  </View>
+                                <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                                  <Button
+                                    onPress={() => this.setState({selectedBrewery:null})}
+                                    title="X"
+                                    color="white"
+                                  />
+                                </View>
                               }
                               body={
                                 <BreweryCard
@@ -163,13 +162,10 @@ export class MapScreen extends React.Component {
                                 />
                               }
                               right={
-                                //<View style={{flexDirection: 'row', backgroundColor: 'red'}} />
-                                // <Text> goodbye </Text>
-                                //this.setState({selectedBrewery:null})
-                                <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column'}}>
+                                <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                                     <Button
                                       onPress={() => this.setState({selectedBrewery:null})}
-                                      title="X1"
+                                      title="X"
                                       color="white"
                                     />
                                 </View>
