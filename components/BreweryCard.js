@@ -25,7 +25,13 @@ export class BreweryCard extends React.Component {
         return (
             <TouchableOpacity onPress={() => this.props.navigation.navigate("Brewery", {navigation: this.props.navigation, brewery: this.props.curBrew})}>
               <View style = {{flexDirection: 'row', borderRadius:5, backgroundColor:'white', marginBottom: 10, marginLeft: 10}}>
-    							<View style={{flex: 3, borderRadius: 5, backgroundColor: 'powderblue'}} />
+    							{
+                    //<View style={{flex: 3, borderRadius: 5, backgroundColor: 'powderblue'}} />
+                  }
+                  <Image
+                    style={{flex:3, borderRadius: 5}}
+                    source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.props.curBrew.photo}}
+                  />
     							<View style = {{flex: 7, flexDirection: 'column', padding: 5}}>
     									<View style={{flex: 1, flexDirection: 'row'}}>
     											<Text> {this.props.curBrewName} </Text>

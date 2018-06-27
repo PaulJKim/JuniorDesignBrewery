@@ -137,43 +137,43 @@ export class MapScreen extends React.Component {
                 </View>
 
 
-                {this.state.selectedBrewery != null &&
+                {this.state.selectedBrewery != null && global.mapVisible &&
                     <View style={{bottom:50, position: 'absolute', width: '100%'}}>
-                        <Content scrollEnabled={false}>
-                            <SwipeRow
-                              leftOpenValue={75}
-                              rightOpenValue={-75}
+                        <SwipeRow
+                          leftOpenValue={75}
+                          rightOpenValue={-75}
 
-                              left={
-                                <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                                  <Button
-                                    onPress={() => this.setState({selectedBrewery:null})}
-                                    title="X"
-                                    color="white"
-                                  />
-                                </View>
-                              }
-                              body={
-                                <BreweryCard
-                                      curBrew = {this.state.selectedBrewery}
-                                      curBrewName = {this.state.selectedBrewery.name}
-                                      curBrewRating = {this.state.selectedBrewery.genRating}
-                                      curBrewDist = {(this.state.lat || this.state.lng)
-                                                    ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
-                                                    {latitude: this.state.selectedBrewery.latitude, longitude: this.state.selectedBrewery.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
-                                />
-                              }
-                              right={
-                                <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Button
-                                      onPress={() => this.setState({selectedBrewery:null})}
-                                      title="X"
-                                      color="white"
-                                    />
-                                </View>
-                              }
+                          left={
+                            <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                              <Button
+                                onPress={() => this.setState({selectedBrewery:null})}
+                                title="X"
+                                color="white"
+                              />
+                            </View>
+                          }
+                          body={
+                            <BreweryCard
+                                  curBrew = {this.state.selectedBrewery}
+                                  curBrewName = {this.state.selectedBrewery.name}
+                                  curBrewRating = {this.state.selectedBrewery.genRating}
+                                  navigation = {this.props.navigation}
+                                  curBrewDist = {(this.state.lat || this.state.lng)
+                                                ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
+                                                {latitude: this.state.selectedBrewery.latitude, longitude: this.state.selectedBrewery.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
                             />
-                        </Content>
+                          }
+                          right={
+                            <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                                <Button
+                                  onPress={() => this.setState({selectedBrewery:null})}
+                                  title="X"
+                                  color="white"
+                                />
+                            </View>
+                          }
+                        />
+
                     </View>
                 }
 
@@ -263,7 +263,7 @@ export class MapScreen extends React.Component {
 
     searchBreweries(lat, lng) {
         fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/'
-                    + 'json?key=' + this.mapsApiKey 
+                    + 'json?key=' + this.mapsApiKey
                     + '&location=' + `${lat}` + ',' + `${lng}`
                     + '&radius=50000&name=brewery&keyword=brewery')
             .then((response) => response.json().then(data => {
@@ -323,6 +323,7 @@ export class MapScreen extends React.Component {
                   curBrew = {b} //need to pass in the current brewery...
                   curBrewName = {b.name}
                   curBrewRating = {b.genRating}
+                  navigation = {this.props.navigation}
                   curBrewDist = {(this.state.lat || this.state.lng)
                                 ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
                                 {latitude: b.latitude, longitude: b.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
