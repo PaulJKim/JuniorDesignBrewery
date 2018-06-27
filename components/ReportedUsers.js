@@ -42,19 +42,18 @@ export class ReportedUsers extends React.Component {
         super(props);
         this.state = {
             isAdmin: false,
-            userData: null,
+            users: null
         }
     }
 
     componentDidMount() {
+        console.log("DID MOUNT");
         isAdmin().then((adminStatus) => {
             this.setState({isAdmin: adminStatus});
         });
         getReportedUsers().then((uids) => {
-            getUsersObject(uids).then((userData) => {
-                this.setState({userData: userData});
-            });
-        })
+            this.setState({users: uids});
+        });
     }
 
     render() {
@@ -79,7 +78,7 @@ export class ReportedUsers extends React.Component {
             <ScrollView style={{backgroundColor: '#fff'}}>
 
             <View style={styles.container}>
-                <Text style={styles.title}>Reported users</Text>
+                <Text style={styles.title}>Reported Users</Text>
                            
                     <View>
                         <List style={styles.listStyle}>
@@ -97,23 +96,23 @@ export class ReportedUsers extends React.Component {
     }
 
     renderUsersList() {
-        if (this.state.userData != null) {
-            return _.map(this.state.userData, (user) => {
+        if (this.state.users != null && this.state.users.length > 0) {
+            return _.map(this.state.users, (user) => {
                 return (
                     <View>
                         <ListItem key={new Date().getTime()}>
-                            <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ProfileView", {navigation: this.props.navigation, id: user.userId})}>
+                            <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ProfileView", {navigation: this.props.navigation, id: user})}>
                                 <View style={{flex: 1, paddingTop: 7, paddingRight: 10}}>
-                                    <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri:'data:image/png;base64,' + this.state.userData[rev.userId].avatar.join('')}}></Image>
+                                    <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri:'data:image/png;base64,' + user.avatar.join('')}}></Image>
                                 </View>
                                 <View style={{flex: 5}}>
-                                    <Text style={styles.list_item_title}>{this.state.user.username}</Text>
+                                    <Text style={styles.list_item_title}>{user.username}</Text>
                                     <View>
                                         {this.state.isAdmin ? (
                                             <Button
                                             color="red"
                                             title="Delete User"
-                                            onPress={this.deleteUser.bind(this, user.userId)}
+                                            onPress={this.deleteUser.bind(this, user)}
                                             >
                                             Delete
                                             </Button>
@@ -128,7 +127,7 @@ export class ReportedUsers extends React.Component {
                                             <Button
                                                 title="Approve User"
                                                 color="green"
-                                                onPress={() => approveUser(user.userId)}
+                                                onPress={this.approveUser.bind(this, user)}
                                             >
                                             </Button>
                                         ) : (
@@ -147,6 +146,21 @@ export class ReportedUsers extends React.Component {
             )
         }
     }
+
+    // Delete button listener
+    deleteUser(user, e) {
+        deleteReview(user.userId)
+        this.setState({users: this.state.users.filter((user_iter) => user_iter != user)});
+        // Remove the deleted user from the screen
+    }
+
+    // Approve button listener
+    approveUser(user, e) {
+        approveReview(user.userId)
+        this.setState({users: this.state.users.filter((user_iter) => user_iter != user)});
+        // Remove the approved user from the screen
+    }
+
 }
 
 const styles = StyleSheet.create({

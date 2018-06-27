@@ -58,7 +58,7 @@ export class ReportedReviews extends React.Component {
             getUsersObject(Uids).then((userData) => {
                 this.setState({userData: userData});
             });
-        })
+        });
     }
 
     render() {
