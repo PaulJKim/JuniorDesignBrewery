@@ -31,6 +31,7 @@ import { BreweryScreen } from './components/BreweryScreen';
 import { AddReviewScreen } from './components/AddReviewScreen';
 import { ReviewScreen } from './components/ReviewScreen';
 import { ViewProfileScreen } from './components/ViewProfileScreen';
+import { PolicyScreen } from './components/PolicyScreen';
 
 class App extends React.Component {
 
@@ -51,6 +52,7 @@ const AppNavigator = StackNavigator({
     AddReview: { screen: AddReviewScreen },
     ReviewView: { screen: ReviewScreen },
     ProfileView : {screen : ViewProfileScreen },
+    Policy : {screen : PolicyScreen }
 })
 
 const styles = StyleSheet.create({

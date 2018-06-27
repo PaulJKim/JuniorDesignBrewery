@@ -98,9 +98,7 @@ export class RegisterScreen extends React.Component {
             <CheckBox checked={this.state.userPolicyChecked}
                       onPress={()=>this.setState({userPolicyChecked: !this.state.userPolicyChecked})} />
             <Text style={styles.checkboxText}>I have read and agree to the&nbsp;
-              <Text onPress={()=>console.log("hello")} style={styles.policyLinks}>user</Text>&nbsp;and&nbsp; 
-              <Text onPress={()=>console.log("hello")} style={styles.policyLinks}>privacy</Text> &nbsp; 
-            policies
+              <Text onPress={()=>{this.props.navigation.navigate("Policy", {navigation: this.props.navigation, policyType: "Privacy Policy"});}} style={styles.policyLinks}>privacy</Text>&nbsp;policy
             </Text>
           </View>
           
@@ -209,7 +207,7 @@ const styles = StyleSheet.create({
   checkboxText: {
     maxWidth: '100%',
     marginLeft: 20,
-    fontSize: 12
+    fontSize: 14
   },
   textinput: {
     height: 58,
