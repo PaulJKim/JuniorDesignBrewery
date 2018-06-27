@@ -21,8 +21,8 @@
 
 import React from 'react';
 import { MapView, Constants, Location, Permissions } from 'expo';
-import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { Footer, Container, Icon, List, ListItem, SwipeRow, Content} from 'native-base';
+import { StyleSheet, View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
+import { Footer, Container, Icon, List, ListItem, SwipeRow, Content, Button as BaseButton} from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
 import firebaseApp from '../firebase';
@@ -146,12 +146,14 @@ export class MapScreen extends React.Component {
                 {this.state.selectedBrewery != null && global.mapVisible &&
                     <View style={{bottom:50, position: 'absolute', width:'100%'}}>
                         <View style={{flexDirection:'column'}}>
-                            <TouchableOpacity style={{backgroundColor:'red', marginLeft:10, width:30, height:30, borderRadius: 15}} onPress={() => this.setState({selectedBrewery : null})}>
-                                <Icon
-                                    style={{marginLeft:10, color: 'white'}}
-                                    type= 'EvilIcons'
-                                    name='close'/>
-                            </TouchableOpacity>
+                            <View style={{flexDirection:'row', justifyContent:"flex-end"}}>
+                                <BaseButton rounded style={{backgroundColor:'red', marginRight: 10}} onPress={() => this.setState({selectedBrewery : null})}>
+                                    <Icon
+                                        style={{color: 'white'}}
+                                        type= 'EvilIcons'
+                                        name='close'/>
+                                </BaseButton>
+                            </View>
                             <BreweryCard
                                 curBrew = {this.state.selectedBrewery}
                                 curBrewName = {this.state.selectedBrewery.name}

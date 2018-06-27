@@ -24,7 +24,7 @@ export class BreweryCard extends React.Component {
     render() {
         return (
             <TouchableOpacity onPress={() => this.props.navigation.navigate("Brewery", {navigation: this.props.navigation, brewery: this.props.curBrew})}>
-              <View style = {{flexDirection: 'row', borderRadius:5, backgroundColor:'white', marginBottom: 10, marginLeft: 10}}>
+              <View style = {{flexDirection: 'row', borderRadius:5, backgroundColor:'white', marginLeft:10, marginRight:10, marginBottom:10}}>
     							{
                     //<View style={{flex: 3, borderRadius: 5, backgroundColor: 'powderblue'}} />
                   }
