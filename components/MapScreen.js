@@ -31,7 +31,7 @@ import StarRating from 'react-native-star-rating';
 import current_location from '../current_location.png';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { BreweryCard } from './BreweryCard'
-
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export class MapScreen extends React.Component {
     breweries;
@@ -45,6 +45,7 @@ export class MapScreen extends React.Component {
             lng: 0,
             mapVisible: true,
             selectedBrewery: null,
+            loading: true
         }
         if(global.ulat == null || global.ulong == null) {
             global.ulat = 0;
@@ -61,6 +62,7 @@ export class MapScreen extends React.Component {
             this.searchLocalBreweries();
         }
         this.mapsApiKey = Expo.Constants.manifest.android.config.googleMaps.apiKey;
+
         console.log(this.mapsApiKey);
     }
 
@@ -84,6 +86,10 @@ export class MapScreen extends React.Component {
     render() {
         return (
             <Container>
+                <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"} 
+                        color={"rgb(66,137,244)"}
+                        visible={this.state.loading}
+                 />
                 <View style={{flex: 1, backgroundColor:'white'}}>
                     {global.mapVisible && this.state.lat != null && this.state.lng != null && this.state.lat != 0 &&
                       <MapView style={styles.map}
@@ -218,6 +224,7 @@ export class MapScreen extends React.Component {
     }
 
     search() {
+        this.setState({loading:true});
         console.log('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.query + '&key=' + this.mapsApiKey);
         fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.query + '&key=' + this.mapsApiKey)
             .then((r) => r.json().then((d) => {
@@ -239,10 +246,7 @@ export class MapScreen extends React.Component {
     }
 
     searchBreweriesOnPress(lat, lng) {
-        console.log('https://maps.googleapis.com/maps/api/place/nearbysearch/'
-                    + 'json?key=' + this.mapsApiKey
-                    + '&location=' + `${lat}` + ',' + `${lng}`
-                    + '&radius=50000&name=brewery&keyword=brewery');
+        this.setState({loading:true});
         fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/'
                     + 'json?key=' + this.mapsApiKey
                     + '&location=' + `${lat}` + ',' + `${lng}`
@@ -257,7 +261,7 @@ export class MapScreen extends React.Component {
                     res.push(b);
                 });
                 global.breweries = res;
-                this.setState({breweries: res, lat: lat, lng: lng});
+                this.setState({breweries: res, lat: lat, lng: lng, loading:false});
             }));
     }
 
@@ -275,7 +279,7 @@ export class MapScreen extends React.Component {
                     res.push(b);
                 });
                 global.breweries = res;
-                this.setState({breweries: res});
+                this.setState({breweries: res, loading:false});
             }));
     }
 
