@@ -25,10 +25,11 @@ import _ from 'lodash';
 import Brewery from '../models/Brewery';
 import firebaseApp from '../firebase';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
-import Guid from 'guid';
 import StarRating from 'react-native-star-rating';
 import { NavigationActions } from 'react-navigation';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { writeReview } from '../lib/FirebaseHelpers';
+
 
 
 
@@ -387,70 +388,45 @@ export class AddReviewScreen extends React.Component {
     }
 
     submitReview() {
-        if(!this.state.overallRating || !this.state.kidFriendly || !this.state.environment || !this.state.overallFood) {
+        if(!this.state.overallRating || !this.state.environment || !this.state.overallFood) {
             this.setState({error: true});
             return;
         }
         this.setState({spinnerVisible: true})
-        if(this.state.revId == 0) {
-            this.state.revId = this.newGuid();
-        }
-        var userRef = firebaseApp.database().ref("Users/" + firebaseApp.auth().currentUser.uid + "/publicData");
+        
         var timestamp = (new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + new Date().getFullYear();
-        userRef.once("value", (userData) => {
-            var updates = {};
-            updates["Reviews/" + this.state.revId + "/metadata"] = {
-                breweryId: this.state.breweryId,
-                userId: firebaseApp.auth().currentUser.uid,
-                viewable: this.state.viewable
-            };
-            updates["Reviews/" + this.state.revId + "/data"] = {
-                username: userData.val().username,
-                date: timestamp,
-                environment: this.state.environment,
-                overallFood: this.state.overallFood,
-                cleanliness: this.state.cleanliness,
-                parking: this.state.parking,
-                hasChangingTables: this.state.hasChangingTables,
-                hasFamilyRestroom: this.state.hasFamilyRestroom,
-                isWheelchairAccessible: this.state.isWheelchairAccessible,
-                seatingArrangements: this.state.seatingArrangements,
-                kidFriendly: this.state.kidFriendly,
-                safety: this.state.safety,
-                petFriendly: this.state.petFriendly,
-                foodOptionDiversity: this.state.foodOptionDiversity,
-                nonAlcoholicOptions: this.state.nonAlcoholicOptions,
-                soundLevel: this.state.soundLevel,
-                isSmokingPermitted: this.state.isSmokingPermitted,
-                strollerKids: this.state.strollerKids,
-                kThroughSix: this.state.kThroughSix,
-                teenagers: this.state.teenagers,
-                overallRating: this.state.overallRating,
-                revId: this.state.revId,
-                breweryName: this.state.breweryName,
-                photo: this.state.photo,
-                latitude: this.state.lat,
-                longitude: this.state.long,
-                comments: this.state.comments
-            }
-            updates["Users/" + firebaseApp.auth().currentUser.uid + "/privateData/reviews/" + this.state.revId] = true
-            updates["Breweries/" + this.state.breweryId + "/reviews/" + this.state.revId] = true
-            firebaseApp.database().ref().update(updates).then(() => {
-                const backAction = NavigationActions.back({
-                    key: null
-                })
-                this.props.navigation.dispatch(backAction);
+        var reviewData = {
+            date: timestamp,
+            environment: this.state.environment,
+            overallFood: this.state.overallFood,
+            cleanliness: this.state.cleanliness,
+            parking: this.state.parking,
+            hasChangingTables: this.state.hasChangingTables,
+            hasFamilyRestroom: this.state.hasFamilyRestroom,
+            isWheelchairAccessible: this.state.isWheelchairAccessible,
+            seatingArrangements: this.state.seatingArrangements,
+            safety: this.state.safety,
+            petFriendly: this.state.petFriendly,
+            foodOptionDiversity: this.state.foodOptionDiversity,
+            nonAlcoholicOptions: this.state.nonAlcoholicOptions,
+            soundLevel: this.state.soundLevel,
+            isSmokingPermitted: this.state.isSmokingPermitted,
+            strollerKids: this.state.strollerKids,
+            kThroughSix: this.state.kThroughSix,
+            teenagers: this.state.teenagers,
+            overallRating: this.state.overallRating,
+            revId: this.state.revId,
+            breweryName: this.state.breweryName,
+            photo: this.state.photo,
+            latitude: this.state.lat,
+            longitude: this.state.long,
+            comments: this.state.comments
+        }
+        writeReview(this.props.navigation.state.params.brewery.placeId, reviewData).then(() => {
+            const backAction = NavigationActions.back({
+                key: null
             })
-
-        });
-    }
-
-    newGuid() { // Public Domain/MIT
-        var d = new Date().getTime();
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = (d + Math.random() * 16) % 16 | 0;
-            d = Math.floor(d / 16);
-            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            this.props.navigation.dispatch(backAction);
         });
     }
 }
