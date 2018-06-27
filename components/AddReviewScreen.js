@@ -57,27 +57,27 @@ export class AddReviewScreen extends React.Component {
             //kid friendly
             kidFriendly: 0,
             strollerKids: false,
-            kThroughSix: 0,
-            teenagers: 0,
+            kThroughSix: false,
+            teenagers: false,
 
             //environment
             environment: 0,
             safety: 0,
-            petFriendly: 0,
+            petFriendly: false,
             soundLevel: 0,
-            isSmokingPermitted: 0,
+            isSmokingPermitted: false,
             seatingArrangements: 0,
             cleanliness: 0,
 
             //food
-            overallFood: 0,
+            overallFood: false,
             foodOptionDiversity: 0,
-            nonAlcoholicOptions: 0,
+            nonAlcoholicOptions: false,
 
             //logistics
-            hasChangingTables: 0,
-            hasFamilyRestroom: 0,
-            isWheelchairAccessible: 0,
+            hasChangingTables: false,
+            hasFamilyRestroom: false,
+            isWheelchairAccessible: false,
             parking: "",
 
             comments: "",
@@ -154,89 +154,63 @@ export class AddReviewScreen extends React.Component {
 
                 <View style={{marginLeft: 25}}>
 
-                    <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <View style={{marginRight:5}}>
-
-                                    <Text> Stroller Kids          </Text>
-                                </View>
-                                <View style={{flex: 10}}>
-                                    <View style={{marginLeft: 10}} />
-
+                    <View style={{flexDirection: 'column', width:200}}>
+                            <View style={{flexDirection: 'row', flex: 4}}>
+                                <Text> Stroller Kids </Text>
+                                <View style={{flex: 1, alignItems:'flex-end'}} >
                                         <CheckBox checked={this.state.strollerKids} onPress = {() => this.setState({strollerKids: !this.state.strollerKids})} />
                                 </View>
                             </View>
 
                     </View>
 
-                    <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <View style={{marginRight:5}}>
-                                    <Text> K - 6                  </Text>
-                                </View>
-                                <View style={{flex: 10}}>
-                                    <View style={{marginLeft: 10}} />
-
-                                        <CheckBox checked={false} />
+                    <View style={{flexDirection: 'column', width: 200}}>
+                            <View style={{flexDirection: 'row', flex: 4}}>
+                                    <Text> K - 6 </Text>
+                                <View style={{flex: 1, alignItems: 'flex-end'}}>
+                                        <CheckBox checked={this.state.kThroughSix} onPress = {() => this.setState({kThroughSix: !this.state.kThroughSix})} />
                                 </View>
                             </View>
 
                     </View>
 
-                    <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <View style={{marginRight:5}}>
-                                    <Text> Teenagers              </Text>
-                                </View>
-                                <View style={{flex: 10}}>
-                                    <View style={{marginLeft: 10}} />
-
-                                        <CheckBox checked={false} />
+                    <View style={{flexDirection: 'column', width: 200}}>
+                            <View style={{flexDirection: 'row', flex: 4}}>
+                                    <Text> Teenagers </Text>
+                                <View style={{flex: 1, alignItems: 'flex-end'}}>
+                                        <CheckBox checked={this.state.teenagers} onPress = {() => this.setState({teenagers: !this.state.teenagers})} />
                                 </View>
                             </View>
 
                     </View>
 
-                    <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <View style={{marginRight:5}}>
-                                    <Text> Changing Tables        </Text>
-
-                                </View>
-                                <View style={{flex: 10}}>
-                                    <View style={{marginLeft: 10}} />
-                                        <CheckBox checked={false} />
+                    <View style={{flexDirection: 'column', width: 200}}>
+                            <View style={{flexDirection: 'row', flex: 4}}>
+                                    <Text> Changing Tables </Text>
+                                <View style={{flex: 1, alignItems: 'flex-end'}}>
+                                        <CheckBox checked={this.state.hasChangingTables} onPress = {() => this.setState({hasChangingTables: !this.state.hasChangingTables})} />
                                 </View>
                             </View>
 
                     </View>
 
-                    <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <View style={{marginRight:5}}>
+                    <View style={{flexDirection: 'column', width: 200}}>
+                            <View style={{flexDirection: 'row', flex: 4}}>
                                     <Text> Wheel Chair Accessible </Text>
-                                </View>
-                                <View style={{flex: 10}}>
-                                    <View style={{marginLeft: 10}} />
-                                        <CheckBox checked={false} />
-
+                                <View style={{flex: 1, alignItems: 'flex-end'}}>
+                                        <CheckBox checked={this.state.isWheelchairAccessible} onPress = {() => this.setState({isWheelchairAccessible: !this.state.isWheelchairAccessible})} />
                                 </View>
                             </View>
 
                     </View>
 
-                    <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <View style={{marginRight:5}}>
-                                    <Text> Family Restrooms       </Text>
-                                </View>
-                                <View style={{flex: 10}}>
-                                    <View style={{marginLeft: 10}} />
-                                        <CheckBox checked={false} />
-
+                    <View style={{flexDirection: 'column', width: 200}}>
+                            <View style={{flexDirection: 'row', flex: 4}}>
+                                    <Text> Family Restrooms </Text>
+                                <View style={{flex: 1, alignItems: 'flex-end'}}>
+                                        <CheckBox checked={this.state.hasFamilyRestroom} onPress = {() => this.setState({hasFamilyRestroom: !this.state.hasFamilyRestroom})} />
                                 </View>
                             </View>
-
                     </View>
 
                 </View>
@@ -246,18 +220,13 @@ export class AddReviewScreen extends React.Component {
                     <Icon name='arrow-forward' />
                 </Button>
 
-                <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <View style={{marginRight:5}}>
-                                    <Text> Smoking Allowed?       </Text>
-                                </View>
-                                <View style={{flex: 10}}>
-                                    <View style={{marginLeft: 10}} />
-                                        <CheckBox checked={false} />
-
-                                </View>
-                            </View>
-
+                <View style={{flexDirection: 'column', width: 225}}>
+                    <View style={{flexDirection: 'row', flex: 4}}>
+                        <Text> Smoking Allowed? </Text>
+                        <View style={{flex: 1, alignItems: 'flex-end'}}>
+                            <CheckBox checked={this.state.isSmokingPermitted} onPress = {() => this.setState({isSmokingPermitted: !this.state.isSmokingPermitted})} />
+                        </View>
+                    </View>
                 </View>
 
                 <Text style={styles.radio_title}>Seating Arrangements</Text>
@@ -278,18 +247,13 @@ export class AddReviewScreen extends React.Component {
                     containerStyle={{width: '30%'}}
                     starSize={30}                    />
 
-                <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <View style={{marginRight:5}}>
-                                    <Text> Pet Friendly           </Text>
-                                </View>
-                                <View style={{flex: 10}}>
-                                    <View style={{marginLeft: 10}} />
-                                        <CheckBox checked={false} />
-
-                                </View>
-                            </View>
-
+                <View style={{flexDirection: 'column', width: 225}}>
+                    <View style={{flexDirection: 'row', flex: 4}}>
+                        <Text> Pet Friendly </Text>
+                        <View style={{flex: 1, alignItems: 'flex-end'}}>
+                            <CheckBox checked={this.state.petFriendly} onPress = {() => this.setState({petFriendly: !this.state.petFriendly})} />
+                        </View>
+                    </View>
                 </View>
 
                 <Text style={styles.radio_title}>Cleanliness</Text>
@@ -324,15 +288,13 @@ export class AddReviewScreen extends React.Component {
                     <Icon name='arrow-forward' />
                 </Button>
 
-                <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row', flex: 1}}>
+                <View style={{flexDirection: 'column', width: 235}}>
+                            <View style={{flexDirection: 'row', flex: 4}}>
                                 <View style={{marginRight:5}}>
-                                    <Text> Food                   </Text>
-
+                                    <Text> Food </Text>
                                 </View>
-                                <View style={{flex: 10}}>
-                                    <View style={{marginLeft: 10}} />
-                                        <CheckBox checked={false} />
+                                <View style={{flex: 1, alignItems: 'flex-end'}}>
+                                        <CheckBox checked={this.state.overallFood} onPress = {() => this.setState({overallFood: !this.state.overallFood})} />
                                 </View>
                             </View>
 
@@ -347,14 +309,11 @@ export class AddReviewScreen extends React.Component {
                     containerStyle={{width: '30%'}}
                     starSize={30}                    />
 
-                <View style={{flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <View style={{marginRight:5}}>
-                                    <Text>Non-Alcoholic Beverages </Text>
-                                </View>
-                                <View style={{flex: 10}}>
-                                    <View style={{marginLeft: 10}} />
-                                        <CheckBox checked={false} />
+                <View style={{flexDirection: 'column', width: 235}}>
+                            <View style={{flexDirection: 'row', flex: 4}}>
+                                    <Text> Non-Alcoholic Beverages </Text>
+                                <View style={{flex: 1, alignItems: 'flex-end'}}>
+                                        <CheckBox checked={this.state.nonAlcoholicOptions} onPress = {() => this.setState({nonAlcoholicOptions: !this.state.nonAlcoholicOptions})} />
 
                                 </View>
                             </View>
@@ -393,7 +352,7 @@ export class AddReviewScreen extends React.Component {
             return;
         }
         this.setState({spinnerVisible: true})
-        
+
         var timestamp = (new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + new Date().getFullYear();
         var reviewData = {
             date: timestamp,
