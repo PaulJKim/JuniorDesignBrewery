@@ -21,7 +21,7 @@
 
 import React from 'react';
 import { MapView, Constants, Location, Permissions } from 'expo';
-import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Footer, Container, Icon, List, ListItem, SwipeRow, Content} from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
@@ -138,42 +138,24 @@ export class MapScreen extends React.Component {
 
 
                 {this.state.selectedBrewery != null && global.mapVisible &&
-                    <View style={{bottom:50, position: 'absolute', width: '100%'}}>
-                        <SwipeRow
-                          leftOpenValue={75}
-                          rightOpenValue={-75}
-
-                          left={
-                            <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                              <Button
-                                onPress={() => this.setState({selectedBrewery:null})}
-                                title="X"
-                                color="white"
-                              />
-                            </View>
-                          }
-                          body={
+                    <View style={{bottom:50, position: 'absolute', width:'100%'}}>
+                        <View style={{flexDirection:'column'}}>
+                            <TouchableOpacity style={{backgroundColor:'red', marginLeft:10, width:30, height:30, borderRadius: 15}} onPress={() => this.setState({selectedBrewery : null})}>
+                                <Icon
+                                    style={{marginLeft:10, color: 'white'}}
+                                    type= 'EvilIcons'
+                                    name='close'/>
+                            </TouchableOpacity>
                             <BreweryCard
-                                  curBrew = {this.state.selectedBrewery}
-                                  curBrewName = {this.state.selectedBrewery.name}
-                                  curBrewRating = {this.state.selectedBrewery.genRating}
-                                  navigation = {this.props.navigation}
-                                  curBrewDist = {(this.state.lat || this.state.lng)
-                                                ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
-                                                {latitude: this.state.selectedBrewery.latitude, longitude: this.state.selectedBrewery.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
+                                curBrew = {this.state.selectedBrewery}
+                                curBrewName = {this.state.selectedBrewery.name}
+                                curBrewRating = {this.state.selectedBrewery.genRating}
+                                navigation = {this.props.navigation}
+                                curBrewDist = {(this.state.lat || this.state.lng)
+                                              ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
+                                              {latitude: this.state.selectedBrewery.latitude, longitude: this.state.selectedBrewery.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
                             />
-                          }
-                          right={
-                            <View style={{flex: 1,backgroundColor: 'red', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                                <Button
-                                  onPress={() => this.setState({selectedBrewery:null})}
-                                  title="X"
-                                  color="white"
-                                />
-                            </View>
-                          }
-                        />
-
+                        </View>
                     </View>
                 }
 
@@ -194,23 +176,8 @@ export class MapScreen extends React.Component {
                             key={val.latitude + val.longitude}
                             name={val.name}
                             pinColor={'#2196F3'}
-                            // onCalloutPress={() => this.props.navigation.navigate("Brewery", {navigation: this.props.navigation, brewery: val})}
-                            onPress = {() => this.setState({selectedBrewery : val})} //hide currently selected breweryCard, show new BreweryCard
+                            onPress = {() => this.setState({selectedBrewery : val})}
                         />
-
-                            // <MapView.Callout>
-                            //     <Text style={{fontSize: 15, fontWeight: 'bold'}}>{val.name}</Text>
-                            //     {val.price && <Text>{'$'.repeat(val.price)}</Text>}
-                            //     <View style={{width: '50%'}}>
-                            //     <StarRating
-                            //         maxStars={5}
-                            //         rating={parseInt(val.genRating)}
-                            //         fullStarColor={'#eaaa00'}
-                            //         starSize={20}
-                            //     />
-                            //     </View>
-                            // </MapView.Callout>
-                        //</MapView.Marker>
                     )
                 })
             )
@@ -306,21 +273,9 @@ export class MapScreen extends React.Component {
         return _.map(this.state.breweries, (b) => {
             counter = counter + 1;
             return (
-                // <ListItem
-                // style={{display:'flex'}}
-                // key={counter} onPress={() => this.props.navigation.navigate("Brewery", {navigation: this.props.navigation, brewery: b})}>
-                //     <View style={{flexDirection:'column'}}>
-                //     <Text style={{width: '100%'}}>{b.name}</Text>
-                //     <Text style={{width:'100%', color:'gray', fontSize:11}}>
-                //         Distance:
-                //             {(this.state.lat || this.state.lng)
-                //             ? ' ' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
-                //             {latitude: b.latitude, longitude: b.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
-                //     </Text>
-                //     </View>
-                // </ListItem>
+
                 <BreweryCard
-                  curBrew = {b} //need to pass in the current brewery...
+                  curBrew = {b}
                   curBrewName = {b.name}
                   curBrewRating = {b.genRating}
                   navigation = {this.props.navigation}
