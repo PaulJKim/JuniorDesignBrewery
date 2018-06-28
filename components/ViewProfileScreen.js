@@ -83,7 +83,7 @@ export class ViewProfileScreen extends React.Component {
                     </View>
                     <Button
                         title="Report"
-                        onPress={() => reportUser(this.props.navigation.state.params.id)}
+                        onPress={() => reportUser(this.state.user.uid)}
                     >
                     </Button>
                 </View> }
