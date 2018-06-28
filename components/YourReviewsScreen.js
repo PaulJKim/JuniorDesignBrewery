@@ -26,7 +26,8 @@ import firebaseApp from '../firebase';
 import StarRating from 'react-native-star-rating';
 import {  Constants, Location, Permissions } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { getUserReviews } from '../lib/FirebaseHelpers';
+import { getUserReviews, getUserData } from '../lib/FirebaseHelpers';
+import { ReviewCard } from './ReviewCard';
 
 export class YourReviewsScreen extends React.Component {
     constructor(props) {
@@ -37,7 +38,7 @@ export class YourReviewsScreen extends React.Component {
                 lat: 0,
                 lng: 0,
             },
-            didMount: false,
+            user: null
         }
         global.main = true;
     }
@@ -46,6 +47,9 @@ export class YourReviewsScreen extends React.Component {
         this._getLocationAsync()
         getUserReviews().then((reviews) => {
             this.setState({reviews: reviews});
+        });
+        getUserData(firebaseApp.auth().currentUser.uid).then((userData) => {
+            this.setState({user: userData});
         });
     }
     
@@ -56,6 +60,10 @@ export class YourReviewsScreen extends React.Component {
         this.state.location.lat = location.coords.latitude;
         this.state.location.lng = location.coords.longitude;
         this.setState({});
+    }
+
+    finishedLoadingData() {
+        return this.state.reviews != null && this.state.user != null;
     }
 
     render() {
@@ -79,7 +87,7 @@ export class YourReviewsScreen extends React.Component {
         if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible) {
             return(
                 <View style={{height:'100%', width:'100%', alignContent:'center', alignItems:'center', backgroundColor:'white', display:'flex'}}>
-                <View style={{flex:1}}/>                
+                <View style={{flex:1}}/>
                 <Text style={{textAlign: 'center', flex:1}}>No Reviews Yet!</Text>
                 </View>
             )
@@ -120,6 +128,7 @@ export class YourReviewsScreen extends React.Component {
             }
             return _.map(this.state.reviews, (fav) => {
                 return (
+                    /*
                         <ListItem key={this.hashCode(fav.breweryName)}>
                             <TouchableOpacity 
                                 onPress={() => this.props.navigation.navigate("ReviewView", {navigation: this.props.navigation, review: fav})}>
@@ -141,6 +150,13 @@ export class YourReviewsScreen extends React.Component {
                                     containerStyle={{width: '25%'}} />
                             </TouchableOpacity>
                         </ListItem>
+                        */
+                    <ReviewCard 
+                        review = {fav}
+                        user = {this.state.user}
+                        breweryName = {fav.breweryName}
+                        navigation = {this.props.navigation}
+                    />
                 );
             });
         }
