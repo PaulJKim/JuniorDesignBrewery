@@ -10,8 +10,6 @@ export class BreweryCard extends React.Component {
         super();
           this.state ={
               status:true,
-              reviews:null,
-              revsAvg: new Review()
           }
     }
 
@@ -49,9 +47,6 @@ export class BreweryCard extends React.Component {
     									</View>
     									<View style={{flex: 1, flexDirection: 'row'}}>
     											<Text> {this.props.curBrewDist} </Text>
-    									</View>
-    									<View style={{flex: 1, flexDirection: 'row'}}>
-    											<Text> City, ST </Text>
     									</View>
     							</View>
     					</View>

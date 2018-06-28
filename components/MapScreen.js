@@ -133,7 +133,7 @@ export class MapScreen extends React.Component {
 
                     <View style={styles.searchWrapper}>
                         <TextInput style={styles.search}
-                                placeholder="Search by city..."
+                                placeholder="Search"
                                 onChangeText={(query) => this.setState({query})}
                                 value={this.state.query}
                         ></TextInput>
