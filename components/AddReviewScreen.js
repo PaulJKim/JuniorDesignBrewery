@@ -141,6 +141,7 @@ export class AddReviewScreen extends React.Component {
             <View style={{height:'100%', width:'100%', backgroundColor:'#FFFFFF'}}>
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <ScrollView>
+                <View style= {{alignItems: 'center'}}>
                 <Text style={styles.title}>{this.state.breweryName}</Text>
                 <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                         color={"rgb(66,137,244)"}
@@ -163,6 +164,18 @@ export class AddReviewScreen extends React.Component {
                 {
                   //Kid Friendlyness
                 }
+            </View>
+
+                <View style={{width:30, borderRadius:5}}>
+                        <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'flex-end'}} onPress={()=>{alert('hello!');}}>
+                            <Icon
+                              name="chevron-right"
+                              type="Entypo"
+                            />
+                        </TouchableOpacity>
+                </View>
+            <View style ={{alignItems:'center'}} >
+
                 <View style={{flexDirection: 'column', width:300, borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
                         <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
                           <Text> Children & Accessibility </Text>
@@ -205,15 +218,10 @@ export class AddReviewScreen extends React.Component {
                         </View>
                 </View>
 
-
-
-                <Button iconRight light>
-                    <Icon name='arrow-forward' />
-                </Button>
-
                 {
                   //environment
                 }
+
                 <View style={{flexDirection: 'column', width:300, borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
                     <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
                         <Text> Environment </Text>
@@ -282,10 +290,6 @@ export class AddReviewScreen extends React.Component {
                     </View>
                 </View>
 
-                <Button iconRight light>
-                    <Icon name='arrow-forward' />
-                </Button>
-
                 {
                   //FOOD
                 }
@@ -317,22 +321,21 @@ export class AddReviewScreen extends React.Component {
                     </View>
                 </View>
 
-                <Button iconRight light>
-                    <Icon name='arrow-forward' />
-                </Button>
+
 
                 {
                   //LOGISTICS
                 }
                 <View style={{flexDirection: 'column', width:300, borderRadius:5, marginTop: 10, marginBottom:10}}>
                     <View style={{width:300, color:'pink', borderRadius:5}}>
-                        <TouchableOpacity style={{width:'100%'}} onPress={()=>{alert('hello!');}}>
+                        <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{alert('hello!');}}>
                             <Icon
                               name="camera"
                               type="Entypo"
+                              color='#1DA664'
                             />
                         </TouchableOpacity>
-                    </View>
+
 
                     <Text style={styles.radio_title}>Overall Comments:</Text>
                     <TextInput
@@ -340,6 +343,7 @@ export class AddReviewScreen extends React.Component {
                         onChangeText={(comments) => this.setState({comments})}
                         value={this.state.comments}
                         placeholder="Tell us about your visit" />
+                    </View>
                 </View>
 
                 <Text style={{fontWeight:'bold'}}>Fields marked * are required </Text>
@@ -351,6 +355,7 @@ export class AddReviewScreen extends React.Component {
                     <Text style={{color:"#FFF", fontSize:16, fontWeight:'bold'}}>SUBMIT</Text>
                 </TouchableOpacity>
                 </View>
+                </View>
             </ScrollView>
             </KeyboardAvoidingView>
             </View>
@@ -358,7 +363,7 @@ export class AddReviewScreen extends React.Component {
     }
 
     submitReview() {
-        if(!this.state.overallRating || !this.state.environment || !this.state.overallFood) {
+        if(!this.state.overallRating) {
             this.setState({error: true});
             return;
         }
@@ -426,7 +431,7 @@ const styles = StyleSheet.create({
     height: 100,
     fontSize: 11,
     width:300,
-    maxWidth: '75%',
+    maxWidth: '100%',
     marginTop: 5,
     marginBottom: 5,
     borderColor: 'gray',
