@@ -30,6 +30,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
  } from 'react-native';
+import { CheckBox, ListItem } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import firebaseApp from '../firebase';
 
@@ -55,7 +56,9 @@ export class RegisterScreen extends React.Component {
       username: "",
       registerClicked: false,
       registerFailed: false,
-      errorMessage: ""
+      errorMessage: "",
+      ageAgreementChecked: false,
+      userPolicyChecked: false,
     };
   }
 
@@ -86,6 +89,20 @@ export class RegisterScreen extends React.Component {
             secureTextEntry={true} 
             placeholder="Password" />
 
+          <View style={styles.checkboxContainer}>
+            <CheckBox checked={this.state.ageAgreementChecked} 
+                      onPress={()=>this.setState({ageAgreementChecked: !this.state.ageAgreementChecked})} />
+            <Text style={styles.checkboxText}>I am 18 years or older</Text>
+          </View>
+          <View style={styles.checkboxContainer}>
+            <CheckBox checked={this.state.userPolicyChecked}
+                      onPress={()=>this.setState({userPolicyChecked: !this.state.userPolicyChecked})} />
+            <Text style={styles.checkboxText}>I have read and agree to the&nbsp;
+              <Text onPress={()=>{this.props.navigation.navigate("Policy", {navigation: this.props.navigation, policyType: "Privacy Policy"});}} style={styles.policyLinks}>privacy</Text>&nbsp;policy
+            </Text>
+          </View>
+          
+
           { this.state.registerClicked && <ActivityIndicator size="large" style={{marginTop: 10}} color="#00ff00"/>}
           <TouchableOpacity 
             style={styles.button}
@@ -113,11 +130,18 @@ export class RegisterScreen extends React.Component {
     }
 
   register() {
+
       if(!this.state.username || this.state.username.trim().length == 0) {
         this.setState({errorMessage: "Please enter a username", registerFailed: true});
         return;
+      } else if(!this.state.ageAgreementChecked)  {
+        this.setState({errorMessage: "Please confirm you are over 18 years old", registerFailed: true});
+        return;
+      } else if(!this.state.userPolicyChecked) {
+        this.setState({errorMessage: "Please agree to the user and privacy agreements", registerFailed: true});
+        return;
       }
-      this.setState({registerClicked: true, registerFailed: false});      
+      this.setState({registerClicked: true, registerFailed: false});
       var s = firebaseApp.auth().createUserWithEmailAndPassword(this.state.email.trim(), this.state.password).then(() => {
         currentUser = firebaseApp.auth().currentUser;
         av = []
@@ -156,6 +180,7 @@ export class RegisterScreen extends React.Component {
           this.setState({errorMessage: error.message})
       });
   }
+
 }
 
 const styles = StyleSheet.create({
@@ -166,6 +191,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height:'100%'
   },
+  checkboxContainer: {
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    minWidth: '80%',
+    maxWidth: '80%',
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 10
+  },
+  checkbox: {
+    marginRight: 5,
+    marginLeft: 5
+  },
+  checkboxText: {
+    maxWidth: '100%',
+    marginLeft: 20,
+    fontSize: 14
+  },
   textinput: {
     height: 58,
     fontSize: 18, 
@@ -175,6 +218,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     borderColor: 'gray', 
     borderWidth: 0
+  },
+  policyLinks: {
+    color:"blue", 
+    textDecorationLine: "underline"
   },
   button: { 
     height: 40, 
