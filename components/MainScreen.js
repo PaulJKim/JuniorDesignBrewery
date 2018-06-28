@@ -114,7 +114,7 @@ export class MainScreen extends React.Component {
     t = this;
     if(Platform.OS === 'android') {
         BackHandler.addEventListener('hardwareBackPress', function() {          
-              if(isLoggedIn()) {
+              if(global.main) {
                 Alert.alert(
                     'Log Out',
                     'Are you sure you want to log out?',
@@ -125,7 +125,7 @@ export class MainScreen extends React.Component {
                     { cancelable: false }
                 );        
             } else {
-                // Need to exit the app instead?
+                // Need to exit the app instead
                 this.props.navigation.navigate("Login");
             } 
             return true;
