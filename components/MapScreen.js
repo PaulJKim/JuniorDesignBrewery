@@ -86,7 +86,7 @@ export class MapScreen extends React.Component {
     render() {
         return (
             <Container>
-                <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"} 
+                <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                         color={"rgb(66,137,244)"}
                         visible={this.state.loading}
                  />

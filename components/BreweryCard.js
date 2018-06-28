@@ -2,13 +2,16 @@ import React from 'react';
 import { Card, CardItem, Text, Body, Icon, Button } from 'native-base';
 import { View, Image, TouchableOpacity } from 'react-native';
 import StarRating from 'react-native-star-rating';
+import Review from '../models/Review';
 
 export class BreweryCard extends React.Component {
 
     constructor(){
         super();
           this.state ={
-              status:true
+              status:true,
+              reviews:null,
+              revsAvg: new Review()
           }
     }
 
