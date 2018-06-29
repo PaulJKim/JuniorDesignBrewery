@@ -54,7 +54,7 @@ const AppNavigator = StackNavigator({
     AddReview: { screen: AddReviewScreen },
     ReviewView: { screen: ReviewScreen },
     ProfileView : {screen : ViewProfileScreen },
-    Policy : {screen : PolicyScreen }
+    Policy : {screen : PolicyScreen },
     ReportedReviews : {screen : ReportedReviews },
     ReportedUsers: {screen : ReportedUsers },
 })
