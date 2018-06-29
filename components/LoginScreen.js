@@ -20,28 +20,39 @@
 */
 
 import React from 'react';
-import { StyleSheet, Button, Text, TextInput, ViewText, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Platform, BackHandler, StyleSheet, Button, Text, TextInput, ViewText, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import firebaseApp from '../firebase';
+import { NavigationActions } from 'react-navigation';
 
 export class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
         title: "Login",
         headerStyle:  { backgroundColor: "#2196F3", },
         headerTitleStyle: { color: "#FFFFFF" },
-        headerLeft: null, 
+        headerLeft: null,
     });
 
 
   constructor(props) {
     super(props);
     this.state = {
-      email: "", 
+      email: "",
       password: "",
       error: "",
       loginFailed: false,
       loginClicked: false,
     };
     global.main = false;
+  }
+
+  componentWillMount() {
+    t = this;
+    if(Platform.OS === 'android') {
+        BackHandler.addEventListener('hardwareBackPress', function() {
+          this.props.navigation.dispatch(NavigationActions.back());
+          return true;
+        }.bind(this));
+    }
   }
 
   render() {
@@ -56,7 +67,7 @@ export class LoginScreen extends React.Component {
     return (
       <View style={styles.container}>
 
-        <View style={{flex:1}}/>          
+        <View style={{flex:1}}/>
 
         <View style={{flex:1}}>
           <Text style={styles.logo}>Family Friendly Brewery Trackr</Text>
@@ -71,7 +82,7 @@ export class LoginScreen extends React.Component {
                 style={styles.textinput}
                 onChangeText={(email) => this.setState({email})}
                 value={this.state.email}
-                placeholder="Email" 
+                placeholder="Email"
                 keyboardType={'email-address'}
                 autoCapitalize={'none'}
                 />
@@ -83,7 +94,7 @@ export class LoginScreen extends React.Component {
                 secureTextEntry={true}
                 placeholder="Password" />
 
-              <TouchableOpacity 
+              <TouchableOpacity
                   style={styles.button}
                   onPress={this.login.bind(this)}>
                   <Text style={{color:"#FFF", fontSize:16, fontWeight:'bold'}}>LOGIN</Text>
@@ -98,10 +109,20 @@ export class LoginScreen extends React.Component {
                 <TouchableOpacity
                   style={{width:'100%'}}
                   onPress={() => this.props.navigation.navigate("Register", {navigation: this.props.navigation})}>
-                  <Text 
-                    style={{color:'blue', textAlign:'center', marginVertical: 15}}> 
-                    Need an account? Click here! 
-                  </Text> 
+                  <Text
+                    style={{color:'blue', textAlign:'center', marginVertical: 15}}>
+                    Need an account? Click here!
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity
+                  style={{width:'100%'}}
+                  onPress={this.returnToAppHandler.bind(this)}>
+                  <Text
+                    style={{color:'blue', textAlign:'center', marginVertical: 15}}>
+                    Return to application
+                  </Text>
                 </TouchableOpacity>
               </View>
           </View>
@@ -109,11 +130,19 @@ export class LoginScreen extends React.Component {
     );
   }
 
+  returnToAppHandler() {
+      this.props.navigation.dispatch(NavigationActions.back());
+  }
+
   login() {
     this.setState({loginClicked: true, loginFailed: false});
     var s = firebaseApp.auth().signInWithEmailAndPassword(this.state.email.trim(), this.state.password)
       .then(() => {
-        this.props.navigation.navigate("Main", {navigation: this.props.navigation});
+        if (this.props.navigation.state.params.brewery) {
+          this.props.navigation.dispatch(NavigationActions.back());
+        } else {
+          this.props.navigation.navigate("Main", {navigation: this.props.navigation});
+        }
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -135,27 +164,27 @@ const styles = StyleSheet.create({
   },
   textinput: {
     height: 58,
-    fontSize: 18, 
+    fontSize: 18,
     minWidth: '87%',
-    maxWidth: '87%', 
+    maxWidth: '87%',
     marginBottom: 5,
-    borderColor: 'gray', 
+    borderColor: 'gray',
     borderWidth: 0
   },
-  button: { 
-    height: 40, 
-    width:'87%', 
-    marginVertical: 25, 
-    backgroundColor:"#2196F3", 
-    borderRadius:3, 
-    alignItems:'center', 
+  button: {
+    height: 40,
+    width:'87%',
+    marginVertical: 25,
+    backgroundColor:"#2196F3",
+    borderRadius:3,
+    alignItems:'center',
     justifyContent:'center',
   },
   logo: {
-    textAlign: 'center', 
-    color:"#2196F3", 
-    fontWeight: 'bold', 
-    fontSize: 35, 
+    textAlign: 'center',
+    color:"#2196F3",
+    fontWeight: 'bold',
+    fontSize: 35,
     marginVertical: 10,
   }
 });

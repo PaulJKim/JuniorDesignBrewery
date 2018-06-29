@@ -30,6 +30,7 @@ import { ProfileScreen } from './ProfileScreen';
 import ModalDropdown from 'react-native-modal-dropdown';
 import firebaseApp from '../firebase';
 import { NavigationActions } from 'react-navigation';
+import { isLoggedIn } from '../lib/FirebaseHelpers';
 
 const MAP_TAB = "Breweries";
 const FAVORITES_TAB = "Your Favorites";
@@ -39,34 +40,37 @@ const PROFILE_TAB = "Your Profile";
 export class MainScreen extends React.Component {
 
     static navigationOptions = ({ navigation }) => ({
-        title: navigation.state.params.tab,
+        title: MAP_TAB,
         headerStyle:  { backgroundColor: "#2196F3", },
         headerTitleStyle: { color: "#FFFFFF" },
         headerTintColor: "white",
         headerLeft: (
             <TouchableOpacity onPress={() => {
-                Alert.alert(
-                'Log Out',
-                'Are you sure you want to log out?',
-                [
-                {text: 'No', style: 'cancel'},
-                {text: 'Yes', onPress: () => {navigation.state.params.parent.signOutUser()}},
-                ],
-                { cancelable: false }
-            ); }}>
+                if(isLoggedIn()) {
+                    Alert.alert(
+                    'Log Out',
+                    'Are you sure you want to log out?',
+                    [
+                    {text: 'No', style: 'cancel'},
+                    {text: 'Yes', onPress: () => {navigation.state.params.parent.signOutUser()}},
+                    ],
+                    { cancelable: false });
+                } else {
+                    navigation.navigate("Login", {navigation: navigation, brewery: ""});
+                }
+            }}>
                 <View style={{marginLeft: 15}}>
                     <Icon name='md-arrow-back' style={{color:'white'}}/>
                 </View>
             </TouchableOpacity>
         ),
          headerRight: (
-            <View style={{flexDirection:'row', justifyContent:'flex-end'}}>
-                {navigation.state.params.tab == MAP_TAB && 
-                    <TouchableOpacity style={{flex: 1, marginRight: 15}}
-                        onPress={() => {global.mapVisible = !global.mapVisible; navigation.state.params.parent.setState({}); navigation.setParams({});}}>
-                        <Icon name={(global.mapVisible) ? "list" : "md-map"} style={{color: [(navigation.state.params.tab == MAP_TAB) ? 'white' : '#2196F3']}}/>
-                    </TouchableOpacity>
-                }
+            <View style={{width:80, display:'flex', flexDirection:'row'}}>
+
+                <TouchableOpacity style={{flex: 1}}
+                    onPress={() => {global.mapVisible = !global.mapVisible; navigation.state.params.parent.setState({}); navigation.setParams({});}}>
+                <Icon name={(global.mapVisible) ? "list" : "md-map"} style={{color: [(navigation.state.params.tab == MAP_TAB) ? 'white' : '#2196F3']}}/>
+                </TouchableOpacity>
 
                 <View style={{flex:1, marginRight: 15}}>
                 {(navigation.state.params.tab !== PROFILE_TAB && navigation.state.params.tab !== FAVORITES_TAB)
@@ -110,7 +114,7 @@ export class MainScreen extends React.Component {
     t = this;
     if(Platform.OS === 'android') {
         BackHandler.addEventListener('hardwareBackPress', function() {
-              if(global.main) {
+              if(isLoggedIn()) {
                 Alert.alert(
                     'Log Out',
                     'Are you sure you want to log out?',
@@ -121,7 +125,8 @@ export class MainScreen extends React.Component {
                     { cancelable: false }
                 );
             } else {
-                t.props.navigation.dispatch(NavigationActions.back());
+                // Need to exit the app instead?
+                this.props.navigation.navigate("Login", {navigation: this.props.navigation, brewery: ""});
             }
             return true;
         }.bind(this));
@@ -140,7 +145,9 @@ export class MainScreen extends React.Component {
   signOutUser = async () => {
     try {
         await firebaseApp.auth().signOut();
-        this.props.navigation.dispatch(NavigationActions.back());
+        if (this.state.selectedTab !== MAP_TAB) {
+            this.props.navigation.navigate("Main", {navigation: this.props.navigation});
+        }
     } catch (e) {
     }
 }
@@ -233,7 +240,13 @@ export class MainScreen extends React.Component {
 
                 {this.state.selectedTab != FAVORITES_TAB && <Button
                     active={this.state.selectedTab === FAVORITES_TAB}
-                    onPress={() => this.changeTab(FAVORITES_TAB)}
+                    onPress={() => {
+                        if (isLoggedIn()) {
+                            this.changeTab(FAVORITES_TAB);
+                        } else {
+                            this.props.navigation.navigate("Login", {navigation: this.props.navigation, brewery: ""});
+                        }
+                    }}
                     style={{backgroundColor: '#2196f3'}}
                 >
                     <Icon name="star" style={{fontSize: 28, color: 'rgba(255, 255, 255, 0.5)'}}/>
@@ -249,7 +262,13 @@ export class MainScreen extends React.Component {
 
                 {this.state.selectedTab != YOUR_REVIEWS_TAB && <Button
                     active={this.state.selectedTab === YOUR_REVIEWS_TAB}
-                    onPress={() => this.changeTab(YOUR_REVIEWS_TAB)}
+                    onPress={() => {
+                        if (isLoggedIn()) {
+                            this.changeTab(YOUR_REVIEWS_TAB);
+                        } else {
+                            this.props.navigation.navigate("Login", {navigation: this.props.navigation, brewery: ""});
+                        }
+                    }}
                     style={{backgroundColor: '#2196f3'}}
                 >
                     <Icon name="list" style={{color: 'rgba(255, 255, 255, 0.5)'}}/>
@@ -265,7 +284,13 @@ export class MainScreen extends React.Component {
 
                 {this.state.selectedTab != PROFILE_TAB && <Button
                     active={this.state.selectedTab === PROFILE_TAB}
-                    onPress={() => this.changeTab(PROFILE_TAB)}
+                    onPress={() => {
+                        if (isLoggedIn()) {
+                            this.changeTab(PROFILE_TAB);
+                        } else {
+                            this.props.navigation.navigate("Login", {navigation: this.props.navigation, brewery: ""});
+                        }
+                    }}
                     style={{backgroundColor: '#2196f3'}}
                 >
                     <Icon name="md-person" style={{color: 'rgba(255, 255, 255, 0.5)'}}/>

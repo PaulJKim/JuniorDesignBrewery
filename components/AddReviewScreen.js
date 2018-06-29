@@ -391,14 +391,16 @@ export class AddReviewScreen extends React.Component {
                 {
                     this.state.numberedView == 4 &&
                         <View style={{flexDirection: 'column', width:300, borderRadius:5, marginTop: 10, marginBottom:10}}>
-                            <View style={{width:300, color:'pink', borderRadius:5}}>
-                                <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{alert('hello!');}}>
-                                    <Icon
-                                      name="camera"
-                                      type="Entypo"
-                                      color='#1DA664'
-                                    />
-                                </TouchableOpacity>
+                            <View style={{width:300, borderRadius:5}}>
+                                <View style={{backgroundColor: 'pink'}}>
+                                    <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{alert('hello!');}}>
+                                        <Icon
+                                          name="camera"
+                                          type="Entypo"
+                                          color='#1DA664'
+                                        />
+                                    </TouchableOpacity>
+                                </View>
 
                                 <Text style={styles.radio_title}>Overall Comments:</Text>
                                 <TextInput

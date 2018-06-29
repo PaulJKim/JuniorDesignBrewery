@@ -19,7 +19,7 @@
 * SOFTWARE IS DISCLAIMED.
 */
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Footer, Container, Icon, List, ListItem } from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
@@ -28,7 +28,7 @@ import FAB from 'react-native-fab';
 import StarRating from 'react-native-star-rating';
 import Review from '../models/Review';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { reportReview, deleteReview, getBreweryReviews, getUsersObject, getFavoriteState, setFavoriteState, isAdmin } from '../lib/FirebaseHelpers';
+import { reportReview, deleteReview, getBreweryReviews, getUsersObject, getFavoriteState, setFavoriteState, isAdmin, isLoggedIn } from '../lib/FirebaseHelpers';
 
 export class BreweryScreen extends React.Component {
 
@@ -37,13 +37,26 @@ export class BreweryScreen extends React.Component {
         headerStyle:  { backgroundColor: "#2196F3", },
         headerTitleStyle: { color: "#FFFFFF" },
         headerTintColor: "white",
-        headerRight: 
+        headerRight:
             (<View style={{width:40}}>
                     <Icon style={{paddingRight: 15, color:"#FFFFFF"}}
                     name={(navigation.state.params.fave) ? "md-star" : "md-star-outline"}
-                    onPress={() => {navigation.state.params.setFavorite() }}/>
-                    
-            </View>), 
+                    onPress= {() => {
+                        if(isLoggedIn()) {
+                            navigation.state.params.setFavorite();
+                        } else {
+                            Alert.alert(
+                                'You must be logged in to use this feature',
+                                'Login?',
+                                [
+                                {text: 'No', style: 'cancel'},
+                                {text: 'Yes', onPress: () => {navigation.navigate("Login", {brewery: ""})}},
+                                ],
+                                { cancelable: false });
+                    }
+                }} />
+
+            </View>),
     });
 
     constructor(props) {
@@ -63,15 +76,23 @@ export class BreweryScreen extends React.Component {
     }
     componentDidMount() {
         // set handler method with setParams
-        this.props.navigation.setParams({ 
+        this.props.navigation.setParams({
           setFavorite: this._setFavorite.bind(this),
           fave: false
         });
-        getFavoriteState(this.state.brewery.placeId).then((favoriteState) => {
-            this.props.navigation.setParams({
-                fave: favoriteState
+
+        if(isLoggedIn()) {
+            getFavoriteState(this.state.brewery.placeId).then((favoriteState) => {
+                this.props.navigation.setParams({
+                    fave: favoriteState
+                });
+            })
+            isAdmin().then((adminStatus) => {
+                this.setState({isAdmin: adminStatus});
             });
-        })
+        }
+
+
         getBreweryReviews(this.state.brewery.placeId).then((reviews) => {
             this.setState({reviews: reviews});
             Uids = reviews.map((review) => review.userId);
@@ -79,9 +100,7 @@ export class BreweryScreen extends React.Component {
                 this.setState({userData: userData});
             });
         });
-        isAdmin().then((adminStatus) => {
-            this.setState({isAdmin: adminStatus});
-        });
+
     }
     _setFavorite() {
         setFavoriteState(this.state.brewery.placeId, !this.props.navigation.state.params.fave);
@@ -91,12 +110,12 @@ export class BreweryScreen extends React.Component {
         if(this.state.reviews != null && this.state.reviews.length > 0) {
             this.state.revsAvg = new Review();
             this.calcAvg(this.state.reviews)
-        }  
+        }
         return (
             <View style={{height: '100%'}}>
-            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"} 
+            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                         color={"rgb(66,137,244)"}
-                        visible={this.state.reviews == null} 
+                        visible={this.state.reviews == null}
                         textStyle={{color: '#000000'}} />
             <ScrollView style={{backgroundColor: '#fff'}}>
             <Image
@@ -114,8 +133,8 @@ export class BreweryScreen extends React.Component {
                                 fullStarColor={'#eaaa00'}
                                 starSize={20}
                                 containerStyle={{width: '25%'}}
-                            />            
-    
+                            />
+
                     <Text style={styles.radio_title_top}>{'\n'}Overall Kid Friendliness</Text>
                     <StarRating
                         disabled={true}
@@ -126,7 +145,7 @@ export class BreweryScreen extends React.Component {
                         containerStyle={{width: '25%'}}
                     />
                     <View style={{marginLeft: 10}}>
-                        
+
                     {!!this.state.revsAvg.strollerKids &&
                     <View>
                     <Text style={styles.radio_title}>Stroller Kids</Text>
@@ -138,7 +157,7 @@ export class BreweryScreen extends React.Component {
                         starSize={20}
                         containerStyle={{width: '25%'}}
                     /></View>}
-                    
+
                     {!!this.state.revsAvg.kThroughSix &&
                     <View>
                     <Text style={styles.radio_title}>K-6</Text>
@@ -150,7 +169,7 @@ export class BreweryScreen extends React.Component {
                         starSize={20}
                         containerStyle={{width: '25%'}}
                     /></View>}
-                    
+
                     {!!this.state.revsAvg.teenagers &&
                     <View>
                     <Text style={styles.radio_title}>Teenagers</Text>
@@ -162,7 +181,7 @@ export class BreweryScreen extends React.Component {
                         starSize={20}
                         containerStyle={{width: '25%'}}
                     /></View>}
-    
+
                     </View>
                     <Text style={styles.radio_title_top}>{'\n'}Overall Environment Quality</Text>
                     <StarRating
@@ -185,7 +204,7 @@ export class BreweryScreen extends React.Component {
                         starSize={20}
                         containerStyle={{width: '25%'}}
                     /></View>}
-                    {!!this.state.revsAvg.seatingArrangements && 
+                    {!!this.state.revsAvg.seatingArrangements &&
                     <View>
                     <Text style={styles.radio_title}>Seating Arrangements</Text>
                     <StarRating
@@ -196,7 +215,7 @@ export class BreweryScreen extends React.Component {
                         starSize={20}
                         containerStyle={{width: '25%'}}
                     /></View>}
-                    
+
                     {!!this.state.revsAvg.safety &&
                     <View>
                     <Text style={styles.radio_title}>Safety</Text>
@@ -208,7 +227,7 @@ export class BreweryScreen extends React.Component {
                         starSize={20}
                         containerStyle={{width: '25%'}}
                     /></View>}
-                    
+
                     {!!this.state.revsAvg.petFriendly &&
                     <View>
                     <Text style={styles.radio_title}>Pet Friendliness</Text>
@@ -220,7 +239,7 @@ export class BreweryScreen extends React.Component {
                         starSize={20}
                         containerStyle={{width: '25%'}}
                     /></View>}
-                    
+
                     {!!this.state.revsAvg.cleanliness &&
                     <View>
                     <Text style={styles.radio_title}>Cleanliness</Text>
@@ -232,7 +251,7 @@ export class BreweryScreen extends React.Component {
                         starSize={20}
                         containerStyle={{width: '25%'}}
                     /></View>}
-    
+
                     {!!this.state.revsAvg.soundLevel &&
                     <View>
                     <Text style={styles.radio_title}>Sound Level</Text>
@@ -289,35 +308,52 @@ export class BreweryScreen extends React.Component {
                     </Text>
                     <Text style={styles.radio_title}>
                     <Text>Wheelchair accessible:</Text>
-                    <Text style={{fontWeight:'bold'}}> {(this.state.revsAvg.isWheelchairAccessible >= .5) ? 'Yes' : 'No'}</Text>   
+                    <Text style={{fontWeight:'bold'}}> {(this.state.revsAvg.isWheelchairAccessible >= .5) ? 'Yes' : 'No'}</Text>
                     </Text>
                     <Text style={styles.radio_title_top}>Reviews:</Text>
                     </View>
-                }                
+                }
                 <View>{this.renderContent()}</View>
             </View>
             </ScrollView>
 
             {(this.state.rev == null && this.state.reviews != null) && <View>
-            <FAB 
+            <FAB
                 buttonColor="green"
                 iconTextColor="#FFFFFF"
-                onClickAction={() => this.props.navigation.navigate("AddReview", {navigation: this.props.navigation, brewery: this.state.brewery, review: this.state.rev})}
+                onClickAction={this.addReviewFABHandler.bind(this)}
                 visible={true}
                 iconTextComponent={<Icon name="md-add"/>} />
             </View>}
             {this.state.rev != null && <View>
-            <FAB 
+            <FAB
                 buttonColor="green"
                 iconTextColor="#FFFFFF"
-                onClickAction={() => this.props.navigation.navigate("AddReview", {navigation: this.props.navigation, brewery: this.state.brewery, review: this.state.rev})}
+                onClickAction={this.addReviewFABHandler.bind(this)}
                 visible={true}
                 iconTextComponent={<Icon name="md-create"/>} />
             </View>}
-            
-            </View>  
+
+            </View>
         )
     }
+
+
+    addReviewFABHandler() {
+        if(isLoggedIn()) {
+            this.props.navigation.navigate("AddReview", {navigation: this.props.navigation, brewery: this.state.brewery, review: this.state.rev});
+        } else {
+            Alert.alert(
+                'You must be logged in to use this feature',
+                'Login?',
+                [
+                {text: 'No', style: 'cancel'},
+                {text: 'Yes', onPress: () => {this.props.navigation.navigate("Login", {brewery: this.state.brewery})}},
+                ],
+                { cancelable: false });
+        }
+    }
+
     renderContent() {
         return (
             <List style={styles.listStyle}>
@@ -373,7 +409,7 @@ export class BreweryScreen extends React.Component {
                         </TouchableOpacity>
                     </ListItem>
                 );
-            }); 
+            });
         } else if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible) {
             return (
                 <Text style={{textAlign: 'center'}}>No Reviews Yet!</Text>
@@ -407,7 +443,7 @@ export class BreweryScreen extends React.Component {
         this.state.revsAvg.nonAlcoholicOptions = this.avg(revs, "nonAlcoholicOptions");
         this.state.revsAvg.hasChangingTables = this.avg2(revs, "hasChangingTables");
         this.state.revsAvg.hasFamilyRestroom = this.avg2(revs, "hasFamilyRestroom");
-        this.state.revsAvg.isWheelchairAccessible = this.avg2(revs, "isWheelchairAccessible");        
+        this.state.revsAvg.isWheelchairAccessible = this.avg2(revs, "isWheelchairAccessible");
     }
 
     avg(revs, prop) {

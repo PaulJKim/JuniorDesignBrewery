@@ -34,6 +34,7 @@ import { ViewProfileScreen } from './components/ViewProfileScreen';
 import { PolicyScreen } from './components/PolicyScreen';
 import { ReportedReviews } from './components/ReportedReviews';
 import { ReportedUsers } from './components/ReportedUsers';
+import { LoadingScreen } from './components/LoadingScreen';
 
 class App extends React.Component {
 
@@ -47,6 +48,7 @@ class App extends React.Component {
 }
 
 const AppNavigator = StackNavigator({
+    Load: { screen: LoadingScreen },
     Login: { screen: LoginScreen },
     Main: { screen: MainScreen },
     Register: { screen: RegisterScreen },
