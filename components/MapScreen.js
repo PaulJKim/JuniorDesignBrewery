@@ -45,7 +45,7 @@ export class MapScreen extends React.Component {
             lng: 0,
             mapVisible: true,
             selectedBrewery: null,
-            loading: true
+            loading: false
         }
         if(global.ulat == null || global.ulong == null) {
             global.ulat = 0;
