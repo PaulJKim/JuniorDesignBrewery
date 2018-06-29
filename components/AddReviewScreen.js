@@ -246,7 +246,7 @@ export class AddReviewScreen extends React.Component {
                                         </View>
                                     </View>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={styles.radio_title}>Seating Arrangements</Text>
+                                        <Text style={styles.radio_title}> Seating Arrangements</Text>
                                         <StarRating
                                             maxStars={5}
                                             rating={this.state.seatingArrangements}
@@ -256,7 +256,7 @@ export class AddReviewScreen extends React.Component {
                                             starSize={18}                    />
                                     </View>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={styles.radio_title}>Safety</Text>
+                                        <Text style={styles.radio_title}> Safety</Text>
                                         <StarRating
                                             maxStars={5}
                                             rating={this.state.safety}
@@ -272,7 +272,7 @@ export class AddReviewScreen extends React.Component {
                                         </View>
                                     </View>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={styles.radio_title}>Cleanliness</Text>
+                                        <Text style={styles.radio_title}> Cleanliness</Text>
                                         <StarRating
                                             maxStars={5}
                                             rating={this.state.cleanliness}
@@ -282,7 +282,7 @@ export class AddReviewScreen extends React.Component {
                                             starSize={18}                    />
                                     </View>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={styles.radio_title}>Sound Level</Text>
+                                        <Text style={styles.radio_title}> Sound Level</Text>
                                         <StarRating
                                             maxStars={5}
                                             rating={this.state.soundLevel}
@@ -295,8 +295,8 @@ export class AddReviewScreen extends React.Component {
                                         <Text style={styles.radio_title}> Parking </Text>
                                         <StarRating
                                             maxStars={5}
-                                            rating={this.state.soundLevel}
-                                            selectedStar={(rating) => this.setState({soundLevel: rating})}
+                                            rating={this.state.parking}
+                                            selectedStar={(rating) => this.setState({parking: rating})}
                                             fullStarColor={'#eaaa00'}
                                             containerStyle={{width: '30%'}}
                                             starSize={18}                    />
@@ -342,7 +342,7 @@ export class AddReviewScreen extends React.Component {
                                 </View>
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={styles.radio_title}>Food Diversity</Text>
+                                <Text style={styles.radio_title}> Food Diversity</Text>
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.foodOptionDiversity}
