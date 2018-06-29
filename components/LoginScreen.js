@@ -20,8 +20,9 @@
 */
 
 import React from 'react';
-import { StyleSheet, Button, Text, TextInput, ViewText, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Platform, BackHandler, StyleSheet, Button, Text, TextInput, ViewText, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import firebaseApp from '../firebase';
+import { NavigationActions } from 'react-navigation';
 
 export class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -42,6 +43,16 @@ export class LoginScreen extends React.Component {
       loginClicked: false,
     };
     global.main = false;
+  }
+
+  componentWillMount() {
+    t = this;
+    if(Platform.OS === 'android') {
+        BackHandler.addEventListener('hardwareBackPress', function() {          
+          this.props.navigation.dispatch(NavigationActions.back());
+          return true;
+        }.bind(this));
+    }
   }
 
   render() {
@@ -104,16 +115,34 @@ export class LoginScreen extends React.Component {
                   </Text> 
                 </TouchableOpacity>
               </View>
+              <View>
+                <TouchableOpacity
+                  style={{width:'100%'}}
+                  onPress={this.returnToAppHandler.bind(this)}>
+                  <Text 
+                    style={{color:'blue', textAlign:'center', marginVertical: 15}}> 
+                    Return to application 
+                  </Text> 
+                </TouchableOpacity>
+              </View>
           </View>
       </View>
     );
+  }
+
+  returnToAppHandler() {
+      this.props.navigation.dispatch(NavigationActions.back());
   }
 
   login() {
     this.setState({loginClicked: true, loginFailed: false});
     var s = firebaseApp.auth().signInWithEmailAndPassword(this.state.email.trim(), this.state.password)
       .then(() => {
-        this.props.navigation.navigate("Main", {navigation: this.props.navigation});
+        if (this.props.navigation.state.params.brewery !== undefined) {
+          this.props.navigation.dispatch(NavigationActions.back());
+        } else {
+          this.props.navigation.navigate("Main", {navigation: this.props.navigation});
+        }
       })
       .catch((error) => {
         var errorCode = error.code;
