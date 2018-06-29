@@ -19,7 +19,7 @@
 * SOFTWARE IS DISCLAIMED.
 */
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Footer, Container, Icon, List, ListItem } from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
@@ -28,7 +28,7 @@ import FAB from 'react-native-fab';
 import StarRating from 'react-native-star-rating';
 import Review from '../models/Review';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { reportReview, deleteReview, getBreweryReviews, getUsersObject, getFavoriteState, setFavoriteState, isAdmin, isLoggedIn } from '../lib/FirebaseHelpers';
+import { reportReview, deleteReview, getBreweryReviews, getUsersObject, getFavoriteState, setFavoriteState, isAdmin } from '../lib/FirebaseHelpers';
 
 export class BreweryScreen extends React.Component {
 
@@ -39,22 +39,10 @@ export class BreweryScreen extends React.Component {
         headerTintColor: "white",
         headerRight: 
             (<View style={{width:40}}>
-                <Icon style={{paddingRight: 15, color:"#FFFFFF"}}
-                name={(navigation.state.params.fave) ? "md-star" : "md-star-outline"}
-                onPress={() => {
-                	if(isLoggedIn()) {
-                		navigation.state.params.setFavorite(); 
-                	} else {
-                		Alert.alert(
-		                    'You must be logged in to use this feature',
-		                    'Login?',
-		                    [
-		                    {text: 'No', style: 'cancel'},
-		                    {text: 'Yes', onPress: () => {navigation.navigate("Login", {brewery: ""})}},
-		                    ],
-		                    { cancelable: false }); 
-                	}
-                }} />
+                    <Icon style={{paddingRight: 15, color:"#FFFFFF"}}
+                    name={(navigation.state.params.fave) ? "md-star" : "md-star-outline"}
+                    onPress={() => {navigation.state.params.setFavorite() }}/>
+                    
             </View>), 
     });
 
@@ -79,23 +67,20 @@ export class BreweryScreen extends React.Component {
           setFavorite: this._setFavorite.bind(this),
           fave: false
         });
-
-        if(isLoggedIn()) {
-	        getFavoriteState(this.state.brewery.placeId).then((favoriteState) => {
-	            this.props.navigation.setParams({
-	                fave: favoriteState
-	            });
-	        })
-	        isAdmin().then((adminStatus) => {
-	            this.setState({isAdmin: adminStatus});
-	        });
-	    }
+        getFavoriteState(this.state.brewery.placeId).then((favoriteState) => {
+            this.props.navigation.setParams({
+                fave: favoriteState
+            });
+        })
         getBreweryReviews(this.state.brewery.placeId).then((reviews) => {
             this.setState({reviews: reviews});
             Uids = reviews.map((review) => review.userId);
             getUsersObject(Uids).then((userData) => {
                 this.setState({userData: userData});
             });
+        });
+        isAdmin().then((adminStatus) => {
+            this.setState({isAdmin: adminStatus});
         });
     }
     _setFavorite() {
@@ -317,7 +302,7 @@ export class BreweryScreen extends React.Component {
             <FAB 
                 buttonColor="green"
                 iconTextColor="#FFFFFF"
-                onClickAction={this.addReviewFABHandler.bind(this)}
+                onClickAction={() => this.props.navigation.navigate("AddReview", {navigation: this.props.navigation, brewery: this.state.brewery, review: this.state.rev})}
                 visible={true}
                 iconTextComponent={<Icon name="md-add"/>} />
             </View>}
@@ -325,7 +310,7 @@ export class BreweryScreen extends React.Component {
             <FAB 
                 buttonColor="green"
                 iconTextColor="#FFFFFF"
-                onClickAction={this.addReviewFABHandler.bind(this)}
+                onClickAction={() => this.props.navigation.navigate("AddReview", {navigation: this.props.navigation, brewery: this.state.brewery, review: this.state.rev})}
                 visible={true}
                 iconTextComponent={<Icon name="md-create"/>} />
             </View>}
@@ -333,22 +318,6 @@ export class BreweryScreen extends React.Component {
             </View>  
         )
     }
-
-    addReviewFABHandler() {
-    	if(isLoggedIn()) {
-    		this.props.navigation.navigate("AddReview", {navigation: this.props.navigation, brewery: this.state.brewery, review: this.state.rev});
-    	} else {
-    		Alert.alert(
-                'You must be logged in to use this feature',
-                'Login?',
-                [
-                {text: 'No', style: 'cancel'},
-                {text: 'Yes', onPress: () => {this.props.navigation.navigate("Login", {brewery: this.state.brewery})}},
-                ],
-                { cancelable: false }); 
-    	}
-    }
-
     renderContent() {
         return (
             <List style={styles.listStyle}>
