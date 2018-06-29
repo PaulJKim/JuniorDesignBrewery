@@ -20,12 +20,12 @@
 */
 
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, Image, TouchableOpacity, TextInput, Button } from 'react-native';
 import { Footer, Container, Icon, Fab } from 'native-base';
 import firebaseApp from '../firebase';
 import { ImagePicker, LinearGradient } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { getUserData, setUserData } from '../lib/FirebaseHelpers';
+import { getUserData, setUserData, isAdmin } from '../lib/FirebaseHelpers';
 
 console.disableYellowBox = true;
 
@@ -36,7 +36,8 @@ export class ProfileScreen extends React.Component {
             edit_mode: false,
             user: null,
             image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg",
-            imageBase64: null,            
+            imageBase64: null, 
+            isAdmin: false          
         }
         this.old_vals = null;
     }
@@ -47,6 +48,9 @@ export class ProfileScreen extends React.Component {
             this.old_vals = Object.assign({}, user);
             this.setState({user: user});
         })
+        isAdmin().then((adminStatus) => {
+            this.setState({isAdmin: adminStatus});
+        });
     }
 
     render() {
@@ -93,6 +97,34 @@ export class ProfileScreen extends React.Component {
                     <View style={{width: '100%', padding: 10}}>
                         <Text style={[styles.subtitle_style2]}>Bio</Text>
                         <Text style={styles.subtitle_style3}>{this.state.user.description}</Text>
+                    </View>
+
+                    <View>
+                        {this.state.isAdmin ? (
+                            <Button
+                                style={{fontSize: 20, color: 'red'}}
+                                // styleDisabled={{color: 'red'}}
+                                title="Reported Reviews"
+                                onPress={() => this.props.navigation.navigate('ReportedReviews')}
+                                >
+                            </Button>
+                        ) : (
+                            null
+                        )}
+                    </View>
+
+                    <View>
+                        {this.state.isAdmin ? (
+                            <Button
+                                style={{fontSize: 20, color: 'red'}}
+                                // styleDisabled={{color: 'red'}}
+                                title="Reported Users"
+                                onPress={() => this.props.navigation.navigate('ReportedUsers')}
+                                >
+                            </Button>
+                        ) : (
+                            null
+                        )}
                     </View>
 
                     <Fab

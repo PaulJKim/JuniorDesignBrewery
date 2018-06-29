@@ -353,10 +353,9 @@ export class BreweryScreen extends React.Component {
                                 <View>
 							        {this.state.isAdmin ? (
 							          	<Button
-								    	style={{fontSize: 20, color: 'green'}}
-									    styleDisabled={{color: 'red'}}
 									    title="Delete Review"
 									    onPress={this.deleteReview.bind(this, rev)}
+                                        color="red"
 									    >
 										Delete
 										</Button>
@@ -366,6 +365,7 @@ export class BreweryScreen extends React.Component {
 							    </View>
                                 <Button
                                     title="Report"
+                                    color="red"
                                     onPress={() => reportReview(rev.revId)}
                                 >
                                 </Button>
