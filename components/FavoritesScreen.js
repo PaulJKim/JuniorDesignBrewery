@@ -44,7 +44,6 @@ export class FavoritesScreen extends React.Component {
         super(props);
         this.state = {
             favorites: null,
-            isMounted: false,
             location: {
                 lng: 0,
                 lat: 0,
@@ -54,7 +53,6 @@ export class FavoritesScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.state.isMounted = true;
         getFavorites().then((favorites) => {
           this.setState({favorites: favorites})
         })
@@ -67,6 +65,7 @@ export class FavoritesScreen extends React.Component {
         let location = await Location.getCurrentPositionAsync({});
         this.setState({location: {lat: location.coords.latitude, lng: location.coords.longitude}});
     }
+
     render() {
         return (
             <Container>
@@ -127,14 +126,6 @@ export class FavoritesScreen extends React.Component {
                 )
             })
     }
-
-    hashCode(s) {
-        var h = 0, l = s.length, i = 0;
-        if ( l > 0 )
-            while (i < l)
-            h = (h << 5) - h + s.charCodeAt(i++) | 0;
-        return h;
-    };
 }
 
 const styles = StyleSheet.create({
