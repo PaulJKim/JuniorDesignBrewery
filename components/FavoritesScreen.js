@@ -27,6 +27,8 @@ import firebaseApp from '../firebase';
 import Spinner from 'react-native-loading-spinner-overlay';
 import geolib from 'geolib'
 import {  Constants, Location, Permissions } from 'expo';
+import { getFavorites } from '../lib/FirebaseHelpers'
+import { BreweryCard } from './BreweryCard'
 
 
 export class FavoritesScreen extends React.Component {
@@ -49,27 +51,19 @@ export class FavoritesScreen extends React.Component {
             },
         }
         global.main = true;
-        firebaseApp.database().ref("Users/" + firebaseApp.auth().currentUser.uid + "/Favorites/").on('value', (snapshot) => {
-            this.state.favorites = [];
-            if(snapshot.val() != null) {
-                var keys = Object.keys(snapshot.val());
-                keys.forEach((key) => {
-                    this.state.favorites.push(snapshot.val()[key])
-                });
-            }
-            if(this.state.isMounted)
-                this.setState({favorites: this.state.favorites});
-        });
     }
 
     componentDidMount() {
         this.state.isMounted = true;
+        getFavorites().then((favorites) => {
+          this.setState({favorites: favorites})
+        })
     }
 
     componentWillMount() {
         this._getLocationAsync()
     }
-    
+
     _getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
@@ -81,9 +75,9 @@ export class FavoritesScreen extends React.Component {
     render() {
         return (
             <Container>
-            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"} 
+            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                         color={"rgb(66,137,244)"}
-                        visible={(this.state.favorites == null)} 
+                        visible={(this.state.favorites == null)}
                         textStyle={{color: '#000000'}} />
             <View style={{flex: 1, backgroundColor:'white'}}>
                 {this.renderContent()}
@@ -99,7 +93,7 @@ export class FavoritesScreen extends React.Component {
         if(this.state.favorites != null && this.state.favorites.length == 0) {
             return(
                 <View style={{height:'100%', width:'100%', alignContent:'center', alignItems:'center', backgroundColor:'white', display:'flex'}}>
-                <View style={{flex:1}}/>                
+                <View style={{flex:1}}/>
                 <Text style={{textAlign: 'center', flex:1}}>No Favorites Yet!</Text>
                 </View>
             )
@@ -126,20 +120,15 @@ export class FavoritesScreen extends React.Component {
         }
         return _.map(this.state.favorites, (fav) => {
                 return (
-                    <ListItem key={this.hashCode(fav.id)}>
-                        <TouchableOpacity 
-                            onPress={() => this.props.navigation.navigate("Brewery", {navigation: this.props.navigation, 
-                                                                            brewery: {name: fav.name, placeId: fav.id, photo: fav.photo, latitude: fav.latitude, longitude: fav.longitude},
-                                                                            })}>
-                            <Text style={{width: '100%'}}>{fav.name}</Text>
-                            <Text style={{width:'100%', color:'gray', fontSize:11}}>
-                                Distance:   
-                                    {(this.state.location.lat || this.state.location.lng) 
-                                    ? ' ' + Number(geolib.getDistance({latitude: this.state.location.lat, longitude: this.state.location.lng}, 
-                                    {latitude: fav.latitude, longitude: fav.longitude}) * 0.000621371).toFixed(2) + ' miles': ' location not turned on'}
-                            </Text>                        
-                            </TouchableOpacity>
-                    </ListItem>
+                  <BreweryCard
+                    curBrew = {fav}
+                    curBrewName = {fav.name}
+                    navigation = {this.props.navigation}
+                    curBrewDist = {(this.state.location.lat || this.state.location.lng)
+                                  ? '' + Number(geolib.getDistance({latitude: this.state.location.lat, longitude: this.state.location.lng},
+                                  {latitude: fav.latitude, longitude: fav.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
+                    location = {fav.city + ', ' + fav.state}
+                  />
                 )
             })
     }

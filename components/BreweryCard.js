@@ -48,6 +48,12 @@ export class BreweryCard extends React.Component {
     									<View style={{flex: 1, flexDirection: 'row'}}>
     											<Text> {this.props.curBrewDist} </Text>
     									</View>
+                      <View style={{flex: 1, flexDirection: 'row'}}>
+                          {
+                            this.props.location &&
+                            <Text> {this.props.location} </Text>
+                          }
+    									</View>
     							</View>
     					</View>
             </TouchableOpacity>
