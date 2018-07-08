@@ -122,6 +122,7 @@ export class FavoritesScreen extends React.Component {
                                   ? '' + Number(geolib.getDistance({latitude: this.state.location.lat, longitude: this.state.location.lng},
                                   {latitude: fav.latitude, longitude: fav.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
                     location = {fav.city + ', ' + fav.state}
+                    curBrewRating = {fav.rating}
                   />
                 )
             })
