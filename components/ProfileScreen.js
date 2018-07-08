@@ -25,7 +25,7 @@ import { Footer, Container, Icon, Fab } from 'native-base';
 import firebaseApp from '../firebase';
 import { ImagePicker, LinearGradient } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { getUserData, setUserData, isAdmin } from '../lib/FirebaseHelpers';
+import { getUserData, setUserData, isAdmin, getProfilePicture, setProfilePicture } from '../lib/FirebaseHelpers';
 
 console.disableYellowBox = true;
 
@@ -36,10 +36,12 @@ export class ProfileScreen extends React.Component {
             edit_mode: false,
             user: null,
             image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg",
-            imageBase64: null, 
-            isAdmin: false          
+            isAdmin: false
         }
         this.old_vals = null;
+        this.old_image = null;
+        this.newImage = false
+        this.base64Image = null;
     }
 
     componentDidMount() {
@@ -47,6 +49,12 @@ export class ProfileScreen extends React.Component {
         getUserData(uid).then((user) => {
             this.old_vals = Object.assign({}, user);
             this.setState({user: user});
+        })
+        getProfilePicture().then((profilePicture) => {
+          this.old_image = profilePicture;
+          this.setState({image:profilePicture})
+        }).catch(() => {
+          this.setState({image:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg"})
         })
         isAdmin().then((adminStatus) => {
             this.setState({isAdmin: adminStatus});
@@ -72,25 +80,25 @@ export class ProfileScreen extends React.Component {
     renderContent() {
         return (
             <Container>
-                <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"} 
+                <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                 color={"rgb(66,137,244)"}
-                visible={(this.state.user == null)} 
+                visible={(this.state.user == null)}
                 textStyle={{color: '#000000'}} />
                 {this.state.user != null && <View style={{flex: 1, backgroundColor: '#fff'}}>
                     <View style={{alignItems: 'center'}}>
                         <LinearGradient colors={['#0066cc', '#2196F3']} style={{width:'100%', alignItems:'center'}}>
-                        {this.state.user.avatar != null && 
+                        {this.state.user.avatar != null &&
                             <View>
-                                    <Image source={{ uri:  'data:image/png;base64,' + this.state.user.avatar.join('')}} style={styles.image_style} />
+                                    <Image source={{ uri: this.state.image}} style={styles.image_style} />
                             </View>
                         }
                         <Text style={styles.title_style}>{this.state.user.username}</Text>
                             {this.state.user.age > 0 && <Text style={[styles.subtitle_style]}>
                             {this.state.user.age == -1 ? "" : this.state.user.age} Years Old
                         </Text>}
-                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" : 
+                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" :
                             this.state.user.num_children == 1 ? "1 Child" : this.state.user.num_children + " Children"}
-                        </Text> 
+                        </Text>
                         <View style={{marginBottom: 10}}/>
                         </LinearGradient>
                     </View>
@@ -131,7 +139,7 @@ export class ProfileScreen extends React.Component {
                         direction="up"
                         position="bottomRight"
                         style={{ backgroundColor: 'green'}}
-                        onPress={() => this.setState({edit_mode: true})}
+                        onPress={() => {this.setState({edit_mode: true}); this.newImage = false}}
                     >
                         <Icon name="md-create" />
                     </Fab>
@@ -152,10 +160,10 @@ export class ProfileScreen extends React.Component {
                     <View style={{alignItems: 'center', marginTop: 30}}>
                         {this.state.user.avatar != null && <TouchableOpacity onPress={this.pickImage.bind(this)}>
                             <View>
-                                <Image source={{ uri:  'data:image/png;base64,' + (typeof this.state.user.avatar == 'string' ? this.state.user.avatar : this.state.user.avatar.join(''))}} style={styles.image_style} />
+                                <Image source={{ uri: this.state.image }} style={styles.image_style} />
                             </View>
                         </TouchableOpacity>}
-                        
+
                         <Text style={styles.title_style}>{this.state.user.username}</Text>
                     </View>
                     <View style={{width: '100%', padding: 10}}>
@@ -171,7 +179,7 @@ export class ProfileScreen extends React.Component {
                         <Text style={[styles.subtitle_style, {marginTop: 3, color:'black', flex: 5}]}>Number of kids: </Text>
                         <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.num_children + ""} onChangeText={(num_children) => {this.state.user.num_children = num_children.replace(/[^0-9]/g, ''); this.setState({user: this.state.user})}}></TextInput>
                         <View style={{flex: 9}}></View>
-                    </View>              
+                    </View>
                 </View>
                 </ScrollView>
                 <Fab
@@ -196,32 +204,12 @@ export class ProfileScreen extends React.Component {
     }
 
     confirmEdits() {
-        this.state.edit_mode = false;
-        
-        avatar = [];
-        if (this.state.user.avatar.length > 1048576) {
-            for (i = 0; i <= this.state.user.avatar.length / 1048576; i++) {
-                if ((i + 1) * 1048576 > this.state.user.avatar.length) {
-                    end = this.state.user.avatar.length;
-                } else {
-                    end = (i + 1) * 1048576;
-                }
-                avatar.push(this.state.user.avatar.substring(i * 1048576, end));
-            }
-        } else {
-            avatar.push(this.state.user.avatar);
-        }
-        this.state.user.avatar = avatar;
         this.old_vals = Object.assign({}, this.state.user);
-        setUserData(this.state.user).then(() => {
-            this.setState({});
-        })
-    }
-
-    lengthInUtf8Bytes(str) {
-        // Matches only the 10.. bytes that are non-initial characters in a multi-byte sequence.
-        var m = encodeURIComponent(str).match("/%[89ABab]/g");
-        return str.length + (m ? m.length : 0);
+        setUserData(this.state.user);
+        if (this.newImage) {
+          setProfilePicture(this.state.image);
+        }
+        this.setState({edit_mode: false});
     }
 
     async pickImage() {
@@ -235,9 +223,9 @@ export class ProfileScreen extends React.Component {
 
     handleImage(result) {
         if (!result.cancelled) {
-            this.state.user.avatar = result.base64;
-            this.state.image = result.uri;
-            this.setState({});                
+            this.newImage = true;
+            this.base64Image = result.base64
+            this.setState({image: result.uri});
         }
     }
 }
