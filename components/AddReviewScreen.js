@@ -29,6 +29,7 @@ import StarRating from 'react-native-star-rating';
 import { NavigationActions } from 'react-navigation';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { writeReview } from '../lib/FirebaseHelpers';
+import { ImagePicker } from 'expo';
 
 
 
@@ -92,8 +93,9 @@ export class AddReviewScreen extends React.Component {
             lat: 0,
             long: 0,
             date: new Date(),
-            viewable: true
+            viewable: true,
 
+            image: null
         }
         if(this.state.review != null) {
             this.state.overallRating = this.state.review.overallRating;
@@ -391,9 +393,10 @@ export class AddReviewScreen extends React.Component {
                 {
                     this.state.numberedView == 4 &&
                         <View style={{flexDirection: 'column', width:300, borderRadius:5, marginTop: 10, marginBottom:10}}>
+
                             <View style={{width:300, borderRadius:5}}>
                                 <View style={{backgroundColor: 'pink'}}>
-                                    <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{alert('hello!');}}>
+                                    <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={this.pickImage.bind(this)}>
                                         <Icon
                                           name="camera"
                                           type="Entypo"
@@ -401,6 +404,11 @@ export class AddReviewScreen extends React.Component {
                                         />
                                     </TouchableOpacity>
                                 </View>
+
+                                {
+                                  this.state.image != null &&
+                                  <Image source={{ uri: this.state.image }}  style={styles.image} />
+                                }
 
                                 <Text style={styles.radio_title}>Overall Comments:</Text>
                                 <TextInput
@@ -471,7 +479,8 @@ export class AddReviewScreen extends React.Component {
             photo: this.state.photo,
             latitude: this.state.lat,
             longitude: this.state.long,
-            comments: this.state.comments
+            comments: this.state.comments,
+            image: this.state.image
         }
         writeReview(this.props.navigation.state.params.brewery.placeId, reviewData).then(() => {
             const backAction = NavigationActions.back({
@@ -479,6 +488,17 @@ export class AddReviewScreen extends React.Component {
             })
             this.props.navigation.dispatch(backAction);
         });
+    }
+
+    async pickImage() {
+        result = await ImagePicker.launchImageLibraryAsync({})
+        this.handleImage(result);
+    }
+
+    handleImage(result) {
+        if (!result.cancelled) {
+            this.setState({image: result.uri});
+        }
     }
 }
 
@@ -519,10 +539,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     height: 20,
   },
-  image_style: {
-        borderRadius: 100,
-        width: 150,
-        height: 150,
-        marginTop: 20,
-    }
+  image: {
+    width: null,
+    height: 200,
+    resizeMode: 'contain',
+    marginTop: 10
+}
 });
