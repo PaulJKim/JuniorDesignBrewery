@@ -67,7 +67,7 @@ export class ViewProfileScreen extends React.Component {
                                 {this.state.user.image != null ?
                                   <Image source={{ uri: this.state.user.image}} style={styles.image_style} />
                                   :
-                                  <Image source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg"}} style={styles.image_style} />
+                                  <Image source={require('../resources/default_profile_picture.png')} style={styles.image_style} />
                                 }
 
                             </View>

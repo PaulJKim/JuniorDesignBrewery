@@ -70,7 +70,7 @@ export class ReviewScreen extends React.Component {
                         {this.state.image ?
                            <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri: this.state.image}} />
                            :
-                           <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg"}} />
+                           <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')} />
                         }
                     </View>
                     <View style={{flex: 6, display:'flex'}}>

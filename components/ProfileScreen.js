@@ -35,7 +35,7 @@ export class ProfileScreen extends React.Component {
         this.state = {
             edit_mode: false,
             user: null,
-            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg",
+            image: null,
             isAdmin: false
         }
         this.old_vals = null;
@@ -81,9 +81,13 @@ export class ProfileScreen extends React.Component {
                 {this.state.user != null && <View style={{flex: 1, backgroundColor: '#fff'}}>
                     <View style={{alignItems: 'center'}}>
                         <LinearGradient colors={['#0066cc', '#2196F3']} style={{width:'100%', alignItems:'center'}}>
-                        {this.state.user.avatar != null &&
+                        {this.state.image ?
                             <View>
                                     <Image source={{ uri: this.state.image}} style={styles.image_style} />
+                            </View>
+                            :
+                            <View>
+                                    <Image source={require('../resources/default_profile_picture.png')} style={styles.image_style} />
                             </View>
                         }
                         <Text style={styles.title_style}>{this.state.user.username}</Text>
@@ -153,7 +157,7 @@ export class ProfileScreen extends React.Component {
                 <View style={{backgroundColor: '#fff', flex: 1}}>
                     <View style={{alignItems: 'center', marginTop: 30}}>
                         {
-                          this.state.image != null && 
+                          this.state.image != null &&
                           <TouchableOpacity onPress={this.pickImage.bind(this)}>
                             <View>
                                 <Image source={{ uri: this.state.image }} style={styles.image_style} />
