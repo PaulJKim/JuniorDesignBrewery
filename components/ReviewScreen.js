@@ -43,14 +43,14 @@ export class ReviewScreen extends React.Component {
         super(props);
         this.state = {
             review: this.props.navigation.state.params.review,
-            photo: null,
+            image: null,
             didMount: false,
         }
         global.main = false;
     }
     componentDidMount() {
         getUserData(this.state.review.userId).then((userData) => {
-            this.setState({photo: userData.avatar});
+            this.setState({image: userData.image});
         })
     }
     render() {
@@ -67,9 +67,11 @@ export class ReviewScreen extends React.Component {
                 {<View>
                 <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ProfileView", {id: this.state.review.userId})}>
                     <View style={{flex: 1, paddingTop: 7, paddingRight: 10}}>
-                        {this.state.photo && <Image style={{height: 50, width: 50, borderRadius: 100}} 
-                            source={{uri: 'data:image/png;base64,' + this.state.photo.join('')}}>
-                        </Image>}
+                        {this.state.image ?
+                           <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri: this.state.image}} />
+                           :
+                           <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg"}} />
+                        }
                     </View>
                     <View style={{flex: 6, display:'flex'}}>
                         <View style={{flex:2, marginTop: 10}}>
@@ -89,7 +91,7 @@ export class ReviewScreen extends React.Component {
                             fullStarColor={'#eaaa00'}
                             starSize={20}
                             containerStyle={{width: '25%'}}
-                        />            
+                        />
 
                 <Text style={styles.radio_title_top}>{'\n'}Overall Kid Friendliness</Text>
                 <StarRating
@@ -101,7 +103,7 @@ export class ReviewScreen extends React.Component {
                     containerStyle={{width: '25%'}}
                 />
                 <View style={{marginLeft: 10}}>
-                    
+
                 {!!this.state.review.strollerKids &&
                 <View>
                 <Text style={styles.radio_title}>Stroller Kids</Text>
@@ -113,7 +115,7 @@ export class ReviewScreen extends React.Component {
                     starSize={20}
                     containerStyle={{width: '25%'}}
                 /></View>}
-                
+
                 {!!this.state.review.kThroughSix &&
                 <View>
                 <Text style={styles.radio_title}>K-6</Text>
@@ -125,7 +127,7 @@ export class ReviewScreen extends React.Component {
                     starSize={20}
                     containerStyle={{width: '25%'}}
                 /></View>}
-                
+
                 {!!this.state.review.teenagers &&
                 <View>
                 <Text style={styles.radio_title}>Teenagers</Text>
@@ -160,7 +162,7 @@ export class ReviewScreen extends React.Component {
                     starSize={20}
                     containerStyle={{width: '25%'}}
                 /></View>}
-                {!!this.state.review.seatingArrangements && 
+                {!!this.state.review.seatingArrangements &&
                 <View>
                 <Text style={styles.radio_title}>Seating Arrangements</Text>
                 <StarRating
@@ -171,7 +173,7 @@ export class ReviewScreen extends React.Component {
                     starSize={20}
                     containerStyle={{width: '25%'}}
                 /></View>}
-                
+
                 {!!this.state.review.safety &&
                 <View>
                 <Text style={styles.radio_title}>Safety</Text>
@@ -183,7 +185,7 @@ export class ReviewScreen extends React.Component {
                     starSize={20}
                     containerStyle={{width: '25%'}}
                 /></View>}
-                
+
                 {!!this.state.review.petFriendly &&
                 <View>
                 <Text style={styles.radio_title}>Pet Friendliness</Text>
@@ -195,7 +197,7 @@ export class ReviewScreen extends React.Component {
                     starSize={20}
                     containerStyle={{width: '25%'}}
                 /></View>}
-                
+
                 {!!this.state.review.cleanliness &&
                 <View>
                 <Text style={styles.radio_title}>Cleanliness</Text>
@@ -253,7 +255,7 @@ export class ReviewScreen extends React.Component {
                     containerStyle={{width: '25%'}}
                 /></View>}
                 </View>
-                
+
                 </View>}
                 <Text style={styles.radio_title_top}>{'\n'}Logistics</Text>
                 <Text style={styles.radio_title}>
@@ -266,31 +268,31 @@ export class ReviewScreen extends React.Component {
                 </Text>
                 <Text style={styles.radio_title}>
                 <Text>Wheelchair accessible:</Text>
-                <Text style={{fontWeight:'bold'}}> {(this.state.review.isWheelchairAccessible >= .5) ? 'Yes' : 'No'}</Text>   
+                <Text style={{fontWeight:'bold'}}> {(this.state.review.isWheelchairAccessible >= .5) ? 'Yes' : 'No'}</Text>
                 </Text>
                 {!!this.state.review.parking &&
                 <View>
-                <Text style={[styles.radio_title, {width: '100%'}]}>Parking:                 
+                <Text style={[styles.radio_title, {width: '100%'}]}>Parking:
                 </Text>
                 <Text>"{this.state.review.parking}"</Text>
                 </View>}
                 {!!this.state.review.comments &&
                 <View>
                 <Text style={{width: '100%'}}>{'\n'}Comments:</Text>
-                <Text style={{width: '100%'}}>"{this.state.review.comments}"</Text> 
+                <Text style={{width: '100%'}}>"{this.state.review.comments}"</Text>
                 </View>}
             </View>
             </ScrollView>
 
             {this.state.review.userId === firebaseApp.auth().currentUser.uid && <View>
-            <FAB 
+            <FAB
                 buttonColor="green"
                 iconTextColor="#FFFFFF"
                 onClickAction={() => this.props.navigation.navigate("AddReview", {navigation: this.props.navigation, brewery: new Brewery(), review: this.state.review})}
                 visible={true}
                 iconTextComponent={<Icon name="md-create"/>} />
             </View>}
-            </View>  
+            </View>
         )
     }
 }

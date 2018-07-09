@@ -373,7 +373,12 @@ export class BreweryScreen extends React.Component {
                     <ListItem key={new Date().getTime()}>
                         <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ReviewView", {navigation: this.props.navigation, review: rev})}>
                             <View style={{flex: 1, paddingTop: 7, paddingRight: 10}}>
-                                <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri:'data:image/png;base64,' + this.state.userData[rev.userId].avatar.join('')}}></Image>
+                                {this.state.userData[rev.userId].image ?
+                                  <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri: this.state.userData[rev.userId].image}}/>
+                                  :
+                                  <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg"}}/>
+                                }
+
                             </View>
                             <View style={{flex: 5}}>
                                 <Text style={styles.list_item_title}>{this.state.userData[rev.userId].username}</Text>

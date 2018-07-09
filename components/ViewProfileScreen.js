@@ -34,15 +34,13 @@ export class ViewProfileScreen extends React.Component {
         title: "Profile",
         headerStyle:  { backgroundColor: "#2196F3", },
         headerTitleStyle: { color: "#FFFFFF" },
-        headerTintColor: "white", 
+        headerTintColor: "white",
     });
 
     constructor(props) {
         super(props);
         this.state = {
-            user: null,
-            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg",
-            imageBase64: null,
+            user: null
         }
         global.main = false;
     }
@@ -57,23 +55,28 @@ export class ViewProfileScreen extends React.Component {
         return (
             <ScrollView>
             <Container>
-                <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"} 
+                <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                 color={"rgb(66,137,244)"}
-                visible={(this.state.user == null)} 
+                visible={(this.state.user == null)}
                 textStyle={{color: '#000000'}} />
                 {this.state.user != null && <View style={{flex: 1, backgroundColor: '#fff'}}>
                     <View style={{alignItems: 'center'}}>
                         <LinearGradient colors={['#0066cc', '#2196F3']} style={{width:'100%', alignItems:'center'}}>
                         <TouchableHighlight>
                             <View>
-                                    <Image source={{ uri:  'data:image/png;base64,' + this.state.user.avatar.join('')}} style={styles.image_style} />
+                                {this.state.user.image != null ?
+                                  <Image source={{ uri: this.state.user.image}} style={styles.image_style} />
+                                  :
+                                  <Image source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg"}} style={styles.image_style} />
+                                }
+
                             </View>
                         </TouchableHighlight>
                         <Text style={styles.title_style}>{this.state.user.username}</Text>
                         {this.state.user.age > 0 && <Text style={[styles.subtitle_style]}>{this.state.user.age == -1 ? "" : this.state.user.age} Years Old</Text>}
-                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" : 
+                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" :
                             this.state.user.num_children == 1 ? "1 Child" : this.state.user.num_children + " Children"}
-                        </Text>                     
+                        </Text>
                         <View style={{marginBottom: 10}}/>
                         </LinearGradient>
                     </View>
@@ -88,9 +91,9 @@ export class ViewProfileScreen extends React.Component {
                     </Button>
                 </View> }
                 {this.state.user == null && <View style={{flex:1}}/>}
-                
-            </Container>  
-            </ScrollView>                     
+
+            </Container>
+            </ScrollView>
         );
     }
 }

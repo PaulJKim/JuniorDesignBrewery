@@ -50,12 +50,6 @@ export class ProfileScreen extends React.Component {
             this.old_vals = Object.assign({}, user);
             this.setState({user: user});
         })
-        getProfilePicture().then((profilePicture) => {
-          this.old_image = profilePicture;
-          this.setState({image:profilePicture})
-        }).catch(() => {
-          this.setState({image:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg"})
-        })
         isAdmin().then((adminStatus) => {
             this.setState({isAdmin: adminStatus});
         });
@@ -158,11 +152,13 @@ export class ProfileScreen extends React.Component {
             <ScrollView>
                 <View style={{backgroundColor: '#fff', flex: 1}}>
                     <View style={{alignItems: 'center', marginTop: 30}}>
-                        {this.state.user.avatar != null && <TouchableOpacity onPress={this.pickImage.bind(this)}>
+                        {
+                          this.state.image != null && 
+                          <TouchableOpacity onPress={this.pickImage.bind(this)}>
                             <View>
                                 <Image source={{ uri: this.state.image }} style={styles.image_style} />
                             </View>
-                        </TouchableOpacity>}
+                          </TouchableOpacity>}
 
                         <Text style={styles.title_style}>{this.state.user.username}</Text>
                     </View>
