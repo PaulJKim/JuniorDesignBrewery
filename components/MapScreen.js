@@ -184,7 +184,7 @@ export class MapScreen extends React.Component {
                             key={val.latitude + val.longitude}
                             name={val.name}
                             pinColor={'#2196F3'}
-                            onPress = {() => this.setState({selectedBrewery : val})}
+                            onPress = {() => this.setState({selectedBrewery : val, lat: val.latitude, lng: val.longitude})}
                         />
                     )
                 })
