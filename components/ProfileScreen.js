@@ -41,14 +41,13 @@ export class ProfileScreen extends React.Component {
         this.old_vals = null;
         this.old_image = null;
         this.newImage = false
-        this.base64Image = null;
     }
 
     componentDidMount() {
         uid = firebaseApp.auth().currentUser.uid;
         getUserData(uid).then((user) => {
             this.old_vals = Object.assign({}, user);
-            this.setState({user: user});
+            this.setState({user: user, image: user.image});
         })
         isAdmin().then((adminStatus) => {
             this.setState({isAdmin: adminStatus});
@@ -157,10 +156,17 @@ export class ProfileScreen extends React.Component {
                 <View style={{backgroundColor: '#fff', flex: 1}}>
                     <View style={{alignItems: 'center', marginTop: 30}}>
                         {
-                          this.state.image != null &&
                           <TouchableOpacity onPress={this.pickImage.bind(this)}>
                             <View>
-                                <Image source={{ uri: this.state.image }} style={styles.image_style} />
+                            {this.state.image ?
+                                <View>
+                                        <Image source={{ uri: this.state.image}} style={styles.image_style} />
+                                </View>
+                                :
+                                <View>
+                                        <Image source={require('../resources/default_profile_picture.png')} style={styles.image_style} />
+                                </View>
+                            }
                             </View>
                           </TouchableOpacity>}
 
@@ -215,7 +221,6 @@ export class ProfileScreen extends React.Component {
     async pickImage() {
         result = await ImagePicker.launchImageLibraryAsync({
             allowsEditing: true,
-            base64: true,
             aspect: [1, 1]
         })
         this.handleImage(result);
@@ -224,7 +229,6 @@ export class ProfileScreen extends React.Component {
     handleImage(result) {
         if (!result.cancelled) {
             this.newImage = true;
-            this.base64Image = result.base64
             this.setState({image: result.uri});
         }
     }
