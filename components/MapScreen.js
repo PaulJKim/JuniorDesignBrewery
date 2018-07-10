@@ -32,11 +32,9 @@ import current_location from '../current_location.png';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { BreweryCard } from './BreweryCard'
 import Spinner from 'react-native-loading-spinner-overlay';
-import { getBreweries, findLocation } from '../lib/GoogleMapsHelpers';
+import { getBreweries, findLocation, calculateDistance, getLocation } from '../lib/GoogleMapsHelpers';
 
 export class MapScreen extends React.Component {
-    breweries;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -46,43 +44,21 @@ export class MapScreen extends React.Component {
             lng: null,
             mapVisible: true,
             selectedBrewery: null,
-            loading: false
-        }
-        if(global.ulat == null || global.ulong == null) {
-            global.ulat = 0;
-            global.ulong = 0;
+            loading: false,
+            curLat: null,
+            curLng: null
         }
         global.main = true;
         if(global.mapVisible == null) {
             global.mapVisible = true;
         }
-        if (global.breweries == null) {
-            global.breweries = [];
-        }
-        if (global.breweries.length == 0) {
-            this.searchLocalBreweries();
-        }
         this.mapsApiKey = Expo.Constants.manifest.android.config.googleMaps.apiKey;
-
-        console.log(this.mapsApiKey);
     }
 
     componentDidMount() {
         this.setState({breweries: global.breweries});
         this.searchLocalBreweries();
     }
-
-    _getLocationAsync = async () => {
-        let { status } = await Permissions.askAsync(Permissions.LOCATION);
-
-        let location = await Location.getCurrentPositionAsync({});
-        global.ulat = location.coords.latitude;
-        global.ulong = location.coords.longitude;
-        global.lat = location.coords.latitude;
-        global.lng = location.coords.longitude;
-        return Promise.resolve(location.coords);
-    }
-
 
     render() {
         return (
@@ -102,12 +78,15 @@ export class MapScreen extends React.Component {
                         >
 
                         {this.renderMapViewMarkers()}
+                        {
+                          this.state.curLat && this.state.curLng &&
+                          <MapView.Marker
+                                  coordinate={{latitude: this.state.curLat, longitude: this.state.curLng}}
+                                  name={"Your Location"}
+                                  image={current_location}
+                          />
+                        }
 
-                        <MapView.Marker
-                                coordinate={{latitude: global.lat, longitude: global.lng}}
-                                name={"Your Location"}
-                                image={current_location}
-                            ></MapView.Marker>
 
                       </MapView>}
                     {!global.mapVisible &&
@@ -161,8 +140,7 @@ export class MapScreen extends React.Component {
                                 curBrewRating = {this.state.selectedBrewery.genRating}
                                 navigation = {this.props.navigation}
                                 curBrewDist = {(this.state.lat || this.state.lng)
-                                              ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
-                                              {latitude: this.state.selectedBrewery.latitude, longitude: this.state.selectedBrewery.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
+                                              ? '' + Number(calculateDistance(this.state.curLat, this.state.curLng, this.state.selectedBrewery.latitude, this.state.selectedBrewery.longitude)).toFixed(2) + ' miles': ' no location data'}
                             />
                         </View>
                     </View>
@@ -202,8 +180,9 @@ export class MapScreen extends React.Component {
 
     searchLocalBreweries() {
         this.setState({loading:true});
-        this._getLocationAsync().then((location) => {
+        getLocation().then((location) => {
             this.searchBreweries(location.latitude, location.longitude);
+            this.setState({curLat: location.latitude, curLng: location.longitude});
         });
     }
 
@@ -246,9 +225,8 @@ export class MapScreen extends React.Component {
                   curBrewName = {b.name}
                   curBrewRating = {b.genRating}
                   navigation = {this.props.navigation}
-                  curBrewDist = {(this.state.lat || this.state.lng)
-                                ? '' + Number(geolib.getDistance({latitude: global.ulat, longitude: global.ulong},
-                                {latitude: b.latitude, longitude: b.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
+                  curBrewDist = {(this.state.curLat && this.state.curLng)
+                                ? '' + Number(calculateDistance(this.state.curLat, this.state.curLng, b.latitude, b.longitude)).toFixed(2) + ' miles': ' no location data'}
                   //curBrewLocation =
                 />
             );
