@@ -141,6 +141,7 @@ export class MapScreen extends React.Component {
                                 navigation = {this.props.navigation}
                                 curBrewDist = {(this.state.lat || this.state.lng)
                                               ? '' + Number(calculateDistance(this.state.curLat, this.state.curLng, this.state.selectedBrewery.latitude, this.state.selectedBrewery.longitude)).toFixed(2) + ' miles': ' no location data'}
+                                location = {this.state.selectedBrewery.city + ', ' + this.state.selectedBrewery.state}
                             />
                         </View>
                     </View>
@@ -227,7 +228,7 @@ export class MapScreen extends React.Component {
                   navigation = {this.props.navigation}
                   curBrewDist = {(this.state.curLat && this.state.curLng)
                                 ? '' + Number(calculateDistance(this.state.curLat, this.state.curLng, b.latitude, b.longitude)).toFixed(2) + ' miles': ' no location data'}
-                  //curBrewLocation =
+                  location = {b.city + ', ' + b.state}
                 />
             );
         });
