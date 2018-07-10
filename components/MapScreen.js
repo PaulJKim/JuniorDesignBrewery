@@ -32,6 +32,7 @@ import current_location from '../current_location.png';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { BreweryCard } from './BreweryCard'
 import Spinner from 'react-native-loading-spinner-overlay';
+import { getBreweries, findLocation } from '../lib/GoogleMapsHelpers';
 
 export class MapScreen extends React.Component {
     breweries;
@@ -41,8 +42,8 @@ export class MapScreen extends React.Component {
         this.state = {
             query: "",
             breweries: [],
-            lat: 0,
-            lng: 0,
+            lat: null,
+            lng: null,
             mapVisible: true,
             selectedBrewery: null,
             loading: false
@@ -67,19 +68,19 @@ export class MapScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({breweries: global.breweries, lat: global.lat, lng: global.lng});
+        this.setState({breweries: global.breweries});
+        this.searchLocalBreweries();
     }
 
     _getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
         let location = await Location.getCurrentPositionAsync({});
-        this.state.lat = location.coords.latitude;
-        this.state.lng = location.coords.longitude;
         global.ulat = location.coords.latitude;
         global.ulong = location.coords.longitude;
         global.lat = location.coords.latitude;
         global.lng = location.coords.longitude;
+        return Promise.resolve(location.coords);
     }
 
 
@@ -91,7 +92,7 @@ export class MapScreen extends React.Component {
                         visible={this.state.loading}
                  />
                 <View style={{flex: 1, backgroundColor:'white'}}>
-                    {global.mapVisible && this.state.lat != null && this.state.lng != null && this.state.lat != 0 &&
+                    {global.mapVisible && this.state.lat != null && this.state.lng != null &&
                       <MapView style={styles.map}
 
                         region={{latitude: this.state.lat,
@@ -194,62 +195,22 @@ export class MapScreen extends React.Component {
 
     search() {
         this.setState({loading:true});
-        console.log('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.query + '&key=' + this.mapsApiKey);
-        fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.query + '&key=' + this.mapsApiKey)
-            .then((r) => r.json().then((d) => {
-                location = {};
-
-                this.state.lat = d.results[0].geometry.location.lat;
-                this.state.lng = d.results[0].geometry.location.lng;
-            })).then(() => {
-                this.searchBreweries(this.state.lat, this.state.lng)
-            }).catch((error) => {
-                console.log(error)
-            })
+        findLocation(this.state.query).then((location) => {
+          this.searchBreweries(location.lat, location.lng);
+        })
     }
 
     searchLocalBreweries() {
-        this._getLocationAsync().then(() => {
-            this.searchBreweriesOnPress(this.state.lat, this.state.lng);
+        this.setState({loading:true});
+        this._getLocationAsync().then((location) => {
+            this.searchBreweries(location.latitude, location.longitude);
         });
     }
 
-    searchBreweriesOnPress(lat, lng) {
-        this.setState({loading:true});
-        fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/'
-                    + 'json?key=' + this.mapsApiKey
-                    + '&location=' + `${lat}` + ',' + `${lng}`
-                    + '&radius=50000&name=brewery&keyword=brewery')
-            .then((response) => response.json().then(data => {
-                res = []
-                var results = JSON.parse(JSON.stringify(data)).results;
-                results.forEach((val) => {
-                    var b = new Brewery();
-
-                    b.merge(val);
-                    res.push(b);
-                });
-                global.breweries = res;
-                this.setState({breweries: res, lat: lat, lng: lng, loading:false});
-            }));
-    }
-
     searchBreweries(lat, lng) {
-        fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/'
-                    + 'json?key=' + this.mapsApiKey
-                    + '&location=' + `${lat}` + ',' + `${lng}`
-                    + '&radius=50000&name=brewery&keyword=brewery')
-            .then((response) => response.json().then(data => {
-                res = []
-                var results = JSON.parse(JSON.stringify(data)).results;
-                results.forEach((val) => {
-                    var b = new Brewery();
-                    b.merge(val);
-                    res.push(b);
-                });
-                global.breweries = res;
-                this.setState({breweries: res, loading:false});
-            }));
+      getBreweries(lat, lng, 50000).then((breweries) => {
+        this.setState({breweries: breweries, loading: false, lat: lat, lng: lng});
+      });
     }
 
     renderListView() {
