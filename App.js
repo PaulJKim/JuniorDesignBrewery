@@ -35,6 +35,7 @@ import { PolicyScreen } from './components/PolicyScreen';
 import { ReportedReviews } from './components/ReportedReviews';
 import { ReportedUsers } from './components/ReportedUsers';
 import { LoadingScreen } from './components/LoadingScreen';
+import { ResetPassword } from './components/ResetPassword';
 
 class App extends React.Component {
 
@@ -59,6 +60,7 @@ const AppNavigator = StackNavigator({
     Policy : {screen : PolicyScreen },
     ReportedReviews : {screen : ReportedReviews },
     ReportedUsers: {screen : ReportedUsers },
+    ResetPassword: {screen : ResetPassword }
 })
 
 const styles = StyleSheet.create({
