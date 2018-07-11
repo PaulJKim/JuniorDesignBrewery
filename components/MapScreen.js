@@ -23,7 +23,6 @@ import React from 'react';
 import { MapView, Constants, Location, Permissions } from 'expo';
 import { StyleSheet, View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
 import { Footer, Container, Icon, List, ListItem, SwipeRow, Content, Button as BaseButton} from 'native-base';
-import _ from 'lodash';
 import Brewery from '../models/Brewery';
 import firebaseApp from '../firebase';
 import FAB from 'react-native-fab';
@@ -155,7 +154,7 @@ export class MapScreen extends React.Component {
     renderMapViewMarkers() {
         if (this.state.breweries) {
             return (
-                _.map(this.state.breweries, (val) => {
+                this.state.breweries.map((val) => {
                     return (
                         <MapView.Marker
                             coordinate={{latitude: val.latitude, longitude: val.longitude}}
@@ -215,7 +214,7 @@ export class MapScreen extends React.Component {
                 return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
             })
         }
-        return _.map(this.state.breweries, (b) => {
+        return this.state.breweries.map((b) => {
             counter = counter + 1;
             return (
 
