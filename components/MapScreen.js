@@ -91,7 +91,7 @@ export class MapScreen extends React.Component {
                         color={"rgb(66,137,244)"}
                         visible={this.state.loading}
                  />
-                <View style={{flex: 1, backgroundColor:'white'}}>
+                <View style={{flex: 1, backgroundColor:'white', flexDirection:'column'}}>
                     {global.mapVisible && this.state.lat != null && this.state.lng != null && this.state.lat != 0 &&
                       <MapView style={styles.map}
 
@@ -391,6 +391,9 @@ const styles = StyleSheet.create({
   },
   selectedFilters: {
       position: 'absolute',
+      marginTop: 60,
+      marginLeft: 15,
+      marginRight: 15,
       flex: 1,
       flexDirection: 'row',
       flexWrap: 'wrap',
@@ -400,10 +403,14 @@ const styles = StyleSheet.create({
   selectedFilterBox: {
       flex: 1, 
       flexDirection: 'row', 
-      minWidth: 90, 
-      maxWidth: 95, 
+      minWidth: 100, 
+      maxWidth: 105, 
+      marginLeft: 2,
+      marginRight: 2,
+      marginBottom: 5,
       height: 25,
       backgroundColor: "rgba(255, 255, 255, 0.5)",
-      borderRadius: 25
+      borderRadius: 25,
+      justifyContent: 'center'
   }
 })
