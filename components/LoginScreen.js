@@ -99,18 +99,21 @@ export class LoginScreen extends React.Component {
                   onPress={this.login.bind(this)}>
                   <Text style={{color:"#FFF", fontSize:16, fontWeight:'bold'}}>LOGIN</Text>
               </TouchableOpacity>
-              <View>
-                <TouchableOpacity
-                  style={{width:'100%'}}
-                  onPress={() => this.props.navigation.navigate("ResetPassword", {navigation: this.props.navigation})}>
-                  <Text
-                    style={{color:'red', textAlign:'center', marginVertical: 15}}>
-                    Reset Password
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              
             </View>
         </KeyboardAvoidingView>
+
+          <View>
+            <TouchableOpacity
+              style={{width:'100%'}}
+              onPress={() => this.props.navigation.navigate("ResetPassword", {navigation: this.props.navigation})}>
+              <Text
+                style={{color:'red', textAlign:'center', marginVertical: 15}}>
+                Reset Password
+              </Text>
+            </TouchableOpacity>
+          </View>
+
           <View style={{flex:2}}>
               <View>
                   { this.state.loginFailed && <Text style={{color: "#ff0000", textAlign:'center'}}>{this.state.error}</Text>}
