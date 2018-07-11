@@ -41,6 +41,7 @@ export class MapScreen extends React.Component {
         this.state = {
             query: "",
             breweries: [],
+            filters: [],
             lat: 0,
             lng: 0,
             mapVisible: true,
@@ -142,11 +143,18 @@ export class MapScreen extends React.Component {
                                        dropdownStyle = {{flexDirection:'row', height:150}}
                                        dropdownTextStyle={{fontWeight:'bold', fontSize:16, color:'black'}}
                                        options={['Distance', 'Rating', 'Kid Friendly', 'Pet Friendly']}
-                                       onSelect = {(index, value) => {this.filterSelect}}>
+                                       onSelect = {(index, value) => {this._filterSelect(value)}}>
                         <Icon style={{color:"#4286f4"}} name="md-options"/>
                         </ModalDropdown>
                         <Button style={styles.searchButton} title="Search" onPress={this.search.bind(this)}></Button>
                     </View>
+
+                    {this.state.filters.length != 0 && 
+                        <View style={styles.selectedFilters}>
+                            {this.renderSelectedFilters()}                        
+                        </View>
+                    }
+
                 </View>
 
 
@@ -181,8 +189,34 @@ export class MapScreen extends React.Component {
         )
     }
 
-    filterSelect() {
+    _filterSelect(value) {
+        console.log(this.state.filters.indexOf(value));
+        if (this.state.filters.indexOf(value) == -1) {
+            this.state.filters.push(value);
+            this.setState({});
+        }
+    }
 
+    _filterDeselect(value) {
+        this.state.filters = this.state.filters.filter(function(e) { return e !== value });
+        this.setState({});
+    }
+
+    renderSelectedFilters() {
+        if (this.state.filters) {
+            return (
+                _.map(this.state.filters, (val) => {
+                    return (
+                        <View style={styles.selectedFilterBox}>
+                            <Text>{val}</Text>
+                            <TouchableOpacity onPress={() => { this._filterDeselect(val); }}>
+                                <Icon style={{color:"#4286f4", marginLeft: 5}} name="md-close"/>
+                            </TouchableOpacity>
+                        </View>
+                    )
+                })
+            )
+        }
     }
 
     renderMapViewMarkers() {
@@ -348,9 +382,28 @@ const styles = StyleSheet.create({
       marginRight: 15,
       flex: 1,
       display: 'flex',
-      flexDirection: 'row'
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'flex-start'
   },
   searchButton: {
       flex: 15,
+  },
+  selectedFilters: {
+      position: 'absolute',
+      flex: 1,
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start'
+  },
+  selectedFilterBox: {
+      flex: 1, 
+      flexDirection: 'row', 
+      minWidth: 90, 
+      maxWidth: 95, 
+      height: 25,
+      backgroundColor: "rgba(255, 255, 255, 0.5)",
+      borderRadius: 25
   }
 })
