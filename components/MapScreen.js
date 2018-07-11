@@ -22,13 +22,11 @@
 import React from 'react';
 import { MapView, Constants, Location, Permissions } from 'expo';
 import { StyleSheet, View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
-import { Footer, Container, Icon, List, ListItem, SwipeRow, Content, Button as BaseButton} from 'native-base';
-import Brewery from '../models/Brewery';
+import { Footer, Container, Icon, List, ListItem, Button as BaseButton} from 'native-base';
 import firebaseApp from '../firebase';
 import FAB from 'react-native-fab';
 import StarRating from 'react-native-star-rating';
-import ModalDropdown from 'react-native-modal-dropdown';
-import { BreweryCard } from './BreweryCard'
+import { BreweryCard } from './BreweryCard';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getBreweries, findLocation, calculateDistance, getLocation } from '../lib/GoogleMapsHelpers';
 
