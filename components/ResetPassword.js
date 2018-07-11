@@ -24,9 +24,9 @@ import { Platform, BackHandler, StyleSheet, Button, Text, TextInput, ViewText, V
 import firebaseApp from '../firebase';
 import { NavigationActions } from 'react-navigation';
 
-export class LoginScreen extends React.Component {
+export class ResetPassword extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-        title: "Login",
+        title: "Reset Password",
         headerStyle:  { backgroundColor: "#2196F3", },
         headerTitleStyle: { color: "#FFFFFF" },
         headerLeft: null,
@@ -37,12 +37,7 @@ export class LoginScreen extends React.Component {
     super(props);
     this.state = {
       email: "",
-      password: "",
-      error: "",
-      loginFailed: false,
-      loginClicked: false,
     };
-    global.main = false;
   }
 
   componentWillMount() {
@@ -70,7 +65,7 @@ export class LoginScreen extends React.Component {
         <View style={{flex:1}}/>
 
         <View style={{flex:1}}>
-          <Text style={styles.logo}>Family Friendly Brewery Trackr</Text>
+          <Text style={styles.logo}>Family Friendly Brewery Tracker</Text>
         </View>
 
 
@@ -87,66 +82,24 @@ export class LoginScreen extends React.Component {
                 autoCapitalize={'none'}
                 />
 
-              <TextInput
-                style={styles.textinput}
-                onChangeText={(password) => this.setState({password})}
-                value={this.state.password}
-                secureTextEntry={true}
-                placeholder="Password" />
-
               <TouchableOpacity
                   style={styles.button}
-                  onPress={this.login.bind(this)}>
-                  <Text style={{color:"#FFF", fontSize:16, fontWeight:'bold'}}>LOGIN</Text>
+                  onPress={this.resetPassword.bind(this)}>
+                  <Text style={{color:"#FFF", fontSize:16, fontWeight:'bold'}}>RESET</Text>
               </TouchableOpacity>
-              <View>
-                <TouchableOpacity
-                  style={{width:'100%'}}
-                  onPress={() => this.props.navigation.navigate("ResetPassword", {navigation: this.props.navigation})}>
-                  <Text
-                    style={{color:'red', textAlign:'center', marginVertical: 15}}>
-                    Reset Password
-                  </Text>
-                </TouchableOpacity>
-              </View>
             </View>
         </KeyboardAvoidingView>
           <View style={{flex:2}}>
               <View>
                   { this.state.loginFailed && <Text style={{color: "#ff0000", textAlign:'center'}}>{this.state.error}</Text>}
               </View>
-              <View>
-                <TouchableOpacity
-                  style={{width:'100%'}}
-                  onPress={() => this.props.navigation.navigate("Register", {navigation: this.props.navigation})}>
-                  <Text
-                    style={{color:'blue', textAlign:'center', marginVertical: 15}}>
-                    Need an account? Click here!
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity
-                  style={{width:'100%'}}
-                  onPress={this.returnToAppHandler.bind(this)}>
-                  <Text
-                    style={{color:'blue', textAlign:'center', marginVertical: 15}}>
-                    Return to application
-                  </Text>
-                </TouchableOpacity>
-              </View>
           </View>
       </View>
     );
   }
 
-  returnToAppHandler() {
-      this.props.navigation.dispatch(NavigationActions.back());
-  }
-
-  login() {
-    this.setState({loginClicked: true, loginFailed: false});
-    var s = firebaseApp.auth().signInWithEmailAndPassword(this.state.email.trim(), this.state.password)
+  resetPassword() {
+    var s = firebaseApp.auth().sendPasswordResetEmail(this.state.email.trim())
       .then(() => {
         if (this.props.navigation.state.params.brewery) {
           this.props.navigation.dispatch(NavigationActions.back());
@@ -157,7 +110,6 @@ export class LoginScreen extends React.Component {
       .catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
-        this.setState({error: errorMessage, loginFailed: true, loginClicked: false});
     });
   }
 }
