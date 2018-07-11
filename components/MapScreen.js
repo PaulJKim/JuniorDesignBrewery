@@ -138,6 +138,13 @@ export class MapScreen extends React.Component {
                                 value={this.state.query}
                         ></TextInput>
                         <View style={{flex: 1}}/>
+                        <ModalDropdown style={{marginRight: 20}}
+                                       dropdownStyle = {{flexDirection:'row', height:150}}
+                                       dropdownTextStyle={{fontWeight:'bold', fontSize:16, color:'black'}}
+                                       options={['Distance', 'Rating', 'Kid Friendly', 'Pet Friendly']}
+                                       onSelect = {(index, value) => {this.filterSelect}}>
+                        <Icon style={{color:"#4286f4"}} name="md-options"/>
+                        </ModalDropdown>
                         <Button style={styles.searchButton} title="Search" onPress={this.search.bind(this)}></Button>
                     </View>
                 </View>
@@ -172,6 +179,10 @@ export class MapScreen extends React.Component {
                 </Footer>
             </Container>
         )
+    }
+
+    filterSelect() {
+
     }
 
     renderMapViewMarkers() {
@@ -336,6 +347,7 @@ const styles = StyleSheet.create({
       marginLeft: 15,
       marginRight: 15,
       flex: 1,
+      display: 'flex',
       flexDirection: 'row'
   },
   searchButton: {

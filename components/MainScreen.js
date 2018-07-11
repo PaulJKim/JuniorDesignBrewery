@@ -72,21 +72,12 @@ export class MainScreen extends React.Component {
                 <Icon name={(global.mapVisible) ? "list" : "md-map"} style={{color: [(navigation.state.params.tab == MAP_TAB) ? 'white' : '#2196F3']}}/>
                 </TouchableOpacity>
 
-                <View style={{flex:1, marginRight: 15}}>
-                {(navigation.state.params.tab !== PROFILE_TAB && navigation.state.params.tab !== FAVORITES_TAB)
-                        && <ModalDropdown dropdownStyle = {{flexDirection:'row', height:127}}
-                        dropdownTextStyle={{fontWeight:'bold', fontSize:16, color:'black'}}
-                        options={['Distance', 'Name', 'Rating']}
-                        onSelect = {(index, value) => {navigation.state.params.sortClick(index)}}>
-                        <Icon style={{paddingLeft: 20, color:"#FFFFFF"}}name="md-more"/>
-                    </ModalDropdown>}
-                </View>
+                
             </View>),
     });
     componentDidMount() {
         // set handler method with setParams
         this.props.navigation.setParams({
-          sortClick: this._sortClick.bind(this),
           tab: this.state.selectedTab,
           parent: this,
         });
@@ -131,15 +122,6 @@ export class MainScreen extends React.Component {
             return true;
         }.bind(this));
     }
-  }
-  _sortClick(index) {
-    if(index == 0)
-        this.setState({sort:"Distance"})
-    else if(index == 1)
-        this.setState({sort:"Alphabetical"})
-    else if(index == 2)
-        this.setState({sort:"Rating"})
-    this.forceUpdate()
   }
 
   signOutUser = async () => {
