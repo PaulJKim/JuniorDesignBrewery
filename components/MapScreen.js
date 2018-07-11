@@ -28,7 +28,6 @@ import Brewery from '../models/Brewery';
 import firebaseApp from '../firebase';
 import FAB from 'react-native-fab';
 import StarRating from 'react-native-star-rating';
-import current_location from '../current_location.png';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { BreweryCard } from './BreweryCard'
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -83,7 +82,6 @@ export class MapScreen extends React.Component {
                           <MapView.Marker
                                   coordinate={{latitude: this.state.curLat, longitude: this.state.curLng}}
                                   name={"Your Location"}
-                                  image={current_location}
                           />
                         }
 
