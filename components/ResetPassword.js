@@ -101,11 +101,7 @@ export class ResetPassword extends React.Component {
   resetPassword() {
     var s = firebaseApp.auth().sendPasswordResetEmail(this.state.email.trim())
       .then(() => {
-        if (this.props.navigation.state.params.brewery) {
-          this.props.navigation.dispatch(NavigationActions.back());
-        } else {
-          this.props.navigation.navigate("Main", {navigation: this.props.navigation});
-        }
+        this.props.navigation.dispatch(NavigationActions.back());
       })
       .catch((error) => {
         var errorCode = error.code;
