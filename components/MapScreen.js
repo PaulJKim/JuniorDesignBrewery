@@ -231,11 +231,6 @@ export class MapScreen extends React.Component {
             );
         });
     }
-
-    mapToggle() {
-        this.setState({mapVisible: !this.state.mapVisible});
-        global.mapVisible = !global.mapVisible;
-    }
 }
 
 const styles = StyleSheet.create({
