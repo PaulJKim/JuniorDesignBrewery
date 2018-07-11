@@ -29,6 +29,7 @@ import geolib from 'geolib'
 import {  Constants, Location, Permissions } from 'expo';
 import { getFavorites } from '../lib/FirebaseHelpers'
 import { BreweryCard } from './BreweryCard'
+import { calculateDistance, getLocation } from '../lib/GoogleMapsHelpers';
 
 
 export class FavoritesScreen extends React.Component {
@@ -44,10 +45,8 @@ export class FavoritesScreen extends React.Component {
         super(props);
         this.state = {
             favorites: null,
-            location: {
-                lng: 0,
-                lat: 0,
-            },
+            curLat: null,
+            curLng: null
         }
         global.main = true;
     }
@@ -56,14 +55,9 @@ export class FavoritesScreen extends React.Component {
         getFavorites().then((favorites) => {
           this.setState({favorites: favorites})
         })
-        this._getLocationAsync()
-    }
-
-    _getLocationAsync = async () => {
-        let { status } = await Permissions.askAsync(Permissions.LOCATION);
-
-        let location = await Location.getCurrentPositionAsync({});
-        this.setState({location: {lat: location.coords.latitude, lng: location.coords.longitude}});
+        getLocation().then((location) => {
+            this.setState({curLat: location.latitude, curLng: location.longitude});
+        });
     }
 
     render() {
@@ -118,9 +112,8 @@ export class FavoritesScreen extends React.Component {
                     curBrew = {fav}
                     curBrewName = {fav.name}
                     navigation = {this.props.navigation}
-                    curBrewDist = {(this.state.location.lat || this.state.location.lng)
-                                  ? '' + Number(geolib.getDistance({latitude: this.state.location.lat, longitude: this.state.location.lng},
-                                  {latitude: fav.latitude, longitude: fav.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
+                    curBrewDist = {(this.state.curLat || this.state.curLng)
+                                  ? '' + Number(calculateDistance(this.state.curLat, this.state.curLng, fav.latitude, fav.longitude)).toFixed(2) + ' miles': ' no location data'}
                     location = {fav.city + ', ' + fav.state}
                     curBrewRating = {fav.rating}
                   />
