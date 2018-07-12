@@ -29,6 +29,7 @@ import StarRating from 'react-native-star-rating';
 import Review from '../models/Review';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { reportReview, deleteReview, getBreweryReviews, getUsersObject, getFavoriteState, setFavoriteState, isAdmin, isLoggedIn } from '../lib/FirebaseHelpers';
+import { ReviewCard } from './ReviewCard';
 
 export class BreweryScreen extends React.Component {
 
@@ -299,7 +300,7 @@ export class BreweryScreen extends React.Component {
                 </View>
               }
 
-              {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View style={{marginBottom:20}}>
+              {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View style={{flexDirection: 'column', marginBottom:20, width: '100%'}}>
 
                   ///photos and User reviews
 
@@ -333,7 +334,7 @@ export class BreweryScreen extends React.Component {
                   <View style={{flexDirection:'row', width:'100%'}}>
                       <Text style={styles.radio_title_top}>User Reviews </Text>
                   </View>
-                  <View>{this.renderContent()}</View>
+                  <View style={{width:'100%'}}>{this.renderContent()}</View>
               </View>
             }
 
@@ -381,7 +382,7 @@ export class BreweryScreen extends React.Component {
         return (
             <List style={styles.listStyle}>
                 <List>
-                    {this.renderReviewsList()}
+                    {this.renderReviewCardsList()}
                 </List>
             </List>
         );
@@ -451,9 +452,18 @@ export class BreweryScreen extends React.Component {
 
               // Check to see if review is set to visible
                 return (
-                    <ReviewCard>
-
-                    </ReviewCard>
+                    <ReviewCard
+                        user = {this.state.userData[rev.userId]}
+                        userProfPic = {this.state.userData[rev.userId].image ?
+                                      <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri: this.state.userData[rev.userId].image}}/>
+                                      :
+                                      <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')}/>
+                                      }
+                        userNam = {this.state.userData[rev.userId].username}
+                        review = {rev}
+                        overallRat = {rev.overallRating}
+                        comm = {rev.comments}
+                    />
                 );
             });
         } else if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible) {
