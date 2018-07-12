@@ -20,7 +20,7 @@
 */
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { Footer, Container, Icon, List, ListItem } from 'native-base';
+import { Footer, Container, Icon, List, ListItem, CheckBox } from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
 import firebaseApp from '../firebase';
@@ -118,19 +118,194 @@ export class BreweryScreen extends React.Component {
                         visible={this.state.reviews == null}
                         textStyle={{color: '#000000'}} />
             <ScrollView style={{backgroundColor: '#fff'}}>
-            <Image
-                    style={{width: '100%', height: 200}}
-                    source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
-                />
+
             <View style={styles.container}>
                 <Text style={styles.title}>{this.state.brewery.name}</Text>
+                <Text style={styles.subtitle}>City, ST</Text>
+                <Image
+                    style={{width: 125, height: 125, borderRadius: 5}}
+                    source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
+                />
+                <StarRating
+                            disabled={true}
+                            maxStars={5}
+                            rating={this.state.revsAvg.overallRating}
+                            fullStarColor={'#4D97E1'}
+                            starSize={25}
+                            containerStyle={{marginTop: 15, marginBottom: 15}}
+                        />
+
+
+                <View style={{flexDirection:'row'}}>
+
+                    //////////
+                    //left column
+                    /////////
+                    <View style={{flex:1, marginRight: 12, justifyContent:'space-between'}}>
+                        ///////
+                        //children & Accessibility
+                        ///////
+                        <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                                <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                  <Text style={{fontSize:10}}> Children & Accessibility </Text>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
+                                    <Text style={{flex:3,fontSize:10}}> Stroller Kids </Text>
+                                    <View style={{ flex:1}}>
+                                        <CheckBox style={{checkboxSize: 15}} checked={this.state.strollerKids} onPress = {() => this.setState({strollerKids: !this.state.strollerKids})} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                        <Text style={{flex:3,fontSize:10}}> K - 6 </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.kThroughSix} onPress = {() => this.setState({kThroughSix: !this.state.kThroughSix})} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Teenagers </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.teenagers} onPress = {() => this.setState({teenagers: !this.state.teenagers})} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Changing Tables </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.hasChangingTables} onPress = {() => this.setState({hasChangingTables: !this.state.hasChangingTables})} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Family Restrooms </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.hasFamilyRestroom} onPress = {() => this.setState({hasFamilyRestroom: !this.state.hasFamilyRestroom})} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Wheelchair Access </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.isWheelchairAccessible} onPress = {() => this.setState({isWheelchairAccessible: !this.state.isWheelchairAccessible})} />
+                                    </View>
+                                </View>
+                        </View>
+                        ////////
+                        //food
+                        ////////
+                        <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                            <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                <Text style={{fontSize:10}}> Food </Text>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
+                                <Text style={{flex:3, fontSize:10, marginTop:3}}> Food </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.overallFood} onPress = {() => this.setState({overallFood: !this.state.overallFood})} />
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Food Diversity</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.foodOptionDiversity}
+                                    selectedStar={(rating) => this.setState({foodOptionDiversity: rating})}
+                                    fullStarColor={'#eaaa00'}
+                                    //containerStyle={{width: '30%'}}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3}}>
+                                <Text style={{flex:3, fontSize:10, marginTop:3}}> Non-Alcoholic Drinks </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.nonAlcoholicOptions} onPress = {() => this.setState({nonAlcoholicOptions: !this.state.nonAlcoholicOptions})} />
+                                </View>
+                            </View>
+                        </View>
+
+                    </View>
+
+                    //////////
+                    //right column
+                    ////////
+                    <View style={{flex:1, justifyContent:'space-between'}}>
+                        /////////
+                        //4x4 visual icons
+                        ////////
+                        <View style={{height:100, backgroundColor: 'red', marginTop: 5}}>
+                        </View>
+
+                        //////////
+                        //environment
+                        //////////
+                        <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                            <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                <Text style={{fontSize:10}}> Environment </Text>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                <Text style={{flex:3, fontSize:10}}> Smoking Allowed </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.isSmokingPermitted} onPress = {() => this.setState({isSmokingPermitted: !this.state.isSmokingPermitted})} />
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Seating </Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.seatingArrangements}
+                                    selectedStar={(rating) => this.setState({seatingArrangements: rating})}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Safety</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.safety}
+                                    selectedStar={(rating) => this.setState({safety: rating})}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4}}>
+                                <Text style={{flex:3, fontSize:10}}> Pet Friendly </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.petFriendly} onPress = {() => this.setState({petFriendly: !this.state.petFriendly})}/>
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Cleanliness</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.cleanliness}
+                                    selectedStar={(rating) => this.setState({cleanliness: rating})}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Sound Level</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.soundLevel}
+                                    selectedStar={(rating) => this.setState({soundLevel: rating})}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Parking </Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.parking}
+                                    selectedStar={(rating) => this.setState({parking: rating})}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                        </View>
+
+                    </View>
+
+
+                </View>
                 {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View>
                     <Text style={styles.radio_title_top}>{'\n'}Overall Rating</Text>
                     <StarRating
                                 disabled={true}
                                 maxStars={5}
                                 rating={this.state.revsAvg.overallRating}
-                                fullStarColor={'#eaaa00'}
+                                fullStarColor={'#4D97E1'}
                                 starSize={20}
                                 containerStyle={{width: '25%'}}
                             />
@@ -480,6 +655,7 @@ export class BreweryScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
+    alignItems:'center',
     marginLeft: 10,
     marginRight: 10,
     marginTop: 5,
@@ -489,10 +665,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginBottom: 5,
   },
   subtitle: {
       fontSize: 18,
       fontWeight: 'bold',
+      marginBottom: 5,
   },
   list_item_title: {
       fontWeight: 'bold',
