@@ -136,7 +136,7 @@ export class BreweryScreen extends React.Component {
                         />
 
 
-                <View style={{flexDirection:'row'}}>
+                {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View style={{flexDirection:'row'}}>
 
                     //////////
                     //left column
@@ -296,199 +296,47 @@ export class BreweryScreen extends React.Component {
                         </View>
 
                     </View>
-
-
                 </View>
-                {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View>
-                    <Text style={styles.radio_title_top}>{'\n'}Overall Rating</Text>
-                    <StarRating
-                                disabled={true}
-                                maxStars={5}
-                                rating={this.state.revsAvg.overallRating}
-                                fullStarColor={'#4D97E1'}
-                                starSize={20}
-                                containerStyle={{width: '25%'}}
-                            />
+              }
 
-                    <Text style={styles.radio_title_top}>{'\n'}Overall Kid Friendliness</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.kidFriendly}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    />
-                    <View style={{marginLeft: 10}}>
+              {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View style={{marginBottom:20}}>
 
-                    {!!this.state.revsAvg.strollerKids &&
-                    <View>
-                    <Text style={styles.radio_title}>Stroller Kids</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.strollerKids}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
+                  ///photos and User reviews
 
-                    {!!this.state.revsAvg.kThroughSix &&
-                    <View>
-                    <Text style={styles.radio_title}>K-6</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.kThroughSix}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
 
-                    {!!this.state.revsAvg.teenagers &&
-                    <View>
-                    <Text style={styles.radio_title}>Teenagers</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.teenagers}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
+                  ////////
+                  //image Carousel
+                  ////////
+                  <View style={{flexDirection:'row', width:'100%'}}>
+                      <Text style={styles.radio_title_top}>Photos </Text>
+                  </View>
+                  {
+                  // <Image
+                  //     style={{width:'100%', height:'10%'}}
+                  //     source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
+                  // />
+                  }
 
-                    </View>
-                    <Text style={styles.radio_title_top}>{'\n'}Overall Environment Quality</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.environment}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    />
-                    <View style={{marginLeft: 10}}>
-                    {!!this.state.revsAvg.isSmokingPermitted &&
-                    <View>
-                    <Text style={styles.radio_title}>Smoking (1) restricted (5) prevalent</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.isSmokingPermitted}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-                    {!!this.state.revsAvg.seatingArrangements &&
-                    <View>
-                    <Text style={styles.radio_title}>Seating Arrangements</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.seatingArrangements}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
+                  <View style={{width:'100%', height:'10%'}}>
+                      <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        scrollEventThrottle={10}
+                        pagingEnabled>
+                              <Image
+                                  source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
+                              />
 
-                    {!!this.state.revsAvg.safety &&
-                    <View>
-                    <Text style={styles.radio_title}>Safety</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.safety}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
+                      </ScrollView>
+                  </View>
 
-                    {!!this.state.revsAvg.petFriendly &&
-                    <View>
-                    <Text style={styles.radio_title}>Pet Friendliness</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.petFriendly}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
+                  <View style={{flexDirection:'row', width:'100%'}}>
+                      <Text style={styles.radio_title_top}>User Reviews </Text>
+                  </View>
+                  <View>{this.renderContent()}</View>
+              </View>
+            }
 
-                    {!!this.state.revsAvg.cleanliness &&
-                    <View>
-                    <Text style={styles.radio_title}>Cleanliness</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.cleanliness}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-
-                    {!!this.state.revsAvg.soundLevel &&
-                    <View>
-                    <Text style={styles.radio_title}>Sound Level</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.soundLevel}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-                    </View>
-                    <Text style={styles.radio_title_top}>{'\n'}Overall Food Quality</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.overallFood}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    />
-                    <View style={{marginLeft: 10}}>
-                    {!!this.state.revsAvg.foodOptionDiversity &&
-                    <View>
-                    <Text style={styles.radio_title}>Food Option Diversity</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.foodOptionDiversity}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-                    {!!this.state.revsAvg.nonAlcoholicOptions &&
-                    <View>
-                    <Text style={styles.radio_title}>Non Alcoholic Options</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.nonAlcoholicOptions}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-                    </View>
-                    <Text style={styles.radio_title_top}>{'\n'}Logistics</Text>
-                    <Text style={styles.radio_title}>
-                    <Text>Enough changing tables:</Text>
-                    <Text style={{fontWeight:'bold'}}> {(this.state.revsAvg.hasChangingTables >= .5) ? 'Yes' : 'No'} </Text>
-                    </Text>
-                    <Text style={styles.radio_title}>
-                    <Text>Family restroom availability:</Text>
-                    <Text style={{fontWeight:'bold'}}> {(this.state.revsAvg.hasFamilyRestroom >= .5) ? 'Yes' : 'No'}</Text>
-                    </Text>
-                    <Text style={styles.radio_title}>
-                    <Text>Wheelchair accessible:</Text>
-                    <Text style={{fontWeight:'bold'}}> {(this.state.revsAvg.isWheelchairAccessible >= .5) ? 'Yes' : 'No'}</Text>
-                    </Text>
-                    <Text style={styles.radio_title_top}>Reviews:</Text>
-                    </View>
-                }
-                <View>{this.renderContent()}</View>
             </View>
             </ScrollView>
 
@@ -588,6 +436,24 @@ export class BreweryScreen extends React.Component {
                             </View>
                         </TouchableOpacity>
                     </ListItem>
+                );
+            });
+        } else if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible) {
+            return (
+                <Text style={{textAlign: 'center'}}>No Reviews Yet!</Text>
+            )
+        }
+    }
+
+    renderReviewCardsList() {
+        if (this.state.reviews != null && this.state.reviews.length > 0 && this.state.userData != null) {
+            return _.map(this.state.reviews, (rev) => {
+
+              // Check to see if review is set to visible
+                return (
+                    <ReviewCard>
+
+                    </ReviewCard>
                 );
             });
         } else if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible) {
