@@ -33,9 +33,9 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import { BreweryCard } from './BreweryCard'
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getBreweryReviews } from '../lib/FirebaseHelpers';
+import { getAllCurrentReviews } from '../lib/FilterHelpers';
 
-var breweriesOldState = [];
-
+var reviewsMap = {};
 export class MapScreen extends React.Component {
     breweries;
 
@@ -202,7 +202,8 @@ export class MapScreen extends React.Component {
         )
     }
 
-    findFilterResult(filter, reviews) {
+    // Method for processing filter result
+    shouldBeFiltered(filter, reviews) {
         if (filter === 'Strollers') {
             var count = 0;
 
@@ -212,7 +213,7 @@ export class MapScreen extends React.Component {
                 }
             });
 
-            return (count/reviews.length) < .5;
+            return (count/reviews.length) > .5;
         } else if (filter === 'Rating') {
             var ratingTotal = 0;
 
@@ -220,40 +221,40 @@ export class MapScreen extends React.Component {
                 ratingTotal = ratingTotal + review.overallRating;
             });
 
-            console.log(ratingTotal/reviews.length);
-            return (ratingTotal/reviews.length) < 4.5;
+            return (ratingTotal/reviews.length) > 4;
         }
     }
 
+    // Handler for selecting a filter
     _filterSelect(value) {
         if (this.state.filters.indexOf(value) == -1) {
             this.state.filters.push(value);
-            breweriesOldState = this.state.breweries;
-            var breweries = this.state.breweries;
+
+            // References to 'this' for anonymous contexts 
             var filters = this.state.filters;
-            var findFilterResult = this.findFilterResult;
+            var currentBreweries = this.state.breweries;
+            var shouldBeFiltered = this.shouldBeFiltered;
+            var filteredBreweries = [];
 
-            _.each(breweries, function(brewery) {
-                getBreweryReviews(brewery.placeId).then(reviews => {
-                    _.each(filters, function(filter) {
-                        var filteredOut = findFilterResult(filter, reviews);
-
-                        if (filteredOut)  {
-                            breweries = _.filter(breweries, function(breweryToFilter) {
-                                return breweryToFilter.name === brewery.name;
-                            })
+            _.each(filters, function(filter) {
+                _.each(currentBreweries, function(breweryToKeep) {
+                    getBreweryReviews(breweryToKeep.placeId).then(reviews => {
+                        if (shouldBeFiltered(filter, reviews)) {
+                            filteredBreweries.push(breweryToKeep);
                         }
                     });
                 });
             });
 
-            this.setState({breweries: breweries});
+            console.log(filteredBreweries);
+            this.setState({breweries: filteredBreweries});
         }
     }
 
+    // Handler for deselecting a filter
     _filterDeselect(value) {
         this.state.filters = this.state.filters.filter(function(e) { return e !== value });
-        this.setState({breweries: breweriesOldState});
+        this.setState({});
     }
 
     renderSelectedFilters() {
