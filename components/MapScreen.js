@@ -203,7 +203,7 @@ export class MapScreen extends React.Component {
     }
 
     // Method for processing filter result
-    shouldBeFiltered(filter, reviews) {
+    passFilter(filter, reviews) {
         if (filter === 'Strollers') {
             var count = 0;
 
@@ -233,13 +233,13 @@ export class MapScreen extends React.Component {
             // References to 'this' for anonymous contexts 
             var filters = this.state.filters;
             var currentBreweries = this.state.breweries;
-            var shouldBeFiltered = this.shouldBeFiltered;
+            var passFilter = this.passFilter;
             var filteredBreweries = [];
 
             _.each(filters, function(filter) {
                 _.each(currentBreweries, function(breweryToKeep) {
                     getBreweryReviews(breweryToKeep.placeId).then(reviews => {
-                        if (shouldBeFiltered(filter, reviews)) {
+                        if (passFilter(filter, reviews)) {
                             filteredBreweries.push(breweryToKeep);
                         }
                     });
