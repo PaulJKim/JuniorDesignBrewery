@@ -32,6 +32,9 @@ import current_location from '../current_location.png';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { BreweryCard } from './BreweryCard'
 import Spinner from 'react-native-loading-spinner-overlay';
+import { getBreweryReviews } from '../lib/FirebaseHelpers';
+
+var breweriesOldState = [];
 
 export class MapScreen extends React.Component {
     breweries;
@@ -110,8 +113,18 @@ export class MapScreen extends React.Component {
                             ></MapView.Marker>
 
                       </MapView>}
-                    {!global.mapVisible &&
+                    {!global.mapVisible && this.state.filters.length == 0 &&
                         <ScrollView style={{marginTop: 60}}>
+                        <List style={styles.listStyle}>
+                                {this.renderListView()}
+                            <List>
+                            </List>
+                        </List>
+                        </ScrollView>
+                    }
+
+                    {!global.mapVisible && this.state.filters.length != 0 &&
+                        <ScrollView style={{marginTop: 90}}>
                         <List style={styles.listStyle}>
                                 {this.renderListView()}
                             <List>
@@ -142,7 +155,7 @@ export class MapScreen extends React.Component {
                         <ModalDropdown style={{marginRight: 20}}
                                        dropdownStyle = {{flexDirection:'row', height:150}}
                                        dropdownTextStyle={{fontWeight:'bold', fontSize:16, color:'black'}}
-                                       options={['Distance', 'Rating', 'Kid Friendly', 'Pet Friendly']}
+                                       options={['Distance', 'Rating', 'Strollers', 'K-6', 'Teens Allowed', 'Pet Friendly']}
                                        onSelect = {(index, value) => {this._filterSelect(value)}}>
                         <Icon style={{color:"#4286f4"}} name="md-options"/>
                         </ModalDropdown>
@@ -189,17 +202,58 @@ export class MapScreen extends React.Component {
         )
     }
 
+    findFilterResult(filter, reviews) {
+        if (filter === 'Strollers') {
+            var count = 0;
+
+            _.each(reviews, function(review) {
+                if (review.StrollerKids) {
+                    count = count + 1;
+                }
+            });
+
+            return (count/reviews.length) < .5;
+        } else if (filter === 'Rating') {
+            var ratingTotal = 0;
+
+            _.each(reviews, function(review) {
+                ratingTotal = ratingTotal + review.overallRating;
+            });
+
+            console.log(ratingTotal/reviews.length);
+            return (ratingTotal/reviews.length) < 4.5;
+        }
+    }
+
     _filterSelect(value) {
-        console.log(this.state.filters.indexOf(value));
         if (this.state.filters.indexOf(value) == -1) {
             this.state.filters.push(value);
-            this.setState({});
+            breweriesOldState = this.state.breweries;
+            var breweries = this.state.breweries;
+            var filters = this.state.filters;
+            var findFilterResult = this.findFilterResult;
+
+            _.each(breweries, function(brewery) {
+                getBreweryReviews(brewery.placeId).then(reviews => {
+                    _.each(filters, function(filter) {
+                        var filteredOut = findFilterResult(filter, reviews);
+
+                        if (filteredOut)  {
+                            breweries = _.filter(breweries, function(breweryToFilter) {
+                                return breweryToFilter.name === brewery.name;
+                            })
+                        }
+                    });
+                });
+            });
+
+            this.setState({breweries: breweries});
         }
     }
 
     _filterDeselect(value) {
         this.state.filters = this.state.filters.filter(function(e) { return e !== value });
-        this.setState({});
+        this.setState({breweries: breweriesOldState});
     }
 
     renderSelectedFilters() {
