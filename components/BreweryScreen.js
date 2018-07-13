@@ -454,15 +454,8 @@ export class BreweryScreen extends React.Component {
                 return (
                     <ReviewCard
                         user = {this.state.userData[rev.userId]}
-                        userProfPic = {this.state.userData[rev.userId].image ?
-                                      <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri: this.state.userData[rev.userId].image}}/>
-                                      :
-                                      <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')}/>
-                                      }
-                        userNam = {this.state.userData[rev.userId].username}
                         review = {rev}
-                        overallRat = {rev.overallRating}
-                        comm = {rev.comments}
+                        navigation = {this.props.navigation}
                     />
                 );
             });
