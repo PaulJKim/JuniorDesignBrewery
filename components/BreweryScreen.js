@@ -138,14 +138,17 @@ export class BreweryScreen extends React.Component {
 
 
                 {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View style={{flexDirection:'row'}}>
-
+                    {
                     //////////
                     //left column
                     /////////
+                    }
                     <View style={{flex:1, marginRight: 12, justifyContent:'space-between'}}>
+                        {
                         ///////
                         //children & Accessibility
                         ///////
+                        }
                         <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
                                 <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
                                   <Text style={{fontSize:10}}> Children & Accessibility </Text>
@@ -187,9 +190,11 @@ export class BreweryScreen extends React.Component {
                                     </View>
                                 </View>
                         </View>
+                        {
                         ////////
                         //food
                         ////////
+                        }
                         <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
                             <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
                                 <Text style={{fontSize:10}}> Food </Text>
@@ -220,33 +225,40 @@ export class BreweryScreen extends React.Component {
 
                     </View>
 
+                    {
                     //////////
                     //right column
                     ////////
+                    }
                     <View style={{flex:1, justifyContent:'space-between'}}>
+                        {
                         /////////
                         //4x4 visual icons
                         ////////
+                        }
                         <View style={{flexDirection: 'row', height:100, marginTop: 5}}>
                             <View style={{flex:1, flexDirection: 'column', width:'100%'}}>
-                                <View style={{flex:1}}>
-                                    <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined}} source={require('../resources/dog.png')} />
+                                <View style={{flex:1, marginBottom: 5}}>
+                                    <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/dog.png')} />
                                 </View>
-                                <View style={{flex:1}}>
-                                    <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined}} source={require('../resources/disability.png')} />
+                                <View style={{flex:1, marginBottom: 5}}>
+                                    <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/disability.png')} />
                                 </View>
                             </View>
                             <View style={{flex:1, flexDirection: 'column', width:'100%'}}>
-                                <View style={{flex:1}}>
+                                <View style={{flex:1, marginBottom: 5}}>
+                                    <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode:'contain'}} source={require('../resources/hamburger.png')} />
                                 </View>
                                 <View style={{flex:1}}>
                                 </View>
                             </View>
                         </View>
 
+                        {
                         //////////
                         //environment
                         //////////
+                        }
                         <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
                             <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
                                 <Text style={{fontSize:10}}> Environment </Text>
@@ -316,21 +328,17 @@ export class BreweryScreen extends React.Component {
 
               {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View style={{flexDirection: 'column', marginBottom:20, width: '100%'}}>
 
+                  {
                   ///photos and User reviews
 
 
                   ////////
                   //image Carousel
                   ////////
+                  }
                   <View style={{flexDirection:'row', width:'100%'}}>
                       <Text style={styles.radio_title_top}>Photos </Text>
                   </View>
-                  {
-                  // <Image
-                  //     style={{width:'100%', height:'10%'}}
-                  //     source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
-                  // />
-                  }
 
                   <View style={{width:'100%', height:'10%'}}>
                       <ScrollView
@@ -406,7 +414,6 @@ export class BreweryScreen extends React.Component {
         if (this.state.reviews != null && this.state.reviews.length > 0 && this.state.userData != null) {
             return _.map(this.state.reviews, (rev) => {
 
-            	// Check to see if review is set to visible
                 return (
                     <ListItem key={new Date().getTime()}>
                         <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ReviewView", {navigation: this.props.navigation, review: rev})}>
@@ -464,7 +471,6 @@ export class BreweryScreen extends React.Component {
         if (this.state.reviews != null && this.state.reviews.length > 0 && this.state.userData != null) {
             return _.map(this.state.reviews, (rev) => {
 
-              // Check to see if review is set to visible
                 return (
                     <ReviewCard
                         user = {this.state.userData[rev.userId]}
