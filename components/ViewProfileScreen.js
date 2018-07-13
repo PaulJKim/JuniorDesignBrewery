@@ -79,8 +79,13 @@ export class ViewProfileScreen extends React.Component {
                         </Text>
 
                         <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pet" :
-                            this.state.user.num_pet == 1 ? "1 Pet" : this.state.user.num_pet + " Pet"}
+                            this.state.user.num_pet == 1 ? "1 Pet" : this.state.user.num_pet + " Pets"}
                         </Text>
+
+                        <Text style={[styles.subtitle_style]}>{(this.state.user.reviews == 0) ? "No Reviews Yet" :
+                            this.state.user.reviews == 1 ? "1 Review" : this.state.user.reviews + " Reviews"}
+                        </Text>
+
 
                         <View style={{marginBottom: 10}}/>
                         </LinearGradient>

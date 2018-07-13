@@ -97,8 +97,12 @@ export class ProfileScreen extends React.Component {
                             this.state.user.num_children == 1 ? "1 Child" : this.state.user.num_children + " Children"}
                         </Text>
                         <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pet" :
-                            this.state.user.num_pet == 1 ? "1 Child" : this.state.user.num_pet + " pet"}
+                            this.state.user.num_pet == 1 ? "1 Pet" : this.state.user.num_pet + " pet"}
                         </Text>
+                        <Text style={[styles.subtitle_style]}>{(this.state.user.reviews == 0) ? "No Reviews Yet!" :
+                            this.state.user.reviews == 1 ? "1 Review" : this.state.user.reviews + " Reviews"}
+                        </Text>
+
                         <View style={{marginBottom: 10}}/>
                         </LinearGradient>
                     </View>
