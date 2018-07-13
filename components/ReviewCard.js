@@ -6,7 +6,7 @@ import StarRating from 'react-native-star-rating';
 export class ReviewCard extends React.Component {
     render() {
         return (
-            <View style = {{borderRadius:5, borderWidth: 1, padding: 5}}>
+            <View style = {{borderRadius:5, borderWidth: 1, padding: 5, marginBottom: 10}}>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate("ReviewView", {navigation: this.props.navigation, review: this.props.review})}>
                     {
                         this.props.breweryName &&
