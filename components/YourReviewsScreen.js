@@ -52,7 +52,7 @@ export class YourReviewsScreen extends React.Component {
             this.setState({user: userData});
         });
     }
-    
+
     _getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
@@ -69,9 +69,9 @@ export class YourReviewsScreen extends React.Component {
     render() {
         return (
             <Container>
-            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"} 
+            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                         color={"rgb(66,137,244)"}
-                        visible={this.state.reviews == null} 
+                        visible={this.state.reviews == null}
                         textStyle={{color: '#000000'}} />
             <View style={{flex: 1, backgroundColor:'white'}}>
                 {this.renderContent()}
@@ -84,7 +84,7 @@ export class YourReviewsScreen extends React.Component {
     }
 
     renderContent() {
-        if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible) {
+        if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible && this.state.user) {
             return(
                 <View style={{height:'100%', width:'100%', alignContent:'center', alignItems:'center', backgroundColor:'white', display:'flex'}}>
                 <View style={{flex:1}}/>
@@ -92,13 +92,15 @@ export class YourReviewsScreen extends React.Component {
                 </View>
             )
         }
-        return (
-            <ScrollView>
-                <List style={styles.listStyle}>
-                    {this.renderFavoritesList()}
-                </List>
-            </ScrollView>
-        );
+        if(this.state.user) {
+          return (
+              <ScrollView>
+                  <List style={styles.listStyle}>
+                      {this.renderFavoritesList()}
+                  </List>
+              </ScrollView>
+          );
+        }
     }
 
     renderFavoritesList() {
@@ -117,7 +119,7 @@ export class YourReviewsScreen extends React.Component {
                     var y = t.state.location.lng;
                     var dist1 = geolib.getDistance({latitude: x, longitude: y}, {latitude: a.latitude, longitude: a.longitude});
                     var dist2 = geolib.getDistance({latitude: x, longitude: y}, {latitude: b.latitude, longitude: b.longitude});
-                    return (dist1 < dist2) ? -1 : (dist1 > dist2) ? 1 : 0;               
+                    return (dist1 < dist2) ? -1 : (dist1 > dist2) ? 1 : 0;
                 })
             } else if(this.props.sort === "Rating") {
                 this.state.reviews.sort(function(a, b){
@@ -130,15 +132,15 @@ export class YourReviewsScreen extends React.Component {
                 return (
                     /*
                         <ListItem key={this.hashCode(fav.breweryName)}>
-                            <TouchableOpacity 
+                            <TouchableOpacity
                                 onPress={() => this.props.navigation.navigate("ReviewView", {navigation: this.props.navigation, review: fav})}>
                                 <Text style={{width: '100%'}}>
                                 {fav.breweryName}
                                 </Text>
                                 <Text style={{width:'100%', color:'gray', fontSize:11}}>
-                                Distance:   
-                                    {(this.state.location.lat || this.state.location.lng) 
-                                    ? ' ' + Number(geolib.getDistance({latitude: this.state.location.lat, longitude: this.state.location.lng}, 
+                                Distance:
+                                    {(this.state.location.lat || this.state.location.lng)
+                                    ? ' ' + Number(geolib.getDistance({latitude: this.state.location.lat, longitude: this.state.location.lng},
                                     {latitude: fav.latitude, longitude: fav.longitude}) * 0.000621371).toFixed(2) + ' miles': ' no location data'}
                                 </Text>
                                 <StarRating
@@ -151,7 +153,7 @@ export class YourReviewsScreen extends React.Component {
                             </TouchableOpacity>
                         </ListItem>
                         */
-                    <ReviewCard 
+                    <ReviewCard
                         review = {fav}
                         user = {this.state.user}
                         breweryName = {fav.breweryName}

@@ -30,12 +30,12 @@ import { getReportedReviews, isAdmin, getUsersObject, approveReview, deleteRevie
 console.disableYellowBox = true;
 
 export class ReportedReviews extends React.Component {
-    
+
     static navigationOptions = ({ navigation }) => ({
         title: "Reported Reviews",
         headerStyle:  { backgroundColor: "#2196F3", },
         headerTitleStyle: { color: "#FFFFFF" },
-        headerTintColor: "white", 
+        headerTintColor: "white",
     });
 
     constructor(props) {
@@ -43,7 +43,7 @@ export class ReportedReviews extends React.Component {
         this.state = {
             isAdmin: false,
             userData: null,
-            reviews: null         
+            reviews: null
         }
     }
 
@@ -63,16 +63,16 @@ export class ReportedReviews extends React.Component {
     render() {
         return (
             <View style={{height: '100%'}}>
-            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"} 
+            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                         color={"rgb(66,137,244)"}
-                        visible={this.state.reviews == null} 
+                        visible={this.state.reviews == null}
                         textStyle={{color: '#000000'}} />
             <ScrollView style={{backgroundColor: '#fff'}}>
-            <View style={styles.container}>               
+            <View style={styles.container}>
                 <View>{this.renderContent()}</View>
             </View>
             </ScrollView>
-            </View>  
+            </View>
         )
     }
 
@@ -95,7 +95,11 @@ export class ReportedReviews extends React.Component {
                     <ListItem key={new Date().getTime()}>
                         <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ReviewView", {navigation: this.props.navigation, review: rev})}>
                             <View style={{flex: 1, paddingTop: 7, paddingRight: 10}}>
-                                <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri:'data:image/png;base64,' + this.state.userData[rev.userId].avatar.join('')}}></Image>
+                                {this.state.userData[rev.userId].image ?
+                                        <Image style={{height: 50, width: 50, borderRadius: 100}} source={{ uri: this.state.userData[rev.userId].image}} />
+                                    :
+                                        <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')} />
+                                }
                             </View>
                             <View style={{flex: 5}}>
                                 <Text style={styles.list_item_title}>{rev.username}</Text>
@@ -123,7 +127,7 @@ export class ReportedReviews extends React.Component {
                         </TouchableOpacity>
                     </ListItem>
                 );
-            }); 
+            });
         } else if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible) {
             return (
                 <Text style={{textAlign: 'center'}}>No Reported Reviews Yet!</Text>
