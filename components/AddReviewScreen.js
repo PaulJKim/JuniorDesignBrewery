@@ -19,7 +19,7 @@
 * SOFTWARE IS DISCLAIMED.
 */
 import React from 'react';
-import { Platform, StyleSheet, View, Text, TextInput, Image, ScrollView, BackHandler, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, View, Text, TextInput, Image, ScrollView, BackHandler, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { Footer, Container, CheckBox, ListItem, Button, Header, Content, Icon} from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
@@ -293,8 +293,6 @@ export class AddReviewScreen extends React.Component {
                                         </View>
                                 </View>
                             }
-
-
 
                             {
                               //FOOD

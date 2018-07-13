@@ -77,12 +77,13 @@ export class ViewProfileScreen extends React.Component {
                         <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" :
                             this.state.user.num_children == 1 ? "1 Child" : this.state.user.num_children + " Children"}
                         </Text>
+
+                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pet" :
+                            this.state.user.num_pet == 1 ? "1 Pet" : this.state.user.num_pet + " Pet"}
+                        </Text>
+
                         <View style={{marginBottom: 10}}/>
                         </LinearGradient>
-                    </View>
-                    <View style={{width: '100%', padding: 10}}>
-                        <Text style={[styles.subtitle_style2]}>Bio</Text>
-                        <Text style={styles.subtitle_style3}>{this.state.user.description}</Text>
                     </View>
                     <Button
                         title="Report"
