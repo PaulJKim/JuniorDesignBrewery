@@ -35,7 +35,7 @@ export class BreweryCard extends React.Component {
                   />
     							<View style = {{flex: 7, flexDirection: 'column', padding: 5}}>
     									<View style={{flex: 1, flexDirection: 'row'}}>
-    											<Text> {this.props.curBrewName} </Text>
+    											<Text>{this.props.curBrewName} </Text>
     									</View>
     									<View style={{flex: 1, flexDirection: 'row'}}>
     											<StarRating
