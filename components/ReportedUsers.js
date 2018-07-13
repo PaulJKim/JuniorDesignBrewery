@@ -30,12 +30,12 @@ import { getReportedUsers, isAdmin, approveUser, deleteUser } from '../lib/Fireb
 console.disableYellowBox = true;
 
 export class ReportedUsers extends React.Component {
-    
+
     static navigationOptions = ({ navigation }) => ({
         title: "Reported Users",
         headerStyle:  { backgroundColor: "#2196F3", },
         headerTitleStyle: { color: "#FFFFFF" },
-        headerTintColor: "white", 
+        headerTintColor: "white",
     });
 
     constructor(props) {
@@ -55,20 +55,20 @@ export class ReportedUsers extends React.Component {
         });
     }
 
-    render() { 
+    render() {
         return (
             <View style={{height: '100%'}}>
-            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"} 
+            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                         color={"rgb(66,137,244)"}
-                        visible={this.state.users == null} 
+                        visible={this.state.users == null}
                         textStyle={{color: '#000000'}} />
             <ScrollView style={{backgroundColor: '#fff'}}>
             <View style={styles.container}>
-                              
+
                 <View>{this.renderContent()}</View>
             </View>
             </ScrollView>
-            </View>  
+            </View>
         )
     }
 
@@ -91,7 +91,11 @@ export class ReportedUsers extends React.Component {
                     <ListItem key={new Date().getTime()}>
                         <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ProfileView", {id: user.uid})}>
                             <View style={{flex: 1, paddingTop: 7, paddingRight: 10}}>
-                                <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri:'data:image/png;base64,' + user.avatar.join('')}}></Image>
+                                {user.image ?
+                                        <Image style={{height: 50, width: 50, borderRadius: 100}} source={{ uri: user.image}} />
+                                    :
+                                        <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')} />
+                                }
                             </View>
                             <View style={{flex: 5}}>
                                 <Text style={styles.list_item_title}>{user.username}</Text>
@@ -119,7 +123,7 @@ export class ReportedUsers extends React.Component {
                         </TouchableOpacity>
                     </ListItem>
                 );
-            }); 
+            });
         } else if(this.state.users != null && this.state.users.length == 0 && !this.state.spinnerVisible) {
             return (
                 <Text style={{textAlign: 'center'}}>No Reported Users Yet!</Text>

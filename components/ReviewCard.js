@@ -18,7 +18,7 @@ export class ReviewCard extends React.Component {
                                 {this.props.user.image ?
                                         <Image style={{height: 50, width: 50, borderRadius: 100}} source={{ uri: this.props.user.image}} />
                                     :
-                                        <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')} style={styles.image_style} />
+                                        <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')} />
                                 }
                                 <Text>{this.props.user.username}</Text>
                                 <StarRating
