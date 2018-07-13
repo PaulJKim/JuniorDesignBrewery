@@ -19,7 +19,7 @@
 * SOFTWARE IS DISCLAIMED.
 */
 import React from 'react';
-import { Platform, StyleSheet, View, Text, TextInput, Image, ScrollView, BackHandler, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, View, Text, TextInput, Image, ScrollView, BackHandler, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { Footer, Container, CheckBox, ListItem, Button, Header, Content, Icon} from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
@@ -155,75 +155,77 @@ export class AddReviewScreen extends React.Component {
 
                 {
                     this.state.numberedView == 1 &&
-                        <View style ={{alignItems:'center'}} >
-                            <View style={{flexDirection: 'column', alignItems:'center', borderWidth: 1, borderRadius:5}}>
-                            <Text style={styles.radio_final_title}> * Overall Rating</Text>
-                            <StarRating
-                                maxStars={5}
-                                rating={this.state.overallRating}
-                                selectedStar={(rating) => this.setState({overallRating: rating})}
-                                fullStarColor={'#eaaa00'}
-                                //containerStyle={{width: '30%'}}
-                                starSize={30}
-                            />
-                            </View>
-
-                            <View style={{flexDirection: 'column', width:300, borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
-                                    <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
-                                      <Text> Children & Accessibility </Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={{flex:4}}> Stroller Kids </Text>
-                                        <View style={{ flex:1}}>
-                                            <CheckBox checked={this.state.strollerKids} onPress = {() => this.setState({strollerKids: !this.state.strollerKids})} />
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                            <Text style={{flex:4}}> K - 6 </Text>
-                                        <View style={{flex: 1}}>
-                                            <CheckBox checked={this.state.kThroughSix} onPress = {() => this.setState({kThroughSix: !this.state.kThroughSix})} />
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                            <Text style={{flex:4}}> Teenagers </Text>
-                                        <View style={{flex: 1}}>
-                                            <CheckBox checked={this.state.teenagers} onPress = {() => this.setState({teenagers: !this.state.teenagers})} />
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                            <Text style={{flex:4}}> Changing Tables </Text>
-                                        <View style={{flex: 1}}>
-                                            <CheckBox checked={this.state.hasChangingTables} onPress = {() => this.setState({hasChangingTables: !this.state.hasChangingTables})} />
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                            <Text style={{flex:4}}> Family Restrooms </Text>
-                                        <View style={{flex: 1}}>
-                                            <CheckBox checked={this.state.hasFamilyRestroom} onPress = {() => this.setState({hasFamilyRestroom: !this.state.hasFamilyRestroom})} />
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                            <Text style={{flex:4}}> Wheelchair Accessible </Text>
-                                        <View style={{flex: 1}}>
-                                            <CheckBox checked={this.state.isWheelchairAccessible} onPress = {() => this.setState({isWheelchairAccessible: !this.state.isWheelchairAccessible})} />
-                                        </View>
-                                    </View>
-                            </View>
-
-                            <Text style={{fontWeight:'bold'}}>Fields marked * are required </Text>
-                            {this.state.error && <Text style={{color:'red'}}>Please fill out all of the required fields</Text>}
-
-                            <View style={{width:300, borderRadius:5, alignItems:'flex-end', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <View style ={{flex:1}}/>
-                                <View style={{flex:1,alignItems:'center'}}>
-                                    <Text style={{flex:1, alignItems:'center'}}> 1 of 4 </Text>
+                        <View style = {{alignItems: 'center', justifyContent:'center'}}>
+                            <View style ={{alignItems:'center'}} >
+                                <View style={{flexDirection: 'column', alignItems:'center', borderWidth: 1, borderRadius:5}}>
+                                <Text style={styles.radio_final_title}> * Overall Rating</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.overallRating}
+                                    selectedStar={(rating) => this.setState({overallRating: rating})}
+                                    fullStarColor={'#eaaa00'}
+                                    //containerStyle={{width: '30%'}}
+                                    starSize={30}
+                                />
                                 </View>
-                                <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{this.setState({numberedView: 2})}}>
-                                    <Icon
-                                      name="chevron-right"
-                                      type="Entypo"
-                                    />
-                                </TouchableOpacity>
+
+                                <View style={{flexDirection: 'column', width:300, borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                                        <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                          <Text> Children & Accessibility </Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{flex:4}}> Stroller Kids </Text>
+                                            <View style={{ flex:1}}>
+                                                <CheckBox checked={this.state.strollerKids} onPress = {() => this.setState({strollerKids: !this.state.strollerKids})} />
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                <Text style={{flex:4}}> K - 6 </Text>
+                                            <View style={{flex: 1}}>
+                                                <CheckBox checked={this.state.kThroughSix} onPress = {() => this.setState({kThroughSix: !this.state.kThroughSix})} />
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                <Text style={{flex:4}}> Teenagers </Text>
+                                            <View style={{flex: 1}}>
+                                                <CheckBox checked={this.state.teenagers} onPress = {() => this.setState({teenagers: !this.state.teenagers})} />
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                <Text style={{flex:4}}> Changing Tables </Text>
+                                            <View style={{flex: 1}}>
+                                                <CheckBox checked={this.state.hasChangingTables} onPress = {() => this.setState({hasChangingTables: !this.state.hasChangingTables})} />
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                <Text style={{flex:4}}> Family Restrooms </Text>
+                                            <View style={{flex: 1}}>
+                                                <CheckBox checked={this.state.hasFamilyRestroom} onPress = {() => this.setState({hasFamilyRestroom: !this.state.hasFamilyRestroom})} />
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                <Text style={{flex:4}}> Wheelchair Accessible </Text>
+                                            <View style={{flex: 1}}>
+                                                <CheckBox checked={this.state.isWheelchairAccessible} onPress = {() => this.setState({isWheelchairAccessible: !this.state.isWheelchairAccessible})} />
+                                            </View>
+                                        </View>
+                                </View>
+                                    <View Style = {{height: '25%'}}>
+                                        <Text style={{fontWeight:'bold'}}>Fields marked * are required </Text>
+                                            {this.state.error && <Text style={{color:'red'}}>Please fill out all of the required fields</Text>}
+
+                                            <View style={{width:300, borderRadius:5, alignItems:'flex-end', flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                <View style ={{flex:1}}/>
+                                                <View style={{flex:1,alignItems:'center'}}>
+                                                    <Text style={{flex:1, alignItems:'center'}}> 1 of 4 </Text>
+                                                </View>
+                                                <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{this.setState({numberedView: 2})}}>
+                                                    <Image
+                                                        style={{width: 25, height: 25}}
+                                                        source={require('../resources/chevron.png')} />
+                                                </TouchableOpacity>
+                                            </View>
+                                    </View>
                             </View>
                         </View>
             }
