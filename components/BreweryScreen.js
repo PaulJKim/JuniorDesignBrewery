@@ -227,7 +227,21 @@ export class BreweryScreen extends React.Component {
                         /////////
                         //4x4 visual icons
                         ////////
-                        <View style={{height:100, backgroundColor: 'red', marginTop: 5}}>
+                        <View style={{flexDirection: 'row', height:100, marginTop: 5}}>
+                            <View style={{flex:1, flexDirection: 'column', width:'100%'}}>
+                                <View style={{flex:1}}>
+                                    <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined}} source={require('../resources/dog.png')} />
+                                </View>
+                                <View style={{flex:1}}>
+                                    <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined}} source={require('../resources/disability.png')} />
+                                </View>
+                            </View>
+                            <View style={{flex:1, flexDirection: 'column', width:'100%'}}>
+                                <View style={{flex:1}}>
+                                </View>
+                                <View style={{flex:1}}>
+                                </View>
+                            </View>
                         </View>
 
                         //////////
