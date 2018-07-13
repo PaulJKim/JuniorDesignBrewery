@@ -143,305 +143,278 @@ export class AddReviewScreen extends React.Component {
     render() {
         return (
             <View style={{height:'100%', width:'100%', backgroundColor:'#FFFFFF'}}>
-            <KeyboardAvoidingView behavior="padding" style={styles.container}>
-            <ScrollView>
-                <View style= {{alignItems: 'center'}}>
-                <Text style={styles.title}>{this.state.breweryName}</Text>
-                <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
-                        color={"rgb(66,137,244)"}
-                        visible={this.state.spinnerVisible}
-                        textStyle={{color: '#000000'}} />
-
-
-                {
-                    this.state.numberedView == 1 &&
-                        <View style ={{alignItems:'center'}} >
-                            <View style={{flexDirection: 'column', alignItems:'center', borderWidth: 1, borderRadius:5}}>
-                            <Text style={styles.radio_final_title}> * Overall Rating</Text>
-                            <StarRating
-                                maxStars={5}
-                                rating={this.state.overallRating}
-                                selectedStar={(rating) => this.setState({overallRating: rating})}
-                                fullStarColor={'#eaaa00'}
-                                //containerStyle={{width: '30%'}}
-                                starSize={30}
-                            />
+                <KeyboardAvoidingView behavior="padding" style={styles.container}>
+                    <View style={{height:'100%', flexDirection: 'column', alignItems:'center'}}>
+                            <View style={{flex:1, width:'100%', justifyContent: 'center'}}>
+                                <Text style={styles.title}>{this.state.breweryName}</Text>
+                                <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
+                                        color={"rgb(66,137,244)"}
+                                        visible={this.state.spinnerVisible}
+                                        textStyle={{color: '#000000'}} />
                             </View>
 
-                            <View style={{flexDirection: 'column', width:300, borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
-                                    <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
-                                      <Text> Children & Accessibility </Text>
+                            <View style={{flex:2}}>
+                            {
+                                this.state.numberedView == 1 &&
+                                    <View style ={{alignItems:'center'}} >
+                                        <View style={{flexDirection: 'column', alignItems:'center', borderWidth: 1, borderRadius:5}}>
+                                        <Text style={styles.radio_final_title}> * Overall Rating</Text>
+                                        <StarRating
+                                            maxStars={5}
+                                            rating={this.state.overallRating}
+                                            selectedStar={(rating) => this.setState({overallRating: rating})}
+                                            fullStarColor={'#eaaa00'}
+                                            starSize={30}
+                                        />
+                                        </View>
+
+                                        <View style={{flexDirection: 'column', width:300, borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                                                <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                                  <Text> Children & Accessibility </Text>
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                    <Text style={{flex:4}}> Stroller Kids </Text>
+                                                    <View style={{ flex:1}}>
+                                                        <CheckBox checked={this.state.strollerKids} onPress = {() => this.setState({strollerKids: !this.state.strollerKids})} />
+                                                    </View>
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                        <Text style={{flex:4}}> K - 6 </Text>
+                                                    <View style={{flex: 1}}>
+                                                        <CheckBox checked={this.state.kThroughSix} onPress = {() => this.setState({kThroughSix: !this.state.kThroughSix})} />
+                                                    </View>
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                        <Text style={{flex:4}}> Teenagers </Text>
+                                                    <View style={{flex: 1}}>
+                                                        <CheckBox checked={this.state.teenagers} onPress = {() => this.setState({teenagers: !this.state.teenagers})} />
+                                                    </View>
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                        <Text style={{flex:4}}> Changing Tables </Text>
+                                                    <View style={{flex: 1}}>
+                                                        <CheckBox checked={this.state.hasChangingTables} onPress = {() => this.setState({hasChangingTables: !this.state.hasChangingTables})} />
+                                                    </View>
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                        <Text style={{flex:4}}> Family Restrooms </Text>
+                                                    <View style={{flex: 1}}>
+                                                        <CheckBox checked={this.state.hasFamilyRestroom} onPress = {() => this.setState({hasFamilyRestroom: !this.state.hasFamilyRestroom})} />
+                                                    </View>
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                        <Text style={{flex:4}}> Wheelchair Accessible </Text>
+                                                    <View style={{flex: 1}}>
+                                                        <CheckBox checked={this.state.isWheelchairAccessible} onPress = {() => this.setState({isWheelchairAccessible: !this.state.isWheelchairAccessible})} />
+                                                    </View>
+                                                </View>
+                                        </View>
+
+                                        <Text style={{fontWeight:'bold'}}>Fields marked * are required </Text>
+                                        {this.state.error && <Text style={{color:'red'}}>Please fill out all of the required fields</Text>}
                                     </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={{flex:4}}> Stroller Kids </Text>
-                                        <View style={{ flex:1}}>
-                                            <CheckBox checked={this.state.strollerKids} onPress = {() => this.setState({strollerKids: !this.state.strollerKids})} />
+                        }
+
+
+
+                            {
+                              //environment
+                            }
+
+                            {
+                                this.state.numberedView == 2 &&
+                                    <View style={{alignItems:'center'}} >
+                                            <View style={{flexDirection: 'column', width:300, borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                                                <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                                    <Text> Environment </Text>
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                    <Text style={{flex:4}}> Smoking Allowed </Text>
+                                                    <View style={{flex:1}}>
+                                                        <CheckBox checked={this.state.isSmokingPermitted} onPress = {() => this.setState({isSmokingPermitted: !this.state.isSmokingPermitted})} />
+                                                    </View>
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                    <Text style={styles.radio_title}> Seating Arrangements</Text>
+                                                    <StarRating
+                                                        maxStars={5}
+                                                        rating={this.state.seatingArrangements}
+                                                        selectedStar={(rating) => this.setState({seatingArrangements: rating})}
+                                                        fullStarColor={'#eaaa00'}
+                                                        containerStyle={{width: '30%'}}
+                                                        starSize={18}                    />
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                    <Text style={styles.radio_title}> Safety</Text>
+                                                    <StarRating
+                                                        maxStars={5}
+                                                        rating={this.state.safety}
+                                                        selectedStar={(rating) => this.setState({safety: rating})}
+                                                        fullStarColor={'#eaaa00'}
+                                                        containerStyle={{width: '30%'}}
+                                                        starSize={18}                    />
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                    <Text style={{flex:4}}> Pet Friendly </Text>
+                                                    <View style={{flex:1}}>
+                                                        <CheckBox checked={this.state.petFriendly} onPress = {() => this.setState({petFriendly: !this.state.petFriendly})}/>
+                                                    </View>
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                    <Text style={styles.radio_title}> Cleanliness</Text>
+                                                    <StarRating
+                                                        maxStars={5}
+                                                        rating={this.state.cleanliness}
+                                                        selectedStar={(rating) => this.setState({cleanliness: rating})}
+                                                        fullStarColor={'#eaaa00'}
+                                                        containerStyle={{width: '30%'}}
+                                                        starSize={18}                    />
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                    <Text style={styles.radio_title}> Sound Level</Text>
+                                                    <StarRating
+                                                        maxStars={5}
+                                                        rating={this.state.soundLevel}
+                                                        selectedStar={(rating) => this.setState({soundLevel: rating})}
+                                                        fullStarColor={'#eaaa00'}
+                                                        containerStyle={{width: '30%'}}
+                                                        starSize={18}                    />
+                                                </View>
+                                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                    <Text style={styles.radio_title}> Parking </Text>
+                                                    <StarRating
+                                                        maxStars={5}
+                                                        rating={this.state.parking}
+                                                        selectedStar={(rating) => this.setState({parking: rating})}
+                                                        fullStarColor={'#eaaa00'}
+                                                        containerStyle={{width: '30%'}}
+                                                        starSize={18}                    />
+                                                </View>
+                                        </View>
+                                </View>
+                            }
+
+
+
+                            {
+                              //FOOD
+                            }
+
+                            {
+                                this.state.numberedView == 3 &&
+                                <View style = {{alignItems:'center'}}>
+                                    <View style={{flexDirection: 'column', width:300, borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                                        <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                            <Text> Food </Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{flex:4}}> Food </Text>
+                                            <View style={{flex:1}}>
+                                                <CheckBox checked={this.state.overallFood} onPress = {() => this.setState({overallFood: !this.state.overallFood})} />
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={styles.radio_title}> Food Diversity</Text>
+                                            <StarRating
+                                                maxStars={5}
+                                                rating={this.state.foodOptionDiversity}
+                                                selectedStar={(rating) => this.setState({foodOptionDiversity: rating})}
+                                                fullStarColor={'#eaaa00'}
+                                                containerStyle={{width: '30%'}}
+                                                starSize={18}                    />
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{flex:4}}> Non-Alcoholic Options </Text>
+                                            <View style={{flex:1}}>
+                                                <CheckBox checked={this.state.nonAlcoholicOptions} onPress = {() => this.setState({nonAlcoholicOptions: !this.state.nonAlcoholicOptions})} />
+                                            </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                            }
+
+
+
+
+                            {
+                              //LOGISTICS
+                            }
+
+                            {
+                                this.state.numberedView == 4 &&
+                                    <View style={{flexDirection: 'column', width:300, borderRadius:5, marginTop: 10, marginBottom:10}}>
+
+                                        <View style={{width:300, borderRadius:5}}>
+                                            <View style={{backgroundColor: 'pink'}}>
+                                                <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={this.pickImage.bind(this)}>
+                                                    <Icon
+                                                      name="camera"
+                                                      type="Entypo"
+                                                      color='#1DA664'
+                                                    />
+                                                </TouchableOpacity>
+                                            </View>
+
+                                            {
+                                              this.state.image != null &&
+                                              <Image source={{ uri: this.state.image }}  style={styles.image} />
+                                            }
+
+                                            <Text style={styles.radio_title}>Overall Comments:</Text>
+                                            <TextInput
+                                                style={styles.textinput}
+                                                onChangeText={(comments) => this.setState({comments})}
+                                                value={this.state.comments}
+                                                placeholder="Tell us about your visit" />
                                         </View>
                                     </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                            <Text style={{flex:4}}> K - 6 </Text>
-                                        <View style={{flex: 1}}>
-                                            <CheckBox checked={this.state.kThroughSix} onPress = {() => this.setState({kThroughSix: !this.state.kThroughSix})} />
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                            <Text style={{flex:4}}> Teenagers </Text>
-                                        <View style={{flex: 1}}>
-                                            <CheckBox checked={this.state.teenagers} onPress = {() => this.setState({teenagers: !this.state.teenagers})} />
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                            <Text style={{flex:4}}> Changing Tables </Text>
-                                        <View style={{flex: 1}}>
-                                            <CheckBox checked={this.state.hasChangingTables} onPress = {() => this.setState({hasChangingTables: !this.state.hasChangingTables})} />
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                            <Text style={{flex:4}}> Family Restrooms </Text>
-                                        <View style={{flex: 1}}>
-                                            <CheckBox checked={this.state.hasFamilyRestroom} onPress = {() => this.setState({hasFamilyRestroom: !this.state.hasFamilyRestroom})} />
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                            <Text style={{flex:4}}> Wheelchair Accessible </Text>
-                                        <View style={{flex: 1}}>
-                                            <CheckBox checked={this.state.isWheelchairAccessible} onPress = {() => this.setState({isWheelchairAccessible: !this.state.isWheelchairAccessible})} />
-                                        </View>
-                                    </View>
+
+
+                            }
                             </View>
 
-                            <Text style={{fontWeight:'bold'}}>Fields marked * are required </Text>
-                            {this.state.error && <Text style={{color:'red'}}>Please fill out all of the required fields</Text>}
 
-                            <View style={{width:300, borderRadius:5, alignItems:'flex-end', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <View style ={{flex:1}}/>
+                            <View style={{flex:1, width:300, borderRadius:5, flexDirection: 'row', justifyContent: 'space-between'}}>
+                            {
+                              this.state.numberedView == 1 &&
+                                  <View style ={{flex:1}}/>
+                            }
+                            {
+                              this.state.numberedView != 1 &&
+                              <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%'}} onPress={()=>{this.state.numberedView >= 2 ? this.setState({numberedView: this.state.numberedView - 1}) : null}}>
+                                  <Icon
+                                    name="chevron-left"
+                                    type="Entypo"
+                                  />
+                              </TouchableOpacity>
+
+                            }
                                 <View style={{flex:1,alignItems:'center'}}>
-                                    <Text style={{flex:1, alignItems:'center'}}> 1 of 4 </Text>
+                                    <Text style={{flex:1, alignItems:'center', height:'33%'}}> {this.state.numberedView} of 4 </Text>
                                 </View>
-                                <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{this.setState({numberedView: 2})}}>
-                                    <Icon
-                                      name="chevron-right"
-                                      type="Entypo"
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-            }
-
-
-
-                {
-                  //environment
-                }
-
-                {
-                    this.state.numberedView == 2 &&
-                        <View style={{alignItems:'center'}} >
-                                <View style={{flexDirection: 'column', width:300, borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
-                                    <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
-                                        <Text> Environment </Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={{flex:4}}> Smoking Allowed </Text>
-                                        <View style={{flex:1}}>
-                                            <CheckBox checked={this.state.isSmokingPermitted} onPress = {() => this.setState({isSmokingPermitted: !this.state.isSmokingPermitted})} />
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={styles.radio_title}> Seating Arrangements</Text>
-                                        <StarRating
-                                            maxStars={5}
-                                            rating={this.state.seatingArrangements}
-                                            selectedStar={(rating) => this.setState({seatingArrangements: rating})}
-                                            fullStarColor={'#eaaa00'}
-                                            containerStyle={{width: '30%'}}
-                                            starSize={18}                    />
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={styles.radio_title}> Safety</Text>
-                                        <StarRating
-                                            maxStars={5}
-                                            rating={this.state.safety}
-                                            selectedStar={(rating) => this.setState({safety: rating})}
-                                            fullStarColor={'#eaaa00'}
-                                            containerStyle={{width: '30%'}}
-                                            starSize={18}                    />
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={{flex:4}}> Pet Friendly </Text>
-                                        <View style={{flex:1}}>
-                                            <CheckBox checked={this.state.petFriendly} onPress = {() => this.setState({petFriendly: !this.state.petFriendly})}/>
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={styles.radio_title}> Cleanliness</Text>
-                                        <StarRating
-                                            maxStars={5}
-                                            rating={this.state.cleanliness}
-                                            selectedStar={(rating) => this.setState({cleanliness: rating})}
-                                            fullStarColor={'#eaaa00'}
-                                            containerStyle={{width: '30%'}}
-                                            starSize={18}                    />
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={styles.radio_title}> Sound Level</Text>
-                                        <StarRating
-                                            maxStars={5}
-                                            rating={this.state.soundLevel}
-                                            selectedStar={(rating) => this.setState({soundLevel: rating})}
-                                            fullStarColor={'#eaaa00'}
-                                            containerStyle={{width: '30%'}}
-                                            starSize={18}                    />
-                                    </View>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                        <Text style={styles.radio_title}> Parking </Text>
-                                        <StarRating
-                                            maxStars={5}
-                                            rating={this.state.parking}
-                                            selectedStar={(rating) => this.setState({parking: rating})}
-                                            fullStarColor={'#eaaa00'}
-                                            containerStyle={{width: '30%'}}
-                                            starSize={18}                    />
-                                    </View>
-                            </View>
-                            <View style={{width:300, borderRadius:5, alignItems:'flex-end', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                    <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{this.setState({numberedView: 1})}}>
-                                        <Icon
-                                          name="chevron-left"
-                                          type="Entypo"
-                                        />
-                                    </TouchableOpacity>
-                                    <View style={{flex:1,alignItems:'center'}}>
-                                        <Text style={{flex:1, alignItems:'center'}}> 2 of 4 </Text>
-                                    </View>
-                                    <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{this.setState({numberedView: 3})}}>
-                                        <Icon
-                                          name="chevron-right"
-                                          type="Entypo"
-                                        />
-                                    </TouchableOpacity>
-                            </View>
-                    </View>
-                }
-
-
-
-                {
-                  //FOOD
-                }
-
-                {
-                    this.state.numberedView == 3 &&
-                    <View style = {{alignItems:'center'}}>
-                        <View style={{flexDirection: 'column', width:300, borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
-                            <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
-                                <Text> Food </Text>
-                            </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={{flex:4}}> Food </Text>
-                                <View style={{flex:1}}>
-                                    <CheckBox checked={this.state.overallFood} onPress = {() => this.setState({overallFood: !this.state.overallFood})} />
-                                </View>
-                            </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={styles.radio_title}> Food Diversity</Text>
-                                <StarRating
-                                    maxStars={5}
-                                    rating={this.state.foodOptionDiversity}
-                                    selectedStar={(rating) => this.setState({foodOptionDiversity: rating})}
-                                    fullStarColor={'#eaaa00'}
-                                    containerStyle={{width: '30%'}}
-                                    starSize={18}                    />
-                            </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={{flex:4}}> Non-Alcoholic Options </Text>
-                                <View style={{flex:1}}>
-                                    <CheckBox checked={this.state.nonAlcoholicOptions} onPress = {() => this.setState({nonAlcoholicOptions: !this.state.nonAlcoholicOptions})} />
-                                </View>
-                            </View>
-                    </View>
-
-                        <View style={{width:300, borderRadius:5, alignItems:'flex-end', flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{this.setState({numberedView: 2})}}>
-                                <Icon
-                                  name="chevron-left"
-                                  type="Entypo"
-                                />
-                            </TouchableOpacity>
-                            <View style={{flex:1,alignItems:'center'}}>
-                                <Text style={{flex:1, alignItems:'center'}}> 3 of 4 </Text>
-                            </View>
-                            <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{this.setState({numberedView: 4})}}>
-                                <Icon
-                                  name="chevron-right"
-                                  type="Entypo"
-                                />
-                            </TouchableOpacity>
-                        </View>
-
-
-                    </View>
-                }
-
-
-
-
-                {
-                  //LOGISTICS
-                }
-
-                {
-                    this.state.numberedView == 4 &&
-                        <View style={{flexDirection: 'column', width:300, borderRadius:5, marginTop: 10, marginBottom:10}}>
-
-                            <View style={{width:300, borderRadius:5}}>
-                                <View style={{backgroundColor: 'pink'}}>
-                                    <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={this.pickImage.bind(this)}>
-                                        <Icon
-                                          name="camera"
-                                          type="Entypo"
-                                          color='#1DA664'
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-
                                 {
-                                  this.state.image != null &&
-                                  <Image source={{ uri: this.state.image }}  style={styles.image} />
+                                  this.state.numberedView != 4 &&
+                                  <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%'}} onPress={()=>{this.state.numberedView <= 3 ? this.setState({numberedView: this.state.numberedView + 1}) : null}}>
+                                      <Icon
+                                        name="chevron-right"
+                                        type="Entypo"
+                                      />
+                                  </TouchableOpacity>
+
+                                }
+                                {
+                                  this.state.numberedView == 4 &&
+                                  <TouchableOpacity
+                                          style={{ flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%', justifyContent:'center'}}
+                                          onPress={this.submitReview.bind(this)}>
+                                          <Text style={{color: 'black', fontSize:16, fontWeight:'bold'}}>SUBMIT</Text>
+                                  </TouchableOpacity>
+
                                 }
 
-                                <Text style={styles.radio_title}>Overall Comments:</Text>
-                                <TextInput
-                                    style={styles.textinput}
-                                    onChangeText={(comments) => this.setState({comments})}
-                                    value={this.state.comments}
-                                    placeholder="Tell us about your visit" />
                             </View>
-
-                            <View style={{width:300, borderRadius:5, alignItems:'flex-end', flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center'}} onPress={()=>{this.setState({numberedView: 3})}}>
-                                <Icon
-                                  name="chevron-left"
-                                  type="Entypo"
-                                />
-                            </TouchableOpacity>
-                            <View style={{flex:1,alignItems:'center'}}>
-                                <Text style={{flex:1, alignItems:'center'}}> 4 of 4 </Text>
-                            </View>
-                            <TouchableOpacity
-                                    style={{ flex:1, backgroundColor: 'pink', alignItems: 'center' }}
-                                    onPress={this.submitReview.bind(this)}>
-                                    <Text style={{color: 'black', fontSize:16, fontWeight:'bold'}}>SUBMIT</Text>
-                            </TouchableOpacity>
                     </View>
-                        </View>
-
-
-                }
-                </View>
-
-            </ScrollView>
-            </KeyboardAvoidingView>
+                </KeyboardAvoidingView>
             </View>
         )
     }
