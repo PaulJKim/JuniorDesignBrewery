@@ -112,8 +112,14 @@ export class ProfileScreen extends React.Component {
                         </View>
                         <View style = {{flexDirection: 'row'}}>
                             <Text style={[styles.subtitle_style2]}>Pet: </Text>
-                            <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pet" :
+                            <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pets" :
                                 this.state.user.num_pet == 1 ? " 1 Pet" : " " + this.state.user.num_pet + " pets"}
+                            </Text>
+                        </View>
+                        <View style = {{flexDirection: 'row'}}>
+                            <Text style={[styles.subtitle_style2]}>Reviews: </Text>
+                            <Text style={[styles.subtitle_style]}>{(this.state.user.reviews == 0) ? "No Reviews" :
+                                this.state.user.reviews == 1 ? " 1 Review" : " " + this.state.user.reviews + " Reviews"}
                             </Text>
                         </View>
                     </View>
