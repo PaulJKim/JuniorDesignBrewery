@@ -16,9 +16,9 @@ export class ReviewCard extends React.Component {
                         <View style={{flex:1}}>
                             <View style={{flexDirection: 'row'}}>
                                 {this.props.user.image ?
-                                        <Image style={{height: 50, width: 50, borderRadius: 100}} source={{ uri: this.props.user.image}} />
+                                        <Image style={{height: 50, width: 50, borderRadius: 25}} source={{ uri: this.props.user.image}} />
                                     :
-                                        <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')} />
+                                        <Image style={{height: 50, width: 50, borderRadius: 25}} source={require('../resources/default_profile_picture.png')} />
                                 }
                                 <Text>{this.props.user.username}</Text>
                                 <StarRating

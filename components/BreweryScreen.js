@@ -374,9 +374,9 @@ export class BreweryScreen extends React.Component {
                         <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ReviewView", {navigation: this.props.navigation, review: rev})}>
                             <View style={{flex: 1, paddingTop: 7, paddingRight: 10}}>
                                 {this.state.userData[rev.userId].image ?
-                                  <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri: this.state.userData[rev.userId].image}}/>
+                                  <Image style={{height: 50, width: 50, borderRadius: 25}} source={{uri: this.state.userData[rev.userId].image}}/>
                                   :
-                                  <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')}/>
+                                  <Image style={{height: 50, width: 50, borderRadius: 25}} source={require('../resources/default_profile_picture.png')}/>
                                 }
 
                             </View>

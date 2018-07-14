@@ -68,9 +68,9 @@ export class ReviewScreen extends React.Component {
                 <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ProfileView", {id: this.state.review.userId})}>
                     <View style={{flex: 1, paddingTop: 7, paddingRight: 10}}>
                         {this.state.image ?
-                           <Image style={{height: 50, width: 50, borderRadius: 100}} source={{uri: this.state.image}} />
+                           <Image style={{height: 50, width: 50, borderRadius: 25}} source={{uri: this.state.image}} />
                            :
-                           <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')} />
+                           <Image style={{height: 50, width: 50, borderRadius: 25}} source={require('../resources/default_profile_picture.png')} />
                         }
                     </View>
                     <View style={{flex: 6, display:'flex'}}>

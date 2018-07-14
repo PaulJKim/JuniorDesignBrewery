@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
       image_style: {
-        borderRadius: 100,
+        borderRadius: 75,
         width: 150,
         height: 150,
         marginTop: 20,
