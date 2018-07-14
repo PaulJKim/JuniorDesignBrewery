@@ -23,7 +23,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View, Text, Image, TouchableOpacity, TextInput, Button } from 'react-native';
 import { Footer, Container, Icon, Fab } from 'native-base';
 import firebaseApp from '../firebase';
-import { ImagePicker, LinearGradient } from 'expo';
+import { ImagePicker, LinearGradient, Permissions } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getUserData, setUserData, isAdmin, getProfilePicture, setProfilePicture } from '../lib/FirebaseHelpers';
 
@@ -219,6 +219,9 @@ export class ProfileScreen extends React.Component {
     }
 
     async pickImage() {
+        console.log("test")
+        await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        await Permissions.askAsync(Permissions.CAMERA);
         result = await ImagePicker.launchImageLibraryAsync({
             allowsEditing: true,
             aspect: [1, 1]
@@ -245,7 +248,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image_style: {
-    borderRadius: 100,
+    borderRadius: 75,
     width: 150,
     height: 150,
     marginTop: 20,
