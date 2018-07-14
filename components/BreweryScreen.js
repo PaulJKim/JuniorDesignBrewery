@@ -209,8 +209,7 @@ export class BreweryScreen extends React.Component {
                                 <Text style={{fontSize:10}}> Food Diversity</Text>
                                 <StarRating
                                     maxStars={5}
-                                    rating={this.state.foodOptionDiversity}
-                                    selectedStar={(rating) => this.setState({foodOptionDiversity: rating})}
+                                    rating={this.state.revsAvg.foodOptionDiversity}
                                     fullStarColor={'#eaaa00'}
                                     //containerStyle={{width: '30%'}}
                                     starSize={10}                    />
@@ -273,8 +272,7 @@ export class BreweryScreen extends React.Component {
                                 <Text style={{fontSize:10}}> Seating </Text>
                                 <StarRating
                                     maxStars={5}
-                                    rating={this.state.seatingArrangements}
-                                    selectedStar={(rating) => this.setState({seatingArrangements: rating})}
+                                    rating={this.state.revsAvg.seatingArrangements}
                                     fullStarColor={'#eaaa00'}
                                     starSize={10}                    />
                             </View>
@@ -282,8 +280,7 @@ export class BreweryScreen extends React.Component {
                                 <Text style={{fontSize:10}}> Safety</Text>
                                 <StarRating
                                     maxStars={5}
-                                    rating={this.state.safety}
-                                    selectedStar={(rating) => this.setState({safety: rating})}
+                                    rating={this.state.revsAvg.safety}
                                     fullStarColor={'#eaaa00'}
                                     starSize={10}                    />
                             </View>
