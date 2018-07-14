@@ -156,37 +156,37 @@ export class BreweryScreen extends React.Component {
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
                                     <Text style={{flex:3,fontSize:10}}> Stroller Kids </Text>
                                     <View style={{ flex:1}}>
-                                        <CheckBox style={{checkboxSize: 15}} checked={this.state.strollerKids} onPress = {() => this.setState({strollerKids: !this.state.strollerKids})} />
+                                        <CheckBox style={{checkboxSize: 15}} checked={this.state.revsAvg.strollerKids} />
                                     </View>
                                 </View>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
                                         <Text style={{flex:3,fontSize:10}}> K - 6 </Text>
                                     <View style={{flex: 1}}>
-                                        <CheckBox checked={this.state.kThroughSix} onPress = {() => this.setState({kThroughSix: !this.state.kThroughSix})} />
+                                        <CheckBox checked={this.state.revsAvg.kThroughSix}  />
                                     </View>
                                 </View>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
                                         <Text style={{flex:3,fontSize:10}}> Teenagers </Text>
                                     <View style={{flex: 1}}>
-                                        <CheckBox checked={this.state.teenagers} onPress = {() => this.setState({teenagers: !this.state.teenagers})} />
+                                        <CheckBox checked={this.state.revsAvg.teenagers} />
                                     </View>
                                 </View>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
                                         <Text style={{flex:3,fontSize:10}}> Changing Tables </Text>
                                     <View style={{flex: 1}}>
-                                        <CheckBox checked={this.state.hasChangingTables} onPress = {() => this.setState({hasChangingTables: !this.state.hasChangingTables})} />
+                                        <CheckBox checked={this.state.revsAvg.hasChangingTables} />
                                     </View>
                                 </View>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
                                         <Text style={{flex:3,fontSize:10}}> Family Restrooms </Text>
                                     <View style={{flex: 1}}>
-                                        <CheckBox checked={this.state.hasFamilyRestroom} onPress = {() => this.setState({hasFamilyRestroom: !this.state.hasFamilyRestroom})} />
+                                        <CheckBox checked={this.state.revsAvg.hasFamilyRestroom} />
                                     </View>
                                 </View>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3, marginBottom: 3}}>
                                         <Text style={{flex:3,fontSize:10}}> Wheelchair Access </Text>
                                     <View style={{flex: 1}}>
-                                        <CheckBox checked={this.state.isWheelchairAccessible} onPress = {() => this.setState({isWheelchairAccessible: !this.state.isWheelchairAccessible})} />
+                                        <CheckBox checked={this.state.revsAvg.isWheelchairAccessible} />
                                     </View>
                                 </View>
                         </View>
@@ -202,7 +202,7 @@ export class BreweryScreen extends React.Component {
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
                                 <Text style={{flex:3, fontSize:10, marginTop:3}}> Food </Text>
                                 <View style={{flex:1}}>
-                                    <CheckBox checked={this.state.overallFood} onPress = {() => this.setState({overallFood: !this.state.overallFood})} />
+                                    <CheckBox checked={this.state.revsAvg.overallFood} />
                                 </View>
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4, marginRight:2}}>
@@ -217,7 +217,7 @@ export class BreweryScreen extends React.Component {
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3}}>
                                 <Text style={{flex:3, fontSize:10, marginTop:3}}> Non-Alcoholic Drinks </Text>
                                 <View style={{flex:1}}>
-                                    <CheckBox checked={this.state.nonAlcoholicOptions} onPress = {() => this.setState({nonAlcoholicOptions: !this.state.nonAlcoholicOptions})} />
+                                    <CheckBox checked={this.state.revsAvg.nonAlcoholicOptions} />
                                 </View>
                             </View>
                         </View>
@@ -265,7 +265,7 @@ export class BreweryScreen extends React.Component {
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
                                 <Text style={{flex:3, fontSize:10}}> Smoking Allowed </Text>
                                 <View style={{flex:1}}>
-                                    <CheckBox checked={this.state.isSmokingPermitted} onPress = {() => this.setState({isSmokingPermitted: !this.state.isSmokingPermitted})} />
+                                    <CheckBox checked={this.state.revsAvg.isSmokingPermitted} />
                                 </View>
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
@@ -287,15 +287,14 @@ export class BreweryScreen extends React.Component {
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4}}>
                                 <Text style={{flex:3, fontSize:10}}> Pet Friendly </Text>
                                 <View style={{flex:1}}>
-                                    <CheckBox checked={this.state.petFriendly} onPress = {() => this.setState({petFriendly: !this.state.petFriendly})}/>
+                                    <CheckBox checked={this.state.revsAvg.petFriendly} />
                                 </View>
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4, marginRight:2}}>
                                 <Text style={{fontSize:10}}> Cleanliness</Text>
                                 <StarRating
                                     maxStars={5}
-                                    rating={this.state.cleanliness}
-                                    selectedStar={(rating) => this.setState({cleanliness: rating})}
+                                    rating={this.state.revsAvg.cleanliness}
                                     fullStarColor={'#eaaa00'}
                                     starSize={10}                    />
                             </View>
@@ -303,8 +302,7 @@ export class BreweryScreen extends React.Component {
                                 <Text style={{fontSize:10}}> Sound Level</Text>
                                 <StarRating
                                     maxStars={5}
-                                    rating={this.state.soundLevel}
-                                    selectedStar={(rating) => this.setState({soundLevel: rating})}
+                                    rating={this.state.revsAvg.soundLevel}
                                     fullStarColor={'#eaaa00'}
                                     starSize={10}                    />
                             </View>
@@ -312,8 +310,7 @@ export class BreweryScreen extends React.Component {
                                 <Text style={{fontSize:10}}> Parking </Text>
                                 <StarRating
                                     maxStars={5}
-                                    rating={this.state.parking}
-                                    selectedStar={(rating) => this.setState({parking: rating})}
+                                    rating={this.state.revsAvg.parking}
                                     fullStarColor={'#eaaa00'}
                                     starSize={10}                    />
                             </View>
@@ -494,22 +491,22 @@ export class BreweryScreen extends React.Component {
     calcAvg(revs) {
         this.state.revsAvg.overallRating = this.avg(revs, "overallRating");
         this.state.revsAvg.kidFriendly = this.avg(revs,"kidFriendly");
-        this.state.revsAvg.strollerKids = this.avg(revs, "strollerKids");
-        this.state.revsAvg.kThroughSix = this.avg(revs, "kThroughSix");
-        this.state.revsAvg.teenagers = this.avg(revs, "teenagers");
+        this.state.revsAvg.strollerKids = this.majCheck(revs, "strollerKids");
+        this.state.revsAvg.kThroughSix = this.majCheck(revs, "kThroughSix");
+        this.state.revsAvg.teenagers = this.majCheck(revs, "teenagers");
         this.state.revsAvg.environment = this.avg(revs, "environment");
-        this.state.revsAvg.isSmokingPermitted = this.avg(revs, "isSmokingPermitted");
+        this.state.revsAvg.isSmokingPermitted = this.majCheck(revs, "isSmokingPermitted");
         this.state.revsAvg.seatingArrangements = this.avg(revs, "seatingArrangements");
         this.state.revsAvg.safety = this.avg(revs, "safety");
-        this.state.revsAvg.petFriendly = this.avg(revs, "petFriendly");
+        this.state.revsAvg.petFriendly = this.majCheck(revs, "petFriendly");
         this.state.revsAvg.cleanliness = this.avg(revs,"cleanliness");
         this.state.revsAvg.soundLevel = this.avg(revs, "soundLevel");
         this.state.revsAvg.overallFood = this.avg(revs, "overallFood");
         this.state.revsAvg.foodOptionDiversity = this.avg(revs, "foodOptionDiversity");
-        this.state.revsAvg.nonAlcoholicOptions = this.avg(revs, "nonAlcoholicOptions");
-        this.state.revsAvg.hasChangingTables = this.avg2(revs, "hasChangingTables");
-        this.state.revsAvg.hasFamilyRestroom = this.avg2(revs, "hasFamilyRestroom");
-        this.state.revsAvg.isWheelchairAccessible = this.avg2(revs, "isWheelchairAccessible");
+        this.state.revsAvg.nonAlcoholicOptions = this.majCheck(revs, "nonAlcoholicOptions");
+        this.state.revsAvg.hasChangingTables = this.majCheck(revs, "hasChangingTables");
+        this.state.revsAvg.hasFamilyRestroom = this.majCheck(revs, "hasFamilyRestroom");
+        this.state.revsAvg.isWheelchairAccessible = this.majCheck(revs, "isWheelchairAccessible");
     }
 
     avg(revs, prop) {
@@ -536,7 +533,21 @@ export class BreweryScreen extends React.Component {
         if(cntr)
             return sum / cntr;
         return null;
-    }}
+    }
+
+    majCheck(revs, prop) {
+        cYes = 0;
+        cNo = 0;
+        revs.forEach((rev) => {
+          if(rev[prop]) {
+            cYes++;
+          } else {
+            cNo++;
+          }
+        });
+        return cYes >= cNo;
+    }
+}
 
 const styles = StyleSheet.create({
   container: {

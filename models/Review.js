@@ -47,7 +47,7 @@ export default class Review {
     comments;
     parking;
     breweryId;
-    breweryName;    
+    breweryName;
     latitude = 0;
     longitude = 0;
     photo = null;
