@@ -222,7 +222,6 @@ export class MapScreen extends React.Component {
                   navigation = {this.props.navigation}
                   curBrewDist = {(this.state.curLat && this.state.curLng)
                                 ? '' + Number(calculateDistance(this.state.curLat, this.state.curLng, b.latitude, b.longitude)).toFixed(2) + ' miles': ' no location data'}
-                  location = {b.city + ', ' + b.state}
                 />
             );
         });
