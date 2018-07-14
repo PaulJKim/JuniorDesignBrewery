@@ -40,7 +40,7 @@ const PROFILE_TAB = "Your Profile";
 export class MainScreen extends React.Component {
 
     static navigationOptions = ({ navigation }) => ({
-        title: MAP_TAB,
+        title: navigation.state.params.tab,
         headerStyle:  { backgroundColor: "#2196F3", },
         headerTitleStyle: { color: "#FFFFFF" },
         headerTintColor: "white",
