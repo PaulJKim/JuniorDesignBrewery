@@ -391,11 +391,10 @@ export class AddReviewScreen extends React.Component {
                                 </View>
                                 {
                                   this.state.numberedView != 4 &&
-                                  <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%'}} onPress={()=>{this.state.numberedView <= 3 ? this.setState({numberedView: this.state.numberedView + 1}) : null}}>
-                                      <Icon
-                                        name="chevron-right"
-                                        type="Entypo"
-                                      />
+                                  <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%', justifyContent: 'center'}} onPress={()=>{this.state.numberedView <= 3 ? this.setState({numberedView: this.state.numberedView + 1}) : null}}>
+                                    <Image
+                                      style={{width: 25, height: 25}}
+                                      source={require('../resources/chevron1.png')} />
                                   </TouchableOpacity>
 
                                 }

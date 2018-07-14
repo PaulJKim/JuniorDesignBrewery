@@ -89,22 +89,33 @@ export class ProfileScreen extends React.Component {
                                     <Image source={require('../resources/default_profile_picture.png')} style={styles.image_style} />
                             </View>
                         }
-                        <Text style={styles.title_style}>{this.state.user.username}</Text>
-                            {this.state.user.age > 0 && <Text style={[styles.subtitle_style]}>
-                            {this.state.user.age == -1 ? "" : this.state.user.age} Years Old
-                        </Text>}
-                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" :
-                            this.state.user.num_children == 1 ? "1 Child" : this.state.user.num_children + " Children"}
-                        </Text>
-                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pet" :
-                            this.state.user.num_pet == 1 ? "1 Child" : this.state.user.num_pet + " pet"}
-                        </Text>
                         <View style={{marginBottom: 10}}/>
                         </LinearGradient>
                     </View>
                     <View style={{width: '100%', padding: 10}}>
-                        <Text style={[styles.subtitle_style2]}>Bio</Text>
-                        <Text style={styles.subtitle_style3}>{this.state.user.description}</Text>
+                        <View style = {{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                        <Text style={styles.title_style}>{this.state.user.username}</Text>
+                      </View>
+                      <View style = {{flexDirection: 'row'}}>
+                            <Text style={[styles.subtitle_style2]}>Name: </Text>
+                            <Text style={styles.subtitle_style3}>{this.state.user.description}</Text>
+                        </View>
+                            {this.state.user.age > 0 && <Text style={[styles.subtitle_style]}>
+                            <Text style={[styles.subtitle_style2]}>Age: </Text>
+                            {this.state.user.age == -1 ? " " : " " + this.state.user.age} Years Old
+                        </Text>}
+                        <View style = {{flexDirection: 'row'}}>
+                            <Text style={[styles.subtitle_style2]}>Children: </Text>
+                            <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" :
+                                this.state.user.num_children == 1 ? " 1 Child" : " " + this.state.user.num_children + " Children"}
+                            </Text>
+                        </View>
+                        <View style = {{flexDirection: 'row'}}>
+                            <Text style={[styles.subtitle_style2]}>Pet: </Text>
+                            <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pet" :
+                                this.state.user.num_pet == 1 ? " 1 Pet" : " " + this.state.user.num_pet + " pets"}
+                            </Text>
+                        </View>
                     </View>
 
                     <View>
@@ -175,9 +186,9 @@ export class ProfileScreen extends React.Component {
 
                         <Text style={styles.title_style}>{this.state.user.username}</Text>
                     </View>
-                    <View style={{width: '100%', paddingLeft: 10, display: 'flex', flexDirection: 'row'}}>
-                        <Text style={[styles.subtitle_style, {marginTop: 3, color:'black', flex: 5}]}>Name: </Text>
-                        <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.num_children + ""} onChangeText={(num_children) => {this.state.user.num_children = num_children.replace(/[^0-9]/g, ''); this.setState({user: this.state.user})}}></TextInput>
+                    <View style={{width: '100%', paddingLeft: 10, flexDirection: 'row', display: 'flex'}}>
+                        <Text style={[styles.subtitle_style, {marginTop: 3, color: 'black', flex: 5}]}>Name:</Text>
+                        <TextInput style= {{}} multiline={true} value={this.state.user.description} onChangeText={(description) => {this.state.user.description = description; this.setState({user: this.state.user})}}></TextInput>
                         <View style={{flex: 9}}></View>
                     </View>
                     <View style={{width: '100%', paddingLeft: 10, display: 'flex', flexDirection: 'row'}}>
@@ -279,15 +290,17 @@ const styles = StyleSheet.create({
   subtitle_style: {
       fontSize: 15,
       color: 'rgba(0, 0, 0, 0.95)',
+      marginTop: 10,
   },
   subtitle_style2: {
-    fontSize: 17,
+    fontSize: 15,
     color: 'rgb(0, 0, 0)',
     fontWeight: 'bold',
     marginTop: 10,
   },
   subtitle_style3: {
-    fontSize: 17,
+    fontSize: 15,
     color: 'rgba(0, 0, 0, 0.7)',
+    marginTop: 10,
   }
 })

@@ -148,7 +148,7 @@ export class RegisterScreen extends React.Component {
             viewable: true
           },
           publicData:{
-            age: -1,
+            age: 18,
             description: "None",
             num_children: 0,
             num_pet: 0,
