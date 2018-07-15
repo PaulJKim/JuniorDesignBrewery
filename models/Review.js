@@ -22,6 +22,7 @@
 export default class Review {
     username;
     overallRating = 0;
+    upVotedSum = 0;
 
     kidFriendly = 0;
     strollerKids = 0;

@@ -39,10 +39,10 @@ export class ReviewCard extends React.Component {
                             <Text>{this.props.review.comments}</Text>
                         </View>
                         <View style={{flex:1, justifyContent:'space-between'}}>
-                            <Button transparent dark onPress={() => reportReview(this.props.review)}>
+                            <Button transparent dark>
                                 <Icon name="beer" type="Ionicons" />
                             </Button>
-                            <Button transparent dark>
+                            <Button transparent dark onPress={() => reportReview(this.props.review)}>
                                 <Icon name="flag" type="simpleLineIcons" />
                             </Button>
                         </View>

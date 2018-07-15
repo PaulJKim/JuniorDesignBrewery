@@ -237,15 +237,24 @@ export class BreweryScreen extends React.Component {
                         <View style={{flexDirection: 'row', height:100, marginTop: 5}}>
                             <View style={{flex:1, flexDirection: 'column', width:'100%'}}>
                                 <View style={{flex:1, marginBottom: 5}}>
-                                    <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/dog.png')} />
+                                    {
+                                      this.state.revsAvg.petFriendly &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/dog.png')} />
+                                    }
                                 </View>
                                 <View style={{flex:1, marginBottom: 5}}>
-                                    <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/disability.png')} />
+                                    {
+                                      this.state.revsAvg.isWheelchairAccessible &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/disability.png')} />
+                                    }
                                 </View>
                             </View>
                             <View style={{flex:1, flexDirection: 'column', width:'100%'}}>
                                 <View style={{flex:1, marginBottom: 5}}>
-                                    <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode:'contain'}} source={require('../resources/hamburger.png')} />
+                                    {
+                                      this.state.revsAvg.overallFood &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode:'contain'}} source={require('../resources/hamburger.png')} />
+                                    }
                                 </View>
                                 <View style={{flex:1}}>
                                 </View>
