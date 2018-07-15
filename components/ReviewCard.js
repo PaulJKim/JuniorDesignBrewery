@@ -12,25 +12,32 @@ export class ReviewCard extends React.Component {
                         this.props.breweryName &&
                         <Text>{this.props.breweryName}</Text>
                     }
+
                     <View style ={{flexDirection: 'row'}}>
-                        <View style={{flex:1}}>
+                        <View style={{flex:5}}>
                             <View style={{flexDirection: 'row'}}>
-                                {this.props.user.image ?
-                                        <Image style={{height: 50, width: 50, borderRadius: 25}} source={{ uri: this.props.user.image}} />
-                                    :
-                                        <Image style={{height: 50, width: 50, borderRadius: 25}} source={require('../resources/default_profile_picture.png')} />
-                                }
-                                <Text>{this.props.user.username}</Text>
-                                <StarRating
-                                        disabled={true}
-                                        maxStars={5}
-                                        rating={this.props.review.overallRating}
-                                        fullStarColor={'#eaaa00'}
-                                        starSize={20} />
+                                <View style={{padding:5}}>
+                                    {this.props.user.image ?
+                                            <Image style={{height: 50, width: 50, borderRadius: 25}} source={{ uri: this.props.user.image}} />
+                                        :
+                                            <Image style={{height: 50, width: 50, borderRadius: 25}} source={require('../resources/default_profile_picture.png')} />
+                                    }
+                                </View>
+
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <Text style={{fontWeight:'bold'}}>{this.props.user.username}</Text>
+
+                                    <StarRating
+                                            disabled={true}
+                                            maxStars={5}
+                                            rating={this.props.review.overallRating}
+                                            fullStarColor={'#eaaa00'}
+                                            starSize={15} />
+                                </View>
                             </View>
                             <Text>{this.props.review.comments}</Text>
                         </View>
-                        <View>
+                        <View style={{flex:1, justifyContent:'space-between'}}>
                             <Button>
                                 <Icon name="beer" type="Ionicons" />
                             </Button>

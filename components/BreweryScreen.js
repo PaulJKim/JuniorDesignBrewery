@@ -211,7 +211,6 @@ export class BreweryScreen extends React.Component {
                                     maxStars={5}
                                     rating={this.state.revsAvg.foodOptionDiversity}
                                     fullStarColor={'#eaaa00'}
-                                    //containerStyle={{width: '30%'}}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3}}>
@@ -501,12 +500,13 @@ export class BreweryScreen extends React.Component {
         this.state.revsAvg.petFriendly = this.majCheck(revs, "petFriendly");
         this.state.revsAvg.cleanliness = this.avg(revs,"cleanliness");
         this.state.revsAvg.soundLevel = this.avg(revs, "soundLevel");
-        this.state.revsAvg.overallFood = this.avg(revs, "overallFood");
+        this.state.revsAvg.overallFood = this.majCheck(revs, "overallFood");
         this.state.revsAvg.foodOptionDiversity = this.avg(revs, "foodOptionDiversity");
         this.state.revsAvg.nonAlcoholicOptions = this.majCheck(revs, "nonAlcoholicOptions");
         this.state.revsAvg.hasChangingTables = this.majCheck(revs, "hasChangingTables");
         this.state.revsAvg.hasFamilyRestroom = this.majCheck(revs, "hasFamilyRestroom");
         this.state.revsAvg.isWheelchairAccessible = this.majCheck(revs, "isWheelchairAccessible");
+        this.state.revsAvg.parking = this.avg(revs, "parking");
     }
 
     avg(revs, prop) {

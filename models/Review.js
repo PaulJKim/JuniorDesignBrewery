@@ -73,5 +73,6 @@ export default class Review {
         this.comments = res.comments;
         this.brewerId = res.breweryId;
         this.breweryName = res.breweryName;
+        this.parking = res.parking;
     }
 }
