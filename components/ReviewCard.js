@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardItem, Text, Body, Icon, Button } from 'native-base';
 import { View, Image, TouchableOpacity } from 'react-native';
 import StarRating from 'react-native-star-rating';
+import { reportReview, deleteReview, isAdmin } from '../lib/FirebaseHelpers';
 
 export class ReviewCard extends React.Component {
     render() {
@@ -38,10 +39,10 @@ export class ReviewCard extends React.Component {
                             <Text>{this.props.review.comments}</Text>
                         </View>
                         <View style={{flex:1, justifyContent:'space-between'}}>
-                            <Button>
+                            <Button transparent dark onPress={() => reportReview(this.props.review)}>
                                 <Icon name="beer" type="Ionicons" />
                             </Button>
-                            <Button>
+                            <Button transparent dark>
                                 <Icon name="flag" type="simpleLineIcons" />
                             </Button>
                         </View>
