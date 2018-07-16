@@ -110,8 +110,11 @@ export class ReportedReviews extends React.Component {
 
                         <View style={styles.admin_container}>
                             <View style={styles.approve_button}>
-                                <Button transparent dark onPress={this.approveReview.bind(this, rev)} >
+                                <Button transparent dark 
+                                    onPress={this.approveReview.bind(this, rev)}
+                                >
                                     <Icon name="checkmark" type="Ionicons" />
+                                    <Text>Approve Review</Text>
                                 </Button> 
                             </View>
                             <View style={styles.delete_button}>
@@ -119,6 +122,7 @@ export class ReportedReviews extends React.Component {
                                     onPress={this.deleteReview.bind(this, rev)} 
                                 >
                                     <Icon name="trash" type="Ionicons" />
+                                    <Text>Delete Review</Text>
                                 </Button>
                             </View>
                         </View>
@@ -167,12 +171,12 @@ const styles = StyleSheet.create({
   },
   delete_button: {
     backgroundColor: 'red',
-    width: '15%',
+    width: '40%',
     height: 40
   },
   approve_button: {
     backgroundColor: 'green',
-    width: '15%',
+    width: '40%',
     height: 40
   }
 });
