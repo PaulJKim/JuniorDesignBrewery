@@ -130,12 +130,18 @@ export class MapScreen extends React.Component {
                     <View style={{bottom:50, position: 'absolute', width:'100%'}}>
                         <View style={{flexDirection:'column'}}>
                             <View style={{flexDirection:'row', justifyContent:"flex-end"}}>
-                                <BaseButton rounded style={{backgroundColor:'red', marginRight: 10}} onPress={() => this.setState({selectedBrewery : null})}>
-                                    <Icon
-                                        style={{color: 'white'}}
-                                        type= 'EvilIcons'
-                                        name='close'/>
-                                </BaseButton>
+                                <TouchableOpacity
+                                    style={styles.buttonWrapper}
+                                    onPress={() => this.setState({selectedBrewery: null})}
+                                >
+                                    <View style={{flex:1, alignItems:"center", justifyContent:"center"}}>
+                                        <Icon
+                                            style={{color: 'white', fontSize: 20}}
+                                            type= 'EvilIcons'
+                                            name='close'
+                                        />
+                                    </View>
+                                </TouchableOpacity>
                             </View>
                             <BreweryCard
                                 curBrew = {this.state.selectedBrewery}
@@ -279,5 +285,12 @@ const styles = StyleSheet.create({
   },
   searchButton: {
       flex: 15,
+  },
+  buttonWrapper: {
+      backgroundColor:'red',
+      marginRight: 10,
+      width: 24,
+      height: 24,
+      borderRadius:12
   }
 })
