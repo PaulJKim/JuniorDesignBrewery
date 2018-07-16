@@ -103,7 +103,7 @@ export class ProfileScreen extends React.Component {
                         </View>
                             {this.state.user.age > 0 && <Text style={[styles.subtitle_style]}>
                             <Text style={[styles.subtitle_style2]}>Age: </Text>
-                            {this.state.user.age == -1 ? " " : " " + this.state.user.age} Years Old
+                            {this.state.user.age < 18 ? " You entered an invalid age. To use the app you must be 18 years old minimum " : " " + this.state.user.age + " Years Old"}
                         </Text>}
                         <View style = {{flexDirection: 'row'}}>
                             <Text style={[styles.subtitle_style2]}>Children: </Text>

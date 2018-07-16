@@ -73,7 +73,7 @@ export class ViewProfileScreen extends React.Component {
                             </View>
                         </TouchableHighlight>
                         <Text style={styles.title_style}>{this.state.user.username}</Text>
-                        {this.state.user.age > 0 && <Text style={[styles.subtitle_style]}>{this.state.user.age == -1 ? "" : this.state.user.age} Years Old</Text>}
+                        {this.state.user.age > 18 && <Text style={[styles.subtitle_style]}>{this.state.user.age == -1 ? "Invalid Age to use the app" : this.state.user.age} Years Old</Text>}
                         <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" :
                             this.state.user.num_children == 1 ? "1 Child" : this.state.user.num_children + " Children"}
                         </Text>

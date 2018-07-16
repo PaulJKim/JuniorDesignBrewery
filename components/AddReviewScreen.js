@@ -340,33 +340,34 @@ export class AddReviewScreen extends React.Component {
 
                             {
                                 this.state.numberedView == 4 &&
-                                    <View style={{flexDirection: 'column', width:300, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                                    <ScrollView>
+                                        <View style={{flexDirection: 'column', width:300, borderRadius:5, marginTop: 10, marginBottom:10}}>
 
-                                        <View style={{width:300, borderRadius:5}}>
-                                            <View style={{backgroundColor: 'pink'}}>
-                                                <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={this.pickImage.bind(this)}>
-                                                    <Icon
-                                                      name="camera"
-                                                      type="Entypo"
-                                                      color='#1DA664'
-                                                    />
-                                                </TouchableOpacity>
+                                            <View style={{width:300, borderRadius:5}}>
+                                                <View style={{backgroundColor: 'pink'}}>
+                                                    <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={this.pickImage.bind(this)}>
+                                                        <Icon
+                                                          name="camera"
+                                                          type="Entypo"
+                                                          color='#1DA664'
+                                                        />
+                                                    </TouchableOpacity>
+                                                </View>
+
+                                                {
+                                                  this.state.image != null &&
+                                                  <Image source={{ uri: this.state.image }}  style={styles.image} />
+                                                }
+
+                                                <Text style={styles.radio_title}>Overall Comments:</Text>
+                                                <TextInput
+                                                    style={styles.textinput}
+                                                    onChangeText={(comments) => this.setState({comments})}
+                                                    value={this.state.comments}
+                                                    placeholder="Tell us about your visit" />
                                             </View>
-
-                                            {
-                                              this.state.image != null &&
-                                              <Image source={{ uri: this.state.image }}  style={styles.image} />
-                                            }
-
-                                            <Text style={styles.radio_title}>Overall Comments:</Text>
-                                            <TextInput
-                                                style={styles.textinput}
-                                                onChangeText={(comments) => this.setState({comments})}
-                                                value={this.state.comments}
-                                                placeholder="Tell us about your visit" />
                                         </View>
-                                    </View>
-
+                                    </ScrollView>
 
                             }
                             </View>
