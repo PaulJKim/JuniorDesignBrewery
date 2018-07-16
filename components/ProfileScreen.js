@@ -219,7 +219,6 @@ export class ProfileScreen extends React.Component {
     }
 
     async pickImage() {
-        console.log("test")
         await Permissions.askAsync(Permissions.CAMERA_ROLL);
         await Permissions.askAsync(Permissions.CAMERA);
         result = await ImagePicker.launchImageLibraryAsync({
