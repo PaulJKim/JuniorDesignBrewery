@@ -32,8 +32,6 @@ import { writeReview } from '../lib/FirebaseHelpers';
 import { ImagePicker } from 'expo';
 
 
-
-
 export class AddReviewScreen extends React.Component {
 
     static navigationOptions = ({ navigation }) => ({
@@ -46,8 +44,10 @@ export class AddReviewScreen extends React.Component {
     constructor(props) {
         super(props);
         global.main = false;
+
         this.state = {
             error: false,
+            profane_content: false,
             spinnerVisible: false,
             brewery: this.props.navigation.state.params.brewery,
             review: this.props.navigation.state.params.review,
@@ -366,6 +366,7 @@ export class AddReviewScreen extends React.Component {
                                                 onChangeText={(comments) => this.setState({comments})}
                                                 value={this.state.comments}
                                                 placeholder="Tell us about your visit" />
+                                            {this.state.profane_content && <Text style={{color:'red'}}>Please use clean language in the comments!</Text>}
                                         </View>
                                     </View>
 
@@ -424,6 +425,15 @@ export class AddReviewScreen extends React.Component {
             this.setState({error: true});
             return;
         }
+
+        var Filter = require('bad-words'),
+            filter = new Filter();
+        
+        if(filter.isProfane(this.state.comments)) {
+            this.setState({profane_content: true});
+            return;
+        }
+
         this.setState({spinnerVisible: true})
 
         var timestamp = (new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + new Date().getFullYear();
