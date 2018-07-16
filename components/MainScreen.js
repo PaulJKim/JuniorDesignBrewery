@@ -140,9 +140,7 @@ export class MainScreen extends React.Component {
   signOutUser = async () => {
     try {
         await firebaseApp.auth().signOut();
-        if (this.state.selectedTab !== MAP_TAB) {
-            this.props.navigation.navigate("Main", {navigation: this.props.navigation});
-        }
+        this.props.navigation.navigate("Login", {navigation: this.props.navigation});
     } catch (e) {
     }
 }
