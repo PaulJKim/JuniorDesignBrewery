@@ -42,8 +42,12 @@ export class MapScreen extends React.Component {
             selectedBrewery: null,
             loading: false,
             curLat: null,
-            curLng: null
+            curLng: null,
+            latitudeDelta: 0.6,
+            longitudeDelta: 0.6,
         }
+        this.latitudeDelta = 0.6;
+        this.longitudeDelta = 0.6;
         global.main = true;
         if(global.mapVisible == null) {
             global.mapVisible = true;
@@ -69,8 +73,12 @@ export class MapScreen extends React.Component {
 
                         region={{latitude: this.state.lat,
                         longitude: this.state.lng,
-                        latitudeDelta: 0.6,
-                        longitudeDelta: 0.6,}}
+                        latitudeDelta: this.state.latitudeDelta,
+                        longitudeDelta: this.state.longitudeDelta}}
+                        onRegionChangeComplete={(region) => {
+                            this.latitudeDelta = region.latitudeDelta;
+                            this.longitudeDelta = region.longitudeDelta;
+                        }}
                         >
 
                         {this.renderMapViewMarkers()}
@@ -158,7 +166,8 @@ export class MapScreen extends React.Component {
                             key={val.latitude + val.longitude}
                             name={val.name}
                             pinColor={'#2196F3'}
-                            onPress = {() => this.setState({selectedBrewery : val, lat: val.latitude, lng: val.longitude})}
+                            onPress = {() => this.setState({selectedBrewery : val, lat: val.latitude, lng: val.longitude, latitudeDelta: this.latitudeDelta, longitudeDelta: this.longitudeDelta})}
+                            image={require('../resources/beer.png')}
                         />
                     )
                 })
