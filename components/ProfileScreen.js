@@ -89,6 +89,23 @@ export class ProfileScreen extends React.Component {
                                     <Image source={require('../resources/default_profile_picture.png')} style={styles.image_style} />
                             </View>
                         }
+<<<<<<< HEAD
+=======
+                        <Text style={styles.title_style}>{this.state.user.username}</Text>
+                            {this.state.user.age > 0 && <Text style={[styles.subtitle_style]}>
+                            {this.state.user.age == -1 ? "" : this.state.user.age} Years Old
+                        </Text>}
+                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" :
+                            this.state.user.num_children == 1 ? "1 Child" : this.state.user.num_children + " Children"}
+                        </Text>
+                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pet" :
+                            this.state.user.num_pet == 1 ? "1 Pet" : this.state.user.num_pet + " pet"}
+                        </Text>
+                        <Text style={[styles.subtitle_style]}>{(this.state.user.reviews == 0) ? "No Reviews Yet!" :
+                            this.state.user.reviews == 1 ? "1 Review" : this.state.user.reviews + " Reviews"}
+                        </Text>
+
+>>>>>>> df54ca475d4f8f524d6317e3c737d173d1503678
                         <View style={{marginBottom: 10}}/>
                         </LinearGradient>
                     </View>
