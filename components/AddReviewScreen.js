@@ -461,7 +461,9 @@ export class AddReviewScreen extends React.Component {
     }
 
     async pickImage() {
-        result = await ImagePicker.launchImageLibraryAsync({})
+        result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 3]});
         this.handleImage(result);
     }
 
