@@ -177,9 +177,11 @@ export class MapScreen extends React.Component {
 
     search() {
         this.setState({loading:true});
-        findLocation(this.state.query).then((location) => {
+        findLocation(encodeURI(this.state.query)).then((location) => {
           this.searchBreweries(location.lat, location.lng);
-        })
+      }).catch(() => {
+          this.setState({loading:false});
+      });
     }
 
     searchLocalBreweries() {
