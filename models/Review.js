@@ -22,6 +22,7 @@
 export default class Review {
     username;
     overallRating = 0;
+    upVotedSum = 0;
 
     kidFriendly = 0;
     strollerKids = 0;
@@ -47,7 +48,7 @@ export default class Review {
     comments;
     parking;
     breweryId;
-    breweryName;    
+    breweryName;
     latitude = 0;
     longitude = 0;
     photo = null;
@@ -73,5 +74,6 @@ export default class Review {
         this.comments = res.comments;
         this.brewerId = res.breweryId;
         this.breweryName = res.breweryName;
+        this.parking = res.parking;
     }
 }

@@ -20,7 +20,7 @@
 */
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { Footer, Container, Icon, List, ListItem } from 'native-base';
+import { Footer, Container, Icon, List, ListItem, CheckBox } from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
 import firebaseApp from '../firebase';
@@ -29,6 +29,7 @@ import StarRating from 'react-native-star-rating';
 import Review from '../models/Review';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { reportReview, deleteReview, getBreweryReviews, getUsersObject, getFavoriteState, setFavoriteState, isAdmin, isLoggedIn } from '../lib/FirebaseHelpers';
+import { ReviewCard } from './ReviewCard';
 
 export class BreweryScreen extends React.Component {
 
@@ -118,202 +119,249 @@ export class BreweryScreen extends React.Component {
                         visible={this.state.reviews == null}
                         textStyle={{color: '#000000'}} />
             <ScrollView style={{backgroundColor: '#fff'}}>
-            <Image
-                    style={{width: '100%', height: 200}}
-                    source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
-                />
+
             <View style={styles.container}>
                 <Text style={styles.title}>{this.state.brewery.name}</Text>
-                {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View>
-                    <Text style={styles.radio_title_top}>{'\n'}Overall Rating</Text>
-                    <StarRating
-                                disabled={true}
-                                maxStars={5}
-                                rating={this.state.revsAvg.overallRating}
-                                fullStarColor={'#eaaa00'}
-                                starSize={20}
-                                containerStyle={{width: '25%'}}
-                            />
+                <Text style={styles.subtitle}>City, ST</Text>
+                <Image
+                    style={{width: 125, height: 125, borderRadius: 5}}
+                    source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
+                />
+                <StarRating
+                            disabled={true}
+                            maxStars={5}
+                            rating={this.state.revsAvg.overallRating}
+                            fullStarColor={'#4D97E1'}
+                            starSize={25}
+                            containerStyle={{marginTop: 15, marginBottom: 15}}
+                        />
 
-                    <Text style={styles.radio_title_top}>{'\n'}Overall Kid Friendliness</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.kidFriendly}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    />
-                    <View style={{marginLeft: 10}}>
 
-                    {!!this.state.revsAvg.strollerKids &&
-                    <View>
-                    <Text style={styles.radio_title}>Stroller Kids</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.strollerKids}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-
-                    {!!this.state.revsAvg.kThroughSix &&
-                    <View>
-                    <Text style={styles.radio_title}>K-6</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.kThroughSix}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-
-                    {!!this.state.revsAvg.teenagers &&
-                    <View>
-                    <Text style={styles.radio_title}>Teenagers</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.teenagers}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
+                {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View style={{flexDirection:'row'}}>
+                    {
+                    //////////
+                    //left column
+                    /////////
+                    }
+                    <View style={{flex:1, marginRight: 12, justifyContent:'space-between'}}>
+                        {
+                        ///////
+                        //children & Accessibility
+                        ///////
+                        }
+                        <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                                <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                  <Text style={{fontSize:10}}> Children & Accessibility </Text>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
+                                    <Text style={{flex:3,fontSize:10}}> Stroller Kids </Text>
+                                    <View style={{ flex:1}}>
+                                        <CheckBox style={{checkboxSize: 15}} checked={this.state.revsAvg.strollerKids} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                        <Text style={{flex:3,fontSize:10}}> K - 6 </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.revsAvg.kThroughSix}  />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Teenagers </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.revsAvg.teenagers} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Changing Tables </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.revsAvg.hasChangingTables} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Family Restrooms </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.revsAvg.hasFamilyRestroom} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Wheelchair Access </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.revsAvg.isWheelchairAccessible} />
+                                    </View>
+                                </View>
+                        </View>
+                        {
+                        ////////
+                        //food
+                        ////////
+                        }
+                        <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                            <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                <Text style={{fontSize:10}}> Food </Text>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
+                                <Text style={{flex:3, fontSize:10, marginTop:3}}> Food </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.revsAvg.overallFood} />
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Food Diversity</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.revsAvg.foodOptionDiversity}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3}}>
+                                <Text style={{flex:3, fontSize:10, marginTop:3}}> Non-Alcoholic Drinks </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.revsAvg.nonAlcoholicOptions} />
+                                </View>
+                            </View>
+                        </View>
 
                     </View>
-                    <Text style={styles.radio_title_top}>{'\n'}Overall Environment Quality</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.environment}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    />
-                    <View style={{marginLeft: 10}}>
-                    {!!this.state.revsAvg.isSmokingPermitted &&
-                    <View>
-                    <Text style={styles.radio_title}>Smoking (1) restricted (5) prevalent</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.isSmokingPermitted}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-                    {!!this.state.revsAvg.seatingArrangements &&
-                    <View>
-                    <Text style={styles.radio_title}>Seating Arrangements</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.seatingArrangements}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
 
-                    {!!this.state.revsAvg.safety &&
-                    <View>
-                    <Text style={styles.radio_title}>Safety</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.safety}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
+                    {
+                    //////////
+                    //right column
+                    ////////
+                    }
+                    <View style={{flex:1, justifyContent:'space-between'}}>
+                        {
+                        /////////
+                        //4x4 visual icons
+                        ////////
+                        }
+                        <View style={{flexDirection: 'row', height:100, marginTop: 5}}>
+                            <View style={{flex:1, flexDirection: 'column', width:'100%'}}>
+                                <View style={{flex:1, marginBottom: 5}}>
+                                    {
+                                      this.state.revsAvg.petFriendly &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/dog.png')} />
+                                    }
+                                </View>
+                                <View style={{flex:1, marginBottom: 5}}>
+                                    {
+                                      this.state.revsAvg.isWheelchairAccessible &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/disability.png')} />
+                                    }
+                                </View>
+                            </View>
+                            <View style={{flex:1, flexDirection: 'column', width:'100%'}}>
+                                <View style={{flex:1, marginBottom: 5}}>
+                                    {
+                                      this.state.revsAvg.overallFood &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode:'contain'}} source={require('../resources/hamburger.png')} />
+                                    }
+                                </View>
+                                <View style={{flex:1}}>
+                                </View>
+                            </View>
+                        </View>
 
-                    {!!this.state.revsAvg.petFriendly &&
-                    <View>
-                    <Text style={styles.radio_title}>Pet Friendliness</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.petFriendly}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
+                        {
+                        //////////
+                        //environment
+                        //////////
+                        }
+                        <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                            <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                <Text style={{fontSize:10}}> Environment </Text>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                <Text style={{flex:3, fontSize:10}}> Smoking Allowed </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.revsAvg.isSmokingPermitted} />
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Seating </Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.revsAvg.seatingArrangements}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Safety</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.revsAvg.safety}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4}}>
+                                <Text style={{flex:3, fontSize:10}}> Pet Friendly </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.revsAvg.petFriendly} />
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Cleanliness</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.revsAvg.cleanliness}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Sound Level</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.revsAvg.soundLevel}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Parking </Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.revsAvg.parking}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                        </View>
 
-                    {!!this.state.revsAvg.cleanliness &&
-                    <View>
-                    <Text style={styles.radio_title}>Cleanliness</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.cleanliness}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-
-                    {!!this.state.revsAvg.soundLevel &&
-                    <View>
-                    <Text style={styles.radio_title}>Sound Level</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.soundLevel}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
                     </View>
-                    <Text style={styles.radio_title_top}>{'\n'}Overall Food Quality</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.overallFood}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    />
-                    <View style={{marginLeft: 10}}>
-                    {!!this.state.revsAvg.foodOptionDiversity &&
-                    <View>
-                    <Text style={styles.radio_title}>Food Option Diversity</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.foodOptionDiversity}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-                    {!!this.state.revsAvg.nonAlcoholicOptions &&
-                    <View>
-                    <Text style={styles.radio_title}>Non Alcoholic Options</Text>
-                    <StarRating
-                        disabled={true}
-                        maxStars={5}
-                        rating={this.state.revsAvg.nonAlcoholicOptions}
-                        fullStarColor={'#eaaa00'}
-                        starSize={20}
-                        containerStyle={{width: '25%'}}
-                    /></View>}
-                    </View>
-                    <Text style={styles.radio_title_top}>{'\n'}Logistics</Text>
-                    <Text style={styles.radio_title}>
-                    <Text>Enough changing tables:</Text>
-                    <Text style={{fontWeight:'bold'}}> {(this.state.revsAvg.hasChangingTables >= .5) ? 'Yes' : 'No'} </Text>
-                    </Text>
-                    <Text style={styles.radio_title}>
-                    <Text>Family restroom availability:</Text>
-                    <Text style={{fontWeight:'bold'}}> {(this.state.revsAvg.hasFamilyRestroom >= .5) ? 'Yes' : 'No'}</Text>
-                    </Text>
-                    <Text style={styles.radio_title}>
-                    <Text>Wheelchair accessible:</Text>
-                    <Text style={{fontWeight:'bold'}}> {(this.state.revsAvg.isWheelchairAccessible >= .5) ? 'Yes' : 'No'}</Text>
-                    </Text>
-                    <Text style={styles.radio_title_top}>Reviews:</Text>
-                    </View>
-                }
-                <View>{this.renderContent()}</View>
+                </View>
+              }
+
+              {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View style={{flexDirection: 'column', marginBottom:20, width: '100%'}}>
+
+                  {
+                  ///photos and User reviews
+
+
+                  ////////
+                  //image Carousel
+                  ////////
+                  }
+                  <View style={{flexDirection:'row', width:'100%'}}>
+                      <Text style={styles.radio_title_top}>Photos </Text>
+                  </View>
+
+                  <View style={{width:'100%', height:'10%'}}>
+                      <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        scrollEventThrottle={10}
+                        pagingEnabled>
+                              <Image
+                                  source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
+                              />
+
+                      </ScrollView>
+                  </View>
+
+                  <View style={{flexDirection:'row', width:'100%'}}>
+                      <Text style={styles.radio_title_top}>User Reviews </Text>
+                  </View>
+                  <View style={{width:'100%'}}>{this.renderContent()}</View>
+              </View>
+            }
+
             </View>
             </ScrollView>
 
@@ -358,7 +406,7 @@ export class BreweryScreen extends React.Component {
         return (
             <List style={styles.listStyle}>
                 <List>
-                    {this.renderReviewsList()}
+                    {this.renderReviewCardsList()}
                 </List>
             </List>
         );
@@ -368,7 +416,6 @@ export class BreweryScreen extends React.Component {
         if (this.state.reviews != null && this.state.reviews.length > 0 && this.state.userData != null) {
             return _.map(this.state.reviews, (rev) => {
 
-            	// Check to see if review is set to visible
                 return (
                     <ListItem key={new Date().getTime()}>
                         <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ReviewView", {navigation: this.props.navigation, review: rev})}>
@@ -422,6 +469,25 @@ export class BreweryScreen extends React.Component {
         }
     }
 
+    renderReviewCardsList() {
+        if (this.state.reviews != null && this.state.reviews.length > 0 && this.state.userData != null) {
+            return _.map(this.state.reviews, (rev) => {
+
+                return (
+                    <ReviewCard
+                        user = {this.state.userData[rev.userId]}
+                        review = {rev}
+                        navigation = {this.props.navigation}
+                    />
+                );
+            });
+        } else if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible) {
+            return (
+                <Text style={{textAlign: 'center'}}>No Reviews Yet!</Text>
+            )
+        }
+    }
+
     // Delete button listener
     deleteReview(rev, e) {
         deleteReview(rev.revId)
@@ -433,22 +499,23 @@ export class BreweryScreen extends React.Component {
     calcAvg(revs) {
         this.state.revsAvg.overallRating = this.avg(revs, "overallRating");
         this.state.revsAvg.kidFriendly = this.avg(revs,"kidFriendly");
-        this.state.revsAvg.strollerKids = this.avg(revs, "strollerKids");
-        this.state.revsAvg.kThroughSix = this.avg(revs, "kThroughSix");
-        this.state.revsAvg.teenagers = this.avg(revs, "teenagers");
+        this.state.revsAvg.strollerKids = this.majCheck(revs, "strollerKids");
+        this.state.revsAvg.kThroughSix = this.majCheck(revs, "kThroughSix");
+        this.state.revsAvg.teenagers = this.majCheck(revs, "teenagers");
         this.state.revsAvg.environment = this.avg(revs, "environment");
-        this.state.revsAvg.isSmokingPermitted = this.avg(revs, "isSmokingPermitted");
+        this.state.revsAvg.isSmokingPermitted = this.majCheck(revs, "isSmokingPermitted");
         this.state.revsAvg.seatingArrangements = this.avg(revs, "seatingArrangements");
         this.state.revsAvg.safety = this.avg(revs, "safety");
-        this.state.revsAvg.petFriendly = this.avg(revs, "petFriendly");
+        this.state.revsAvg.petFriendly = this.majCheck(revs, "petFriendly");
         this.state.revsAvg.cleanliness = this.avg(revs,"cleanliness");
         this.state.revsAvg.soundLevel = this.avg(revs, "soundLevel");
-        this.state.revsAvg.overallFood = this.avg(revs, "overallFood");
+        this.state.revsAvg.overallFood = this.majCheck(revs, "overallFood");
         this.state.revsAvg.foodOptionDiversity = this.avg(revs, "foodOptionDiversity");
-        this.state.revsAvg.nonAlcoholicOptions = this.avg(revs, "nonAlcoholicOptions");
-        this.state.revsAvg.hasChangingTables = this.avg2(revs, "hasChangingTables");
-        this.state.revsAvg.hasFamilyRestroom = this.avg2(revs, "hasFamilyRestroom");
-        this.state.revsAvg.isWheelchairAccessible = this.avg2(revs, "isWheelchairAccessible");
+        this.state.revsAvg.nonAlcoholicOptions = this.majCheck(revs, "nonAlcoholicOptions");
+        this.state.revsAvg.hasChangingTables = this.majCheck(revs, "hasChangingTables");
+        this.state.revsAvg.hasFamilyRestroom = this.majCheck(revs, "hasFamilyRestroom");
+        this.state.revsAvg.isWheelchairAccessible = this.majCheck(revs, "isWheelchairAccessible");
+        this.state.revsAvg.parking = this.avg(revs, "parking");
     }
 
     avg(revs, prop) {
@@ -475,11 +542,26 @@ export class BreweryScreen extends React.Component {
         if(cntr)
             return sum / cntr;
         return null;
-    }}
+    }
+
+    majCheck(revs, prop) {
+        cYes = 0;
+        cNo = 0;
+        revs.forEach((rev) => {
+          if(rev[prop]) {
+            cYes++;
+          } else {
+            cNo++;
+          }
+        });
+        return cYes >= cNo;
+    }
+}
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
+    alignItems:'center',
     marginLeft: 10,
     marginRight: 10,
     marginTop: 5,
@@ -489,10 +571,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginBottom: 5,
   },
   subtitle: {
       fontSize: 18,
       fontWeight: 'bold',
+      marginBottom: 5,
   },
   list_item_title: {
       fontWeight: 'bold',
