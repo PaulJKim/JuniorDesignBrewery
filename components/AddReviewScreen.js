@@ -19,7 +19,7 @@
 * SOFTWARE IS DISCLAIMED.
 */
 import React from 'react';
-import { Platform, StyleSheet, View, Text, TextInput, Image, ScrollView, BackHandler, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, View, Text, TextInput, Image, ScrollView, BackHandler, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { Footer, Container, CheckBox, ListItem, Button, Header, Content, Icon} from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
@@ -294,8 +294,6 @@ export class AddReviewScreen extends React.Component {
                                 </View>
                             }
 
-
-
                             {
                               //FOOD
                             }
@@ -381,11 +379,10 @@ export class AddReviewScreen extends React.Component {
                             }
                             {
                               this.state.numberedView != 1 &&
-                              <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%'}} onPress={()=>{this.state.numberedView >= 2 ? this.setState({numberedView: this.state.numberedView - 1}) : null}}>
-                                  <Icon
-                                    name="chevron-left"
-                                    type="Entypo"
-                                  />
+                              <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%', justifyContent: 'center'}} onPress={()=>{this.state.numberedView >= 2 ? this.setState({numberedView: this.state.numberedView - 1}) : null}}>
+                                  <Image
+                                    style={{width: 25, height: 25}}
+                                    source={require('../resources/chevron.png')} />
                               </TouchableOpacity>
 
                             }
@@ -394,11 +391,10 @@ export class AddReviewScreen extends React.Component {
                                 </View>
                                 {
                                   this.state.numberedView != 4 &&
-                                  <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%'}} onPress={()=>{this.state.numberedView <= 3 ? this.setState({numberedView: this.state.numberedView + 1}) : null}}>
-                                      <Icon
-                                        name="chevron-right"
-                                        type="Entypo"
-                                      />
+                                  <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%', justifyContent: 'center'}} onPress={()=>{this.state.numberedView <= 3 ? this.setState({numberedView: this.state.numberedView + 1}) : null}}>
+                                    <Image
+                                      style={{width: 25, height: 25}}
+                                      source={require('../resources/chevron1.png')} />
                                   </TouchableOpacity>
 
                                 }
