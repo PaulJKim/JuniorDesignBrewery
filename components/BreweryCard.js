@@ -42,8 +42,11 @@ export class BreweryCard extends React.Component {
     													disabled={true}
     													maxStars={5}
     													rating={this.props.curBrewRating}
-    													fullStarColor={'#4D97E1'}
-    													starSize={20} />
+    													starSize={20}
+                                                        fullStar={require('../resources/beer.png')}
+                                                        emptyStar={require('../resources/empty_beer.png')}
+                                                        halfStar={require('../resources/half_beer.png')}
+                                                />
     									</View>
     									<View style={{flex: 1, flexDirection: 'row'}}>
     											<Text> {this.props.curBrewDist} </Text>
