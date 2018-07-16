@@ -153,7 +153,7 @@ export class RegisterScreen extends React.Component {
             num_children: 0,
             num_pet: 0,
             reviews: 0,
-            username: this.state.username.trim(),
+            username: this.state.username.trim()
           },
           privateData:{
             email: this.state.email.trim()
@@ -164,7 +164,7 @@ export class RegisterScreen extends React.Component {
           username: this.state.username.trim(),
           email: this.state.email.trim(),
           description: "None",
-          age: -1,
+          age: 18,
           num_children: 0,
           num_pet: 0,
           reviews: 0,

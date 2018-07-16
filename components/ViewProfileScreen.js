@@ -17,7 +17,7 @@
 * ALL LIABILITY, INCLUDING LIABILITY FOR INFRINGEMENT OF ANY PATENTS,
 * COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS, RELATING TO USE OF THIS
 * SOFTWARE IS DISCLAIMED.
-*/ 
+*/
 
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableHighlight, TouchableOpacity, ScrollView, Button } from 'react-native';
@@ -78,7 +78,7 @@ export class ViewProfileScreen extends React.Component {
                             this.state.user.num_children == 1 ? "1 Child" : this.state.user.num_children + " Children"}
                         </Text>
 
-                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pet" :
+                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pets" :
                             this.state.user.num_pet == 1 ? "1 Pet" : this.state.user.num_pet + " Pets"}
                         </Text>
 
