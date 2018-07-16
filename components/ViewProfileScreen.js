@@ -17,7 +17,7 @@
 * ALL LIABILITY, INCLUDING LIABILITY FOR INFRINGEMENT OF ANY PATENTS,
 * COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS, RELATING TO USE OF THIS
 * SOFTWARE IS DISCLAIMED.
-*/
+*/ 
 
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableHighlight, TouchableOpacity, ScrollView, Button } from 'react-native';
@@ -74,22 +74,21 @@ export class ViewProfileScreen extends React.Component {
                         </TouchableHighlight>
                         <Text style={styles.title_style}>{this.state.user.username}</Text>
                         {this.state.user.age > 0 && <Text style={[styles.subtitle_style]}>{this.state.user.age == -1 ? "" : this.state.user.age} Years Old</Text>}
-                        <Text style={[styles.subtitle_style2]}>Children: </Text>
                         <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" :
                             this.state.user.num_children == 1 ? "1 Child" : this.state.user.num_children + " Children"}
                         </Text>
 
-                        <Text style={[styles.subtitle_style2]}>Pet: </Text>
                         <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pet" :
-                            this.state.user.num_pet == 1 ? "1 Pet" : this.state.user.num_pet + " Pet"}
+                            this.state.user.num_pet == 1 ? "1 Pet" : this.state.user.num_pet + " Pets"}
                         </Text>
+
+                        <Text style={[styles.subtitle_style]}>{(this.state.user.reviews == 0) ? "No Reviews Yet" :
+                            this.state.user.reviews == 1 ? "1 Review" : this.state.user.reviews + " Reviews"}
+                        </Text>
+
 
                         <View style={{marginBottom: 10}}/>
                         </LinearGradient>
-                    </View>
-                    <View style={{width: '100%', padding: 10, flexDirection: 'row'}}>
-                        <Text style={[styles.subtitle_style2]}>Name: </Text>
-                        <Text style={styles.subtitle_style3}>{this.state.user.description}</Text>
                     </View>
                     <Button
                         title="Report"
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
       image_style: {
-        borderRadius: 75,
+        borderRadius: 100,
         width: 150,
         height: 150,
         marginTop: 20,
