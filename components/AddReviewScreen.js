@@ -143,7 +143,7 @@ export class AddReviewScreen extends React.Component {
     render() {
         return (
             <View style={{height:'100%', width:'100%', backgroundColor:'#FFFFFF'}}>
-                <KeyboardAvoidingView behavior="padding" style={styles.container}>
+                <Content style={styles.container}>
                     <View style={{height:'100%', flexDirection: 'column', alignItems:'center'}}>
                             <View style={{flex:1, width:'100%', justifyContent: 'center'}}>
                                 <Text style={styles.title}>{this.state.breweryName}</Text>
@@ -340,35 +340,32 @@ export class AddReviewScreen extends React.Component {
 
                             {
                                 this.state.numberedView == 4 &&
-                                    <ScrollView>
-                                        <View style={{flexDirection: 'column', width:300, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                                    <View style={{flexDirection: 'column', width:300, borderRadius:5, marginTop: 10, marginBottom:10}}>
 
-                                            <View style={{width:300, borderRadius:5}}>
-                                                <View style={{backgroundColor: 'pink'}}>
-                                                    <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={this.pickImage.bind(this)}>
-                                                        <Icon
-                                                          name="camera"
-                                                          type="Entypo"
-                                                          color='#1DA664'
-                                                        />
-                                                    </TouchableOpacity>
-                                                </View>
-
-                                                {
-                                                  this.state.image != null &&
-                                                  <Image source={{ uri: this.state.image }}  style={styles.image} />
-                                                }
-
-                                                <Text style={styles.radio_title}>Overall Comments:</Text>
-                                                <TextInput
-                                                    style={styles.textinput}
-                                                    onChangeText={(comments) => this.setState({comments})}
-                                                    value={this.state.comments}
-                                                    placeholder="Tell us about your visit" />
+                                        <View style={{width:300, borderRadius:5}}>
+                                            <View style={{backgroundColor: 'pink'}}>
+                                                <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={this.pickImage.bind(this)}>
+                                                    <Icon
+                                                      name="camera"
+                                                      type="Entypo"
+                                                      color='#1DA664'
+                                                    />
+                                                </TouchableOpacity>
                                             </View>
-                                        </View>
-                                    </ScrollView>
 
+                                            {
+                                              this.state.image != null &&
+                                              <Image source={{ uri: this.state.image }}  style={styles.image} />
+                                            }
+
+                                            <Text style={styles.radio_title}>Overall Comments:</Text>
+                                            <TextInput
+                                                style={styles.textinput}
+                                                onChangeText={(comments) => this.setState({comments})}
+                                                value={this.state.comments}
+                                                placeholder="Tell us about your visit" />
+                                        </View>
+                                    </View>
                             }
                             </View>
 
@@ -380,7 +377,7 @@ export class AddReviewScreen extends React.Component {
                             }
                             {
                               this.state.numberedView != 1 &&
-                              <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%', justifyContent: 'center'}} onPress={()=>{this.state.numberedView >= 2 ? this.setState({numberedView: this.state.numberedView - 1}) : null}}>
+                              <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height: 50, justifyContent: 'center'}} onPress={()=>{this.state.numberedView >= 2 ? this.setState({numberedView: this.state.numberedView - 1}) : null}}>
                                   <Image
                                     style={{width: 25, height: 25}}
                                     source={require('../resources/chevron.png')} />
@@ -392,7 +389,7 @@ export class AddReviewScreen extends React.Component {
                                 </View>
                                 {
                                   this.state.numberedView != 4 &&
-                                  <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%', justifyContent: 'center'}} onPress={()=>{this.state.numberedView <= 3 ? this.setState({numberedView: this.state.numberedView + 1}) : null}}>
+                                  <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height: 50, justifyContent: 'center'}} onPress={()=>{this.state.numberedView <= 3 ? this.setState({numberedView: this.state.numberedView + 1}) : null}}>
                                     <Image
                                       style={{width: 25, height: 25}}
                                       source={require('../resources/chevron1.png')} />
@@ -402,7 +399,7 @@ export class AddReviewScreen extends React.Component {
                                 {
                                   this.state.numberedView == 4 &&
                                   <TouchableOpacity
-                                          style={{ flex:1, backgroundColor: 'pink', alignItems: 'center', height:'33%', justifyContent:'center'}}
+                                          style={{ flex:1, backgroundColor: 'pink', alignItems: 'center', height: 50, justifyContent:'center'}}
                                           onPress={this.submitReview.bind(this)}>
                                           <Text style={{color: 'black', fontSize:16, fontWeight:'bold'}}>SUBMIT</Text>
                                   </TouchableOpacity>
@@ -411,7 +408,7 @@ export class AddReviewScreen extends React.Component {
 
                             </View>
                     </View>
-                </KeyboardAvoidingView>
+                </Content>
             </View>
         )
     }
