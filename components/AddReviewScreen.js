@@ -21,6 +21,7 @@
 import React from 'react';
 import { Platform, StyleSheet, View, Text, TextInput, Image, ScrollView, BackHandler, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { Footer, Container, CheckBox, ListItem, Button, Header, Content, Icon} from 'native-base';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
 import firebaseApp from '../firebase';
@@ -87,6 +88,7 @@ export class AddReviewScreen extends React.Component {
             parking: 0,
 
             comments: "",
+            commentsHeight: 100,
             revId: 0,
             breweryName: this.props.navigation.state.params.brewery.name,
             photo: null,
@@ -143,7 +145,7 @@ export class AddReviewScreen extends React.Component {
     render() {
         return (
             <View style={{height:'100%', width:'100%', backgroundColor:'#FFFFFF'}}>
-                <Content style={styles.container}>
+                <KeyboardAwareScrollView>
                     <View style={{height:'100%', flexDirection: 'column', alignItems:'center'}}>
                             <View style={{flex:1, width:'100%', justifyContent: 'center'}}>
                                 <Text style={styles.title}>{this.state.breweryName}</Text>
@@ -359,11 +361,19 @@ export class AddReviewScreen extends React.Component {
                                             }
 
                                             <Text style={styles.radio_title}>Overall Comments:</Text>
-                                            <TextInput
-                                                style={styles.textinput}
-                                                onChangeText={(comments) => this.setState({comments})}
-                                                value={this.state.comments}
-                                                placeholder="Tell us about your visit" />
+                                            <View style={styles.text_wrapper}>
+                                                <TextInput
+                                                    style={[styles.textinput, {height: this.state.commentsHeight}]}
+                                                    onChangeText={(comments) => this.setState({comments: comments})}
+                                                    onContentSizeChange={(event) => {
+                                                        this.setState({commentsHeight: Math.max(100, event.nativeEvent.contentSize.height)})
+                                                    }}
+                                                    value={this.state.comments}
+                                                    placeholder="Tell us about your visit"
+                                                    multiline={true}
+                                                    underlineColorAndroid="transparent"
+                                                />
+                                            </View>
                                         </View>
                                     </View>
                             }
@@ -408,7 +418,7 @@ export class AddReviewScreen extends React.Component {
 
                             </View>
                     </View>
-                </Content>
+                </KeyboardAwareScrollView>
             </View>
         )
     }
@@ -493,15 +503,17 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   textinput: {
-    height: 100,
     fontSize: 11,
     width:300,
     maxWidth: '100%',
-    marginTop: 5,
-    marginBottom: 5,
-    borderColor: 'gray',
-    borderRadius: 5,
-    borderWidth: 1
+    margin: 5
+  },
+  text_wrapper: {
+      marginTop: 5,
+      marginBottom: 5,
+      borderColor: 'gray',
+      borderRadius: 5,
+      borderWidth: 1
   },
   button: {
     width: '80%',
