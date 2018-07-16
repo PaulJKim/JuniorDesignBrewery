@@ -60,7 +60,13 @@ export class MainScreen extends React.Component {
                 }
             }}>
                 <View style={{marginLeft: 15}}>
-                    <Icon name='md-arrow-back' style={{color:'white'}}/>
+                    {
+                        isLoggedIn() ?
+                        <Icon name='md-log-out' style={{color:'white'}}/>
+                        :
+                        <Icon name='md-log-in' style={{color:'white'}}/>
+                    }
+
                 </View>
             </TouchableOpacity>
         ),
