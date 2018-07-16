@@ -34,8 +34,11 @@ export class LoadingScreen extends React.Component {
     super(props);
   }
 
-  render() {
+  componentDidMount() {
       this.props.navigation.navigate("Main", {navigation: this.props.navigation});
+  }
+
+  render() {
       return (
           <Text style={{fontSize:12}}></Text>
     );
