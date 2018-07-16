@@ -71,22 +71,11 @@ export class MainScreen extends React.Component {
             </TouchableOpacity>
         ),
          headerRight: (
-            <View style={{width:80, display:'flex', flexDirection:'row'}}>
-
+            <View style={{display:'flex', flexDirection:'row', marginRight: 30}}>
                 <TouchableOpacity style={{flex: 1}}
                     onPress={() => {global.mapVisible = !global.mapVisible; navigation.state.params.parent.setState({}); navigation.setParams({});}}>
                 <Icon name={(global.mapVisible) ? "list" : "md-map"} style={{color: [(navigation.state.params.tab == MAP_TAB) ? 'white' : '#2196F3']}}/>
                 </TouchableOpacity>
-
-                <View style={{flex:1, marginRight: 15}}>
-                {(navigation.state.params.tab !== PROFILE_TAB && navigation.state.params.tab !== FAVORITES_TAB)
-                        && <ModalDropdown dropdownStyle = {{flexDirection:'row', height:127}}
-                        dropdownTextStyle={{fontWeight:'bold', fontSize:16, color:'black'}}
-                        options={['Distance', 'Name', 'Rating']}
-                        onSelect = {(index, value) => {navigation.state.params.sortClick(index)}}>
-                        <Icon style={{paddingLeft: 20, color:"#FFFFFF"}}name="md-more"/>
-                    </ModalDropdown>}
-                </View>
             </View>),
     });
     componentDidMount() {
