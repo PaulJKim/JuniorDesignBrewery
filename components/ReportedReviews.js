@@ -20,12 +20,14 @@
 */
 
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text, Image, TouchableOpacity, Button } from 'react-native';
-import { Footer, Container, Icon, List, ListItem } from 'native-base';
+import _ from 'lodash';
+import { ScrollView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { Footer, Container, Icon, List, ListItem, Button } from 'native-base';
 import firebaseApp from '../firebase';
 import { ImagePicker, LinearGradient } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getReportedReviews, isAdmin, getUsersObject, approveReview, deleteReview } from '../lib/FirebaseHelpers';
+import { ReviewCard } from './ReviewCard';
 
 console.disableYellowBox = true;
 
@@ -62,76 +64,67 @@ export class ReportedReviews extends React.Component {
 
     render() {
         return (
-            <View style={{height: '100%'}}>
-            <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
-                        color={"rgb(66,137,244)"}
-                        visible={this.state.reviews == null}
-                        textStyle={{color: '#000000'}} />
-            <ScrollView style={{backgroundColor: '#fff'}}>
-            <View style={styles.container}>
-                <View>{this.renderContent()}</View>
-            </View>
-            </ScrollView>
-            </View>
+            <Container>
+                <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
+                            color={"rgb(66,137,244)"}
+                            visible={this.state.reviews == null}
+                            textStyle={{color: '#000000'}} />
+                <View style={{flex: 1, backgroundColor:'white'}}>
+                    {this.renderContent()}
+                </View>
+            </Container>
         )
     }
 
     renderContent() {
-        return (
-            <List style={styles.listStyle}>
-                <List>
-                    {this.renderReviewsList()}
-                </List>
-            </List>
-        );
+        if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible && this.state.userData) {
+            return(
+                <View style={{height:'100%', width:'100%', alignContent:'center', alignItems:'center', backgroundColor:'white', display:'flex'}}>
+                <View style={{flex:1}}/>
+                <Text style={{textAlign: 'center', flex:1}}>No Reported Reviews Yet!</Text>
+                </View>
+            )
+        }
+        if(this.state.userData) {
+          return (
+              <ScrollView>
+                  <List style={styles.listStyle}>
+                      {this.renderReviewsList()}
+                  </List>
+              </ScrollView>
+          );
+        }
     }
 
     renderReviewsList() {
-        if (this.state.reviews != null && this.state.reviews.length > 0 && this.state.userData != null) {
+        if(this.state.reviews != null) {
             return _.map(this.state.reviews, (rev) => {
-
-                // Check to see if review is set to visible
                 return (
-                    <ListItem key={new Date().getTime()}>
-                        <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}} onPress={() => this.props.navigation.navigate("ReviewView", {navigation: this.props.navigation, review: rev})}>
-                            <View style={{flex: 1, paddingTop: 7, paddingRight: 10}}>
-                                {this.state.userData[rev.userId].image ?
-                                        <Image style={{height: 50, width: 50, borderRadius: 100}} source={{ uri: this.state.userData[rev.userId].image}} />
-                                    :
-                                        <Image style={{height: 50, width: 50, borderRadius: 100}} source={require('../resources/default_profile_picture.png')} />
-                                }
+                    <View style={{width:'100%'}}>
+                        <ReviewCard
+                            review = {rev}
+                            user = {this.state.userData[rev.userId]}
+                            breweryName = {rev.breweryName}
+                            navigation = {this.props.navigation}
+                        />
+
+                        <View style={styles.admin_container}>
+                            <View style={styles.approve_button}>
+                                <Button transparent dark onPress={this.approveReview.bind(this, rev)} >
+                                    <Icon name="checkmark" type="Ionicons" />
+                                </Button> 
                             </View>
-                            <View style={{flex: 5}}>
-                                <Text style={styles.list_item_title}>{rev.username}</Text>
-                                <Text style={{width: '100%'}}>"{rev.comments}"</Text>
-                                <View>
-                                    {this.state.isAdmin ? (
-                                        <Button
-                                        title="Delete Review"
-                                        onPress={this.deleteReview.bind(this, rev)}
-                                        color="red"
-                                        >
-                                        Delete
-                                        </Button>
-                                    ) : (
-                                        null
-                                    )}
-                                </View>
-                                <Button
-                                    title="Approve"
-                                    color="green"
-                                    onPress={this.approveReview.bind(this, rev)}
+                            <View style={styles.delete_button}>
+                                <Button transparent dark
+                                    onPress={this.deleteReview.bind(this, rev)} 
                                 >
+                                    <Icon name="trash" type="Ionicons" />
                                 </Button>
                             </View>
-                        </TouchableOpacity>
-                    </ListItem>
+                        </View>
+                    </View>
                 );
             });
-        } else if(this.state.reviews != null && this.state.reviews.length == 0 && !this.state.spinnerVisible) {
-            return (
-                <Text style={{textAlign: 'center'}}>No Reported Reviews Yet!</Text>
-            )
         }
     }
 
@@ -153,23 +146,33 @@ export class ReportedReviews extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 12,
-    flexDirection: 'row',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  text: {
-    marginLeft: 12,
-    fontSize: 16,
-  },
-  photo: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-  },
-  separator: {
+  listStyle: {
     flex: 1,
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#8E8E8E',
+    backgroundColor: "#fff",
+    width: '100%'
+  },
+  admin_container: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 15
+  },
+  delete_button: {
+    backgroundColor: 'red',
+    width: '15%',
+    height: 40
+  },
+  approve_button: {
+    backgroundColor: 'green',
+    width: '15%',
+    height: 40
   }
 });
