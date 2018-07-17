@@ -26,7 +26,7 @@ export class ReviewCard extends React.Component {
                                 </View>
 
                                 <View style={{flexDirection:'column', justifyContent:'center'}}>
-                                    <View style={{marginBottom:5}}>
+                                    <View style={{marginBottom:5, flex:1, flexDirection:"row"}}>
                                         <Text style={{fontWeight:'bold'}}>{this.props.user.username}</Text>
                                     </View>
                                     <View style={{flexDirection:'row', justifyContent:'flex-start'}}>
