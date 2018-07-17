@@ -501,6 +501,7 @@ export class BreweryScreen extends React.Component {
                         user = {this.state.userData[rev.userId]}
                         review = {rev}
                         navigation = {this.props.navigation}
+                        reportFunction = {this.reportFunction.bind(this)}
                     />
                 );
             });
@@ -578,6 +579,28 @@ export class BreweryScreen extends React.Component {
           }
         });
         return cYes >= cNo;
+    }
+
+    reportFunction(reviewId) {
+        if (isLoggedIn()) {
+            Alert.alert(
+                'Report Review',
+                'Do you wish to report this review for inappropriate content?',
+                [
+                {text: 'No', style: 'cancel'},
+                {text: 'Yes', onPress: () => reportReview(reviewId)},
+                ],
+                { cancelable: false });
+        } else {
+            Alert.alert(
+                'You must be logged in to use this feature',
+                'Login?',
+                [
+                {text: 'No', style: 'cancel'},
+                {text: 'Yes', onPress: () => {this.props.navigation.navigate("Login", {brewery: ""})}},
+                ],
+                { cancelable: false });
+        }
     }
 }
 
