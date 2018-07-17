@@ -36,8 +36,7 @@ export class ProfileScreen extends React.Component {
             edit_mode: false,
             user: null,
             image: null,
-            isAdmin: false,
-            profane_content: false
+            isAdmin: false
         }
         this.old_vals = null;
         this.old_image = null;
@@ -176,7 +175,6 @@ export class ProfileScreen extends React.Component {
                     <View style={{width: '100%', padding: 10}}>
                         <Text style={[styles.subtitle_style, {marginTop: 10}]}>Bio:</Text>
                         <TextInput style={{paddingBottom: 10}}multiline={true} value={this.state.user.description} onChangeText={(description) => {this.state.user.description = description; this.setState({user: this.state.user})}}></TextInput>
-                        {this.state.profane_content && <Text style={{color:'red'}}>Please use clean language in the Bio!</Text>}
                     </View>
                     <View style={{width: '100%', paddingLeft: 10, display: 'flex', flexDirection: 'row'}}>
                         <Text style={[styles.subtitle_style, {marginTop: 3, flex: 1}]}>Age: </Text>
@@ -212,14 +210,6 @@ export class ProfileScreen extends React.Component {
     }
 
     confirmEdits() {
-
-        var Filter = require('bad-words'),
-            filter = new Filter();
-        
-        if(filter.isProfane(this.state.user.description)) {
-            this.setState({profane_content: true});
-            return;
-        }
 
         this.old_vals = Object.assign({}, this.state.user);
         setUserData(this.state.user);
