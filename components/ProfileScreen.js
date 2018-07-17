@@ -73,7 +73,7 @@ export class ProfileScreen extends React.Component {
     renderContent() {
         return (
             <Container>
-                <Content>
+                <Content style={{backgroundColor:'white'}}>
                 <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                 color={"rgb(66,137,244)"}
                 visible={(this.state.user == null)}
