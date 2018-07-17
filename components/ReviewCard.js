@@ -48,7 +48,7 @@ export class ReviewCard extends React.Component {
                                 <Icon name="beer" type="Ionicons" />
                             </Button>
                             <Button transparent dark onPress={() => this.props.reportFunction(this.props.review.revId)}>
-                                <Icon name="flag" type="simpleLineIcons" />
+                                <Icon name="flag" type="simpleLineIcons" style={{color:'#FF4136'}}/>
                             </Button>
                         </View>
                     </View>
