@@ -33,34 +33,43 @@ import { getBreweries, findLocation, calculateDistance, getLocation } from '../l
 export class MapScreen extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            query: "",
-            breweries: [],
-            lat: null,
-            lng: null,
-            mapVisible: true,
-            selectedBrewery: null,
-            loading: false,
-            curLat: null,
-            curLng: null,
-            latitudeDelta: 0.6,
-            longitudeDelta: 0.6,
+        global.mapVisible = true;
+        if (global.mapState) {
+            this.state = global.mapState;
+            this.state.mapVisible = false;
+            this.latitudeDelta = this.state.latitudeDelta;
+            this.longitudeDelta = this.state.longitudeDelta;
+            this.loadedFromMemory = true;
+        } else {
+            this.state = {
+                query: "",
+                breweries: [],
+                lat: null,
+                lng: null,
+                mapVisible: true,
+                selectedBrewery: null,
+                loading: false,
+                curLat: null,
+                curLng: null,
+                latitudeDelta: 0.6,
+                longitudeDelta: 0.6,
+            }
+            this.latitudeDelta = 0.6;
+            this.longitudeDelta = 0.6;
+            this.loadedFromMemory = false;
         }
-        this.latitudeDelta = 0.6;
-        this.longitudeDelta = 0.6;
         global.main = true;
-        if(global.mapVisible == null) {
-            global.mapVisible = true;
-        }
         this.mapsApiKey = Expo.Constants.manifest.android.config.googleMaps.apiKey;
     }
 
     componentDidMount() {
-        this.setState({breweries: global.breweries});
-        this.searchLocalBreweries();
+        if (!this.loadedFromMemory) {
+            this.searchLocalBreweries();
+        }
     }
 
     render() {
+        global.mapState = this.state;
         return (
             <Container>
                 <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
