@@ -242,6 +242,7 @@ export class ProfileScreen extends React.Component {
     }
 
     confirmEdits() {
+
         this.old_vals = Object.assign({}, this.state.user);
         setUserData(this.state.user);
         if (this.newImage) {

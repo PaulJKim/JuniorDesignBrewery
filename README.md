@@ -54,3 +54,10 @@ export default firebaseApp = firebase.initializeApp(config);
 This application is licensed under the GNU General Public License v3.0
   
 The icon for the application is attributed to "brewery by Vicons Design from the Noun Project" used under the Creative Commons license https://creativecommons.org/licenses/by/3.0/legalcode
+
+Content Filtering is enabled using the bad-words library
+https://github.com/web-mech/badwords
+
+The MIT License (MIT)
+
+Copyright (c) 2013 Michael Price
