@@ -21,6 +21,7 @@
 
 import React from 'react';
 import { Platform, BackHandler, StyleSheet, Button, Text, TextInput, ViewText, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Content } from 'native-base';
 import firebaseApp from '../firebase';
 import { NavigationActions } from 'react-navigation';
 
@@ -52,9 +53,11 @@ export class ResetPassword extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        {this.renderComponent()}
-      </View>
+        <Content style={{backgroundColor:"white"}}>
+            <View style={styles.container}>
+                  {this.renderComponent()}
+            </View>
+        </Content>
     );
   }
 

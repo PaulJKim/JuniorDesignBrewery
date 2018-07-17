@@ -30,7 +30,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
  } from 'react-native';
-import { CheckBox, ListItem } from 'native-base';
+import { CheckBox, ListItem, Content } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import firebaseApp from '../firebase';
 
@@ -62,6 +62,7 @@ export class RegisterScreen extends React.Component {
 
   render() {
     return (
+    <Content style={{backgroundColor:"white"}}>
       <View style={styles.container}>
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Text style={{textAlign:'left', color:'gray'}}>You'll use your email and password to login in</Text>
@@ -110,6 +111,7 @@ export class RegisterScreen extends React.Component {
           { this.state.registerFailed && <Text style={{color: "#ff0000"}}>{this.state.errorMessage}</Text>}
         </KeyboardAvoidingView>
       </View>
+    </Content>
     );
   }
 

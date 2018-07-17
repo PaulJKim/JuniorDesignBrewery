@@ -21,6 +21,7 @@
 
 import React from 'react';
 import { Platform, BackHandler, StyleSheet, Button, Text, TextInput, ViewText, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Content } from 'native-base';
 import firebaseApp from '../firebase';
 import { NavigationActions } from 'react-navigation';
 
@@ -57,9 +58,11 @@ export class LoginScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        {this.renderComponent()}
-      </View>
+        <Content style={{backgroundColor:"white"}}>
+            <View style={styles.container}>
+                  {this.renderComponent()}
+            </View>
+        </Content>
     );
   }
 
@@ -99,7 +102,7 @@ export class LoginScreen extends React.Component {
                   onPress={this.login.bind(this)}>
                   <Text style={{color:"#FFF", fontSize:16, fontWeight:'bold'}}>LOGIN</Text>
               </TouchableOpacity>
-              
+
             </View>
         </KeyboardAvoidingView>
 
