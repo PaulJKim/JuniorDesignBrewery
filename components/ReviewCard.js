@@ -25,15 +25,18 @@ export class ReviewCard extends React.Component {
                                     }
                                 </View>
 
-                                <View style={{flexDirection:'row', alignItems:'center'}}>
-                                    <Text style={{fontWeight:'bold'}}>{this.props.user.username}</Text>
-
-                                    <StarRating
-                                            disabled={true}
-                                            maxStars={5}
-                                            rating={this.props.review.overallRating}
-                                            fullStarColor={'#eaaa00'}
-                                            starSize={15} />
+                                <View style={{flexDirection:'column', justifyContent:'center'}}>
+                                    <View style={{marginBottom:5}}>
+                                        <Text style={{fontWeight:'bold'}}>{this.props.user.username}</Text>
+                                    </View>
+                                    <View style={{flexDirection:'row', justifyContent:'flex-start'}}>
+                                        <StarRating
+                                                disabled={true}
+                                                maxStars={5}
+                                                rating={this.props.review.overallRating}
+                                                fullStarColor={'#eaaa00'}
+                                                starSize={15} />
+                                    </View>
                                 </View>
                             </View>
                             <Text>{this.props.review.comments}</Text>

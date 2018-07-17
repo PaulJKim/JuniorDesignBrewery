@@ -20,7 +20,7 @@
 */
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, Button, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { Footer, Container, Icon, List, ListItem } from 'native-base';
+import { Footer, Container, Icon, List, ListItem, CheckBox } from 'native-base';
 import _ from 'lodash';
 import Brewery from '../models/Brewery';
 import firebaseApp from '../firebase';
@@ -82,203 +82,212 @@ export class ReviewScreen extends React.Component {
                         </View>
                     </View>
                 </TouchableOpacity>
-
-                <Text style={styles.radio_title_top}>{'\n'}Overall Rating</Text>
-                <StarRating
-                            disabled={true}
-                            maxStars={5}
-                            rating={this.state.review.overallRating}
-                            fullStarColor={'#eaaa00'}
-                            starSize={20}
-                            containerStyle={{width: '25%'}}
-                        />
-
-                <Text style={styles.radio_title_top}>{'\n'}Overall Kid Friendliness</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.kidFriendly}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                />
-                <View style={{marginLeft: 10}}>
-
-                {!!this.state.review.strollerKids &&
-                <View>
-                <Text style={styles.radio_title}>Stroller Kids</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.strollerKids}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
-
-                {!!this.state.review.kThroughSix &&
-                <View>
-                <Text style={styles.radio_title}>K-6</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.kThroughSix}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
-
-                {!!this.state.review.teenagers &&
-                <View>
-                <Text style={styles.radio_title}>Teenagers</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.teenagers}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
-
-                </View>
-                <Text style={styles.radio_title_top}>{'\n'}Overall Environment Quality</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.environment}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                />
-                <View style={{marginLeft: 10}}>
-                {!!this.state.review.isSmokingPermitted &&
-                <View>
-                <Text style={styles.radio_title}>Smoking (1) restricted (5) prevalent</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.isSmokingPermitted}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
-                {!!this.state.review.seatingArrangements &&
-                <View>
-                <Text style={styles.radio_title}>Seating Arrangements</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.seatingArrangements}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
-
-                {!!this.state.review.safety &&
-                <View>
-                <Text style={styles.radio_title}>Safety</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.safety}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
-
-                {!!this.state.review.petFriendly &&
-                <View>
-                <Text style={styles.radio_title}>Pet Friendliness</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.petFriendly}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
-
-                {!!this.state.review.cleanliness &&
-                <View>
-                <Text style={styles.radio_title}>Cleanliness</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.cleanliness}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
-
-                {!!this.state.review.soundLevel &&
-                <View>
-                <Text style={styles.radio_title}>Sound Level</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.soundLevel}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
-                </View>
-                <Text style={styles.radio_title_top}>{'\n'}Overall Food Quality</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.overallFood}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                />
-                <View style={{marginLeft: 10}}>
-                {!!this.state.review.foodOptionDiversity &&
-                <View>
-                <Text style={styles.radio_title}>Food Option Diversity</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.foodOptionDiversity}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
-                {!!this.state.review.nonAlcoholicOptions &&
-                <View>
-                <Text style={styles.radio_title}>Non Alcoholic Options</Text>
-                <StarRating
-                    disabled={true}
-                    maxStars={5}
-                    rating={this.state.review.nonAlcoholicOptions}
-                    fullStarColor={'#eaaa00'}
-                    starSize={20}
-                    containerStyle={{width: '25%'}}
-                /></View>}
+                <View style={{flexDirection:'row', width:'100%', alignItems:'center', marginTop:10, marginBottom:10}}>
+                    <Text style={[styles.radio_title_top]}> Overall Rating: </Text>
+                    <StarRating
+                        maxStars={5}
+                        rating={this.state.review.overallRating}
+                        fullStarColor={'#eaaa00'}
+                        starSize={20}                    />
                 </View>
 
-                </View>}
-                <Text style={styles.radio_title_top}>{'\n'}Logistics</Text>
-                <Text style={styles.radio_title}>
-                <Text>Enough changing tables:</Text>
-                <Text style={{fontWeight:'bold'}}> {(this.state.review.hasChangingTables >= .5) ? 'Yes' : 'No'} </Text>
-                </Text>
-                <Text style={styles.radio_title}>
-                <Text>Family restroom availabality:</Text>
-                <Text style={{fontWeight:'bold'}}> {(this.state.review.hasFamilyRestroom >= .5) ? 'Yes' : 'No'}</Text>
-                </Text>
-                <Text style={styles.radio_title}>
-                <Text>Wheelchair accessible:</Text>
-                <Text style={{fontWeight:'bold'}}> {(this.state.review.isWheelchairAccessible >= .5) ? 'Yes' : 'No'}</Text>
-                </Text>
-                {!!this.state.review.parking &&
-                <View>
-                <Text style={[styles.radio_title, {width: '100%'}]}>Parking:
-                </Text>
-                <Text>"{this.state.review.parking}"</Text>
+
+                <View style={{flexDirection:'row'}}>
+                    {
+                    //////////
+                    //left column
+                    /////////
+                    }
+                    <View style={{flex:1, marginRight: 12, justifyContent:'space-between'}}>
+                        {
+                        ///////
+                        //children & Accessibility
+                        ///////
+                        }
+                        <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                                <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                  <Text style={{fontSize:10}}> Children & Accessibility </Text>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
+                                    <Text style={{flex:3,fontSize:10}}> Stroller Kids </Text>
+                                    <View style={{ flex:1}}>
+                                        <CheckBox style={{checkboxSize: 15}} checked={this.state.review.strollerKids} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                        <Text style={{flex:3,fontSize:10}}> K - 6 </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.review.kThroughSix}  />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Teenagers </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.review.teenagers} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Changing Tables </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.review.hasChangingTables} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Family Restrooms </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.review.hasFamilyRestroom} />
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3, marginBottom: 3}}>
+                                        <Text style={{flex:3,fontSize:10}}> Wheelchair Access </Text>
+                                    <View style={{flex: 1}}>
+                                        <CheckBox checked={this.state.review.isWheelchairAccessible} />
+                                    </View>
+                                </View>
+                        </View>
+                        {
+                        ////////
+                        //food
+                        ////////
+                        }
+                        <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                            <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                <Text style={{fontSize:10}}> Food </Text>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
+                                <Text style={{flex:3, fontSize:10, marginTop:3}}> Food </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.review.overallFood} />
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Food Diversity</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.review.foodOptionDiversity}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3}}>
+                                <Text style={{flex:3, fontSize:10, marginTop:3}}> Non-Alcoholic Drinks </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.review.nonAlcoholicOptions} />
+                                </View>
+                            </View>
+                        </View>
+
+                    </View>
+
+                    {
+                    //////////
+                    //right column
+                    ////////
+                    }
+                    <View style={{flex:1, justifyContent:'space-between'}}>
+                        {
+                        /////////
+                        //4x4 visual icons
+                        ////////
+                        }
+                        <View style={{flexDirection: 'row', height:100, marginTop: 5}}>
+                            <View style={{flex:1, flexDirection: 'column', width:'100%'}}>
+                                <View style={{flex:1, marginBottom: 5}}>
+                                    {
+                                      this.state.review.petFriendly &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/dog.png')} />
+                                    }
+                                </View>
+                                <View style={{flex:1, marginBottom: 5}}>
+                                    {
+                                      this.state.review.isWheelchairAccessible &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/disability.png')} />
+                                    }
+                                </View>
+                            </View>
+                            <View style={{flex:1, flexDirection: 'column', width:'100%'}}>
+                                <View style={{flex:1, marginBottom: 5}}>
+                                    {
+                                      this.state.review.overallFood &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode:'contain'}} source={require('../resources/hamburger.png')} />
+                                    }
+                                </View>
+                                <View style={{flex:1}}>
+                                </View>
+                            </View>
+                        </View>
+
+                        {
+                        //////////
+                        //environment
+                        //////////
+                        }
+                        <View style={{flexDirection: 'column', width:'100%', borderWidth:1, borderRadius:5, marginTop: 10, marginBottom:10}}>
+                            <View style={{flexDirection:'row', borderBottomColor: 'black', borderBottomWidth: 1}}>
+                                <Text style={{fontSize:10}}> Environment </Text>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3}}>
+                                <Text style={{flex:3, fontSize:10}}> Smoking Allowed </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.review.isSmokingPermitted} />
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Seating </Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.review.seatingArrangements}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Safety</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.review.safety}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4}}>
+                                <Text style={{flex:3, fontSize:10}}> Pet Friendly </Text>
+                                <View style={{flex:1}}>
+                                    <CheckBox checked={this.state.review.petFriendly} />
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Cleanliness</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.review.cleanliness}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Sound Level</Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.review.soundLevel}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3, marginRight:2}}>
+                                <Text style={{fontSize:10}}> Parking </Text>
+                                <StarRating
+                                    maxStars={5}
+                                    rating={this.state.review.parking}
+                                    fullStarColor={'#eaaa00'}
+                                    starSize={10}                    />
+                            </View>
+                        </View>
+
+                    </View>
+                </View>
+
+
+
                 </View>}
                 {!!this.state.review.comments &&
                 <View>
-                <Text style={{width: '100%'}}>{'\n'}Comments:</Text>
+                <Text style={[styles.radio_title_top, {width:'100%'}]}>{'\n'}Comments:</Text>
                 <Text style={{width: '100%'}}>"{this.state.review.comments}"</Text>
                 </View>}
             </View>
