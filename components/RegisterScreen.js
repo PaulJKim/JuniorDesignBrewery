@@ -132,6 +132,9 @@ export class RegisterScreen extends React.Component {
       if(!this.state.username || this.state.username.trim().length == 0) {
         this.setState({errorMessage: "Please enter a username", registerFailed: true});
         return;
+      } else if(this.state.username.trim().length > 20) {
+        this.setState({errorMessage: "Username must be less than 20 characters", registerFailed: true});
+        return;
       } else if(!this.state.ageAgreementChecked)  {
         this.setState({errorMessage: "Please confirm you are over 18 years old", registerFailed: true});
         return;
