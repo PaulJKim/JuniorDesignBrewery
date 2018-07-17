@@ -126,19 +126,26 @@ export class BreweryScreen extends React.Component {
                     style={{width: 125, height: 125, borderRadius: 5}}
                     source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
                 />
-                <StarRating
-                            disabled={true}
-                            maxStars={5}
-                            rating={this.state.revsAvg.overallRating}
-                            fullStar={require('../resources/beer.png')}
-                            emptyStar={require('../resources/empty_beer.png')}
-                            halfStar={require('../resources/half_beer.png')}
-                            starSize={25}
-                            containerStyle={{marginTop: 15, marginBottom: 15}}
-                        />
+                {
+                    (this.state.reviews && this.state.reviews.length > 0) ?
+                    <StarRating
+                                disabled={true}
+                                maxStars={5}
+                                rating={this.state.revsAvg.overallRating}
+                                fullStar={require('../resources/beer.png')}
+                                emptyStar={require('../resources/empty_beer.png')}
+                                halfStar={require('../resources/half_beer.png')}
+                                starSize={25}
+                                containerStyle={{marginTop: 15, marginBottom: 15}}
+                    />
+                    :
+                    <Text style={{fontSize: 20, marginTop: 10}}>No reviews yet</Text>
+                }
 
 
-                {!!(this.state.reviews != null && this.state.reviews.length > 0) && <View style={{flexDirection:'row'}}>
+
+                {(this.state.reviews != null && this.state.reviews.length > 0) &&
+                <View style={{flexDirection:'row'}}>
                     {
                     //////////
                     //left column
