@@ -42,7 +42,7 @@ export class ReviewCard extends React.Component {
                             <Button transparent dark>
                                 <Icon name="beer" type="Ionicons" />
                             </Button>
-                            <Button transparent dark onPress={() => reportReview(this.props.review)}>
+                            <Button transparent dark onPress={() => reportReview(this.props.review.revId)}>
                                 <Icon name="flag" type="simpleLineIcons" />
                             </Button>
                         </View>
