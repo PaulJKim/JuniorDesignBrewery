@@ -116,7 +116,7 @@ export class BreweryScreen extends React.Component {
             <View style={{height: '100%'}}>
             <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                         color={"rgb(66,137,244)"}
-                        visible={this.state.reviews == null}
+                        visible={this.state.reviews == null || this.state.userData == null}
                         textStyle={{color: '#000000'}} />
             <ScrollView style={{backgroundColor: '#fff'}}>
 
