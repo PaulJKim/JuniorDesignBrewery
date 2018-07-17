@@ -87,7 +87,7 @@ export class FavoritesScreen extends React.Component {
             )
         }
         return (
-            <ScrollView>
+            <ScrollView style={{paddingTop:10}}>
                 <List style={styles.listStyle}>
                     {this.renderFavoritesList()}
                 </List>
