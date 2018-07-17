@@ -361,6 +361,7 @@ export class BreweryScreen extends React.Component {
                   <View style={{width:'100%'}}>{this.renderContent()}</View>
               </View>
             }
+            <View style={{height: 150}}/>
 
             </View>
             </ScrollView>
