@@ -345,12 +345,12 @@ export class AddReviewScreen extends React.Component {
                                     <View style={{flexDirection: 'column', width:300, borderRadius:5, marginTop: 10, marginBottom:10}}>
 
                                         <View style={{width:300, borderRadius:5}}>
-                                            <View style={{backgroundColor: 'pink'}}>
-                                                <TouchableOpacity style={{width:'100%', backgroundColor: 'pink', alignItems: 'center'}} onPress={this.pickImage.bind(this)}>
+                                            <View style={{backgroundColor: "#2196F3"}}>
+                                                <TouchableOpacity style={{width:'100%', backgroundColor: "#2196F3", alignItems: 'center'}} onPress={this.pickImage.bind(this)}>
                                                     <Icon
                                                       name="camera"
                                                       type="Entypo"
-                                                      color='#1DA664'
+                                                      style={{color:"white"}}
                                                     />
                                                 </TouchableOpacity>
                                             </View>
@@ -388,7 +388,7 @@ export class AddReviewScreen extends React.Component {
                             }
                             {
                               this.state.numberedView != 1 &&
-                              <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height: 50, justifyContent: 'center'}} onPress={()=>{this.state.numberedView >= 2 ? this.setState({numberedView: this.state.numberedView - 1}) : null}}>
+                              <TouchableOpacity style={{flex:1, backgroundColor: "#2196F3", alignItems: 'center', height: 50, justifyContent: 'center'}} onPress={()=>{this.state.numberedView >= 2 ? this.setState({numberedView: this.state.numberedView - 1}) : null}}>
                                   <Image
                                     style={{width: 25, height: 25}}
                                     source={require('../resources/chevron.png')} />
@@ -400,7 +400,7 @@ export class AddReviewScreen extends React.Component {
                                 </View>
                                 {
                                   this.state.numberedView != 4 &&
-                                  <TouchableOpacity style={{flex:1, backgroundColor: 'pink', alignItems: 'center', height: 50, justifyContent: 'center'}} onPress={()=>{this.state.numberedView <= 3 ? this.setState({numberedView: this.state.numberedView + 1}) : null}}>
+                                  <TouchableOpacity style={{flex:1, backgroundColor: "#2196F3", alignItems: 'center', height: 50, justifyContent: 'center'}} onPress={()=>{this.state.numberedView <= 3 ? this.setState({numberedView: this.state.numberedView + 1}) : null}}>
                                     <Image
                                       style={{width: 25, height: 25}}
                                       source={require('../resources/chevron1.png')} />
@@ -410,9 +410,9 @@ export class AddReviewScreen extends React.Component {
                                 {
                                   this.state.numberedView == 4 &&
                                   <TouchableOpacity
-                                          style={{ flex:1, backgroundColor: 'pink', alignItems: 'center', height: 50, justifyContent:'center'}}
+                                          style={{ flex:1, backgroundColor: "#2196F3", alignItems: 'center', height: 50, justifyContent:'center'}}
                                           onPress={this.submitReview.bind(this)}>
-                                          <Text style={{color: 'black', fontSize:16, fontWeight:'bold'}}>SUBMIT</Text>
+                                          <Text style={{color: 'white', fontSize:16, fontWeight:'bold'}}>SUBMIT</Text>
                                   </TouchableOpacity>
 
                                 }
@@ -432,7 +432,7 @@ export class AddReviewScreen extends React.Component {
 
         var Filter = require('bad-words'),
             filter = new Filter();
-        
+
         if(filter.isProfane(this.state.comments)) {
             this.setState({profane_content: true});
             return;
