@@ -21,7 +21,7 @@
 
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text, Image, TouchableOpacity, TextInput, Button } from 'react-native';
-import { Footer, Container, Icon, Fab } from 'native-base';
+import { Footer, Container, Icon, Fab, Content } from 'native-base';
 import firebaseApp from '../firebase';
 import { ImagePicker, LinearGradient, Permissions } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -73,6 +73,7 @@ export class ProfileScreen extends React.Component {
     renderContent() {
         return (
             <Container>
+                <Content>
                 <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
                 color={"rgb(66,137,244)"}
                 visible={(this.state.user == null)}
@@ -152,16 +153,17 @@ export class ProfileScreen extends React.Component {
                             null
                         )}
                     </View>
-
-                    <Fab
-                        direction="up"
-                        position="bottomRight"
-                        style={{ backgroundColor: 'green'}}
-                        onPress={() => {this.setState({edit_mode: true}); this.newImage = false}}
-                    >
-                        <Icon name="md-create" />
-                    </Fab>
                 </View> }
+            </Content>
+            <Fab
+                direction="up"
+                position="bottomRight"
+                style={{ backgroundColor: 'green', bottom: 50}}
+                onPress={() => {this.setState({edit_mode: true}); this.newImage = false}}
+            >
+                <Icon name="md-create" />
+            </Fab>
+
                 {this.state.user == null && <View style={{flex:1}}/>}
                 <Footer style={styles.footer_style}>
                     {this.props.renderTabs()}
@@ -173,7 +175,7 @@ export class ProfileScreen extends React.Component {
     renderEditContent() {
         return (
             <Container style={{backgroundColor: '#fff'}}>
-            <ScrollView>
+            <Content>
                 <View style={{backgroundColor: '#fff', flex: 1}}>
                     <View style={{alignItems: 'center', marginTop: 30}}>
                         {
@@ -219,7 +221,7 @@ export class ProfileScreen extends React.Component {
                         <View style={{flex: 9}}></View>
                     </View>
                 </View>
-                </ScrollView>
+            </Content>
                 <Fab
                         direction="up"
                         position="bottomRight"
