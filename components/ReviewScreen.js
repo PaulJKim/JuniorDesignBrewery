@@ -87,7 +87,9 @@ export class ReviewScreen extends React.Component {
                     <StarRating
                         maxStars={5}
                         rating={this.state.review.overallRating}
-                        fullStarColor={'#eaaa00'}
+                        fullStar={require('../resources/beer.png')}
+                        emptyStar={require('../resources/empty_beer.png')}
+                        halfStar={require('../resources/half_beer.png')}
                         starSize={20}                    />
                 </View>
 
@@ -165,7 +167,9 @@ export class ReviewScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.review.foodOptionDiversity}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3}}>
@@ -236,7 +240,9 @@ export class ReviewScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.review.seatingArrangements}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
@@ -244,7 +250,9 @@ export class ReviewScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.review.safety}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4}}>
@@ -258,7 +266,9 @@ export class ReviewScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.review.cleanliness}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
@@ -266,7 +276,9 @@ export class ReviewScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.review.soundLevel}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3, marginRight:2}}>
@@ -274,7 +286,9 @@ export class ReviewScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.review.parking}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                         </View>

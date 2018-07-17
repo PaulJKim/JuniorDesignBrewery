@@ -131,7 +131,9 @@ export class BreweryScreen extends React.Component {
                             disabled={true}
                             maxStars={5}
                             rating={this.state.revsAvg.overallRating}
-                            fullStarColor={'#4D97E1'}
+                            fullStar={require('../resources/beer.png')}
+                            emptyStar={require('../resources/empty_beer.png')}
+                            halfStar={require('../resources/half_beer.png')}
                             starSize={25}
                             containerStyle={{marginTop: 15, marginBottom: 15}}
                         />
@@ -210,7 +212,9 @@ export class BreweryScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.revsAvg.foodOptionDiversity}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3}}>
@@ -281,7 +285,9 @@ export class BreweryScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.revsAvg.seatingArrangements}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
@@ -289,7 +295,9 @@ export class BreweryScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.revsAvg.safety}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:4}}>
@@ -303,7 +311,9 @@ export class BreweryScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.revsAvg.cleanliness}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginRight:2}}>
@@ -311,7 +321,9 @@ export class BreweryScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.revsAvg.soundLevel}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:3, marginBottom:3, marginRight:2}}>
@@ -319,7 +331,9 @@ export class BreweryScreen extends React.Component {
                                 <StarRating
                                     maxStars={5}
                                     rating={this.state.revsAvg.parking}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={10}                    />
                             </View>
                         </View>
@@ -435,7 +449,9 @@ export class BreweryScreen extends React.Component {
                                     disabled={true}
                                     maxStars={5}
                                     rating={rev.overallRating}
-                                    fullStarColor={'#eaaa00'}
+                                    fullStar={require('../resources/beer.png')}
+                                    emptyStar={require('../resources/empty_beer.png')}
+                                    halfStar={require('../resources/half_beer.png')}
                                     starSize={20}
                                     containerStyle={{width: '25%'}}
                                 />

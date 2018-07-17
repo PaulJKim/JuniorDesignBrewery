@@ -34,7 +34,9 @@ export class ReviewCard extends React.Component {
                                                 disabled={true}
                                                 maxStars={5}
                                                 rating={this.props.review.overallRating}
-                                                fullStarColor={'#eaaa00'}
+                                                fullStar={require('../resources/beer.png')}
+                                                emptyStar={require('../resources/empty_beer.png')}
+                                                halfStar={require('../resources/half_beer.png')}
                                                 starSize={15} />
                                     </View>
                                 </View>
