@@ -38,7 +38,9 @@ export class BreweryCard extends React.Component {
     											<Text>{this.props.curBrewName} </Text>
     									</View>
     									<View style={{flex: 1, flexDirection: 'row'}}>
-    											<StarRating
+                                            {
+                                                this.props.curBrewRating ?
+                                                <StarRating
     													disabled={true}
     													maxStars={5}
     													rating={this.props.curBrewRating}
@@ -47,9 +49,12 @@ export class BreweryCard extends React.Component {
                                                         emptyStar={require('../resources/empty_beer.png')}
                                                         halfStar={require('../resources/half_beer.png')}
                                                 />
+                                                :
+                                                <Text>No reviews yet</Text>
+                                            }
     									</View>
     									<View style={{flex: 1, flexDirection: 'row'}}>
-    											<Text> {this.props.curBrewDist} </Text>
+    											<Text>{this.props.curBrewDist}</Text>
     									</View>
                       <View style={{flex: 1, flexDirection: 'row'}}>
                           {
