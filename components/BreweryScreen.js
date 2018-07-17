@@ -122,7 +122,6 @@ export class BreweryScreen extends React.Component {
 
             <View style={styles.container}>
                 <Text style={styles.title}>{this.state.brewery.name}</Text>
-                <Text style={styles.subtitle}>City, ST</Text>
                 <Image
                     style={{width: 125, height: 125, borderRadius: 5}}
                     source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
