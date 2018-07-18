@@ -73,22 +73,42 @@ export class ViewProfileScreen extends React.Component {
                             </View>
                         </TouchableHighlight>
                         <Text style={styles.title_style}>{this.state.user.username}</Text>
-                        {this.state.user.age > 18 && <Text style={[styles.subtitle_style]}>{this.state.user.age == -1 ? "Invalid Age to use the app" : this.state.user.age} Years Old</Text>}
-                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" :
-                            this.state.user.num_children == 1 ? "1 Child" : this.state.user.num_children + " Children"}
-                        </Text>
-
-                        <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pets" :
-                            this.state.user.num_pet == 1 ? "1 Pet" : this.state.user.num_pet + " Pets"}
-                        </Text>
-
-                        <Text style={[styles.subtitle_style]}>{(this.state.user.reviews == 0) ? "No Reviews Yet" :
-                            this.state.user.reviews == 1 ? "1 Review" : this.state.user.reviews + " Reviews"}
-                        </Text>
-
 
                         <View style={{marginBottom: 10}}/>
                         </LinearGradient>
+
+                        <View style={{width: '100%', padding: 10}}>
+                            <View style = {{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={styles.title_style}>{this.state.user.username}</Text>
+                          </View>
+                          <View style = {{flexDirection: 'row'}}>
+                                <Text style={[styles.subtitle_style2]}>Name: </Text>
+                                <Text style={styles.subtitle_style3}>{this.state.user.description}</Text>
+                            </View>
+                                {this.state.user.age > 0 && <Text style={[styles.subtitle_style]}>
+                                <Text style={[styles.subtitle_style2]}>Age: </Text>
+                                {this.state.user.age < 18 ? " You entered an invalid age. To use the app you must be 18 years old minimum " : " " + this.state.user.age + " Years Old"}
+                            </Text>}
+                            <View style = {{flexDirection: 'row'}}>
+                                <Text style={[styles.subtitle_style2]}>Children: </Text>
+                                <Text style={[styles.subtitle_style]}>{(this.state.user.num_children == 0) ? "No Children" :
+                                    this.state.user.num_children == 1 ? " 1 Child" : " " + this.state.user.num_children + " Children"}
+                                </Text>
+                            </View>
+                            <View style = {{flexDirection: 'row'}}>
+                                <Text style={[styles.subtitle_style2]}>Pet: </Text>
+                                <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pets" :
+                                    this.state.user.num_pet == 1 ? " 1 Pet" : " " + this.state.user.num_pet + " pets"}
+                                </Text>
+                            </View>
+                            <View style = {{flexDirection: 'row'}}>
+                                <Text style={[styles.subtitle_style2]}>Reviews: </Text>
+                                <Text style={[styles.subtitle_style]}>{(this.state.user.reviews == 0) ? "No Reviews" :
+                                    this.state.user.reviews == 1 ? " 1 Review" : " " + this.state.user.reviews + " Reviews"}
+                                </Text>
+                            </View>
+                        </View>
+
                     </View>
                     <Button
                         title="Report"
@@ -134,13 +154,14 @@ const styles = StyleSheet.create({
           color: 'rgba(255, 255, 255, 0.95)',
       },
       subtitle_style2: {
-        fontSize: 17,
-        color: 'rgba(0, 0, 0, 1)',
+        fontSize: 15,
+        color: 'rgb(0, 0, 0)',
         fontWeight: 'bold',
         marginTop: 10,
       },
       subtitle_style3: {
-        fontSize: 17,
+        fontSize: 15,
         color: 'rgba(0, 0, 0, 0.7)',
+        marginTop: 10,
       }
 })
