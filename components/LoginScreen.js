@@ -20,7 +20,7 @@
 */
 
 import React from 'react';
-import { Platform, BackHandler, StyleSheet, Button, Text, TextInput, ViewText, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Platform, BackHandler, StyleSheet, Button, Text, TextInput, ViewText, View, KeyboardAvoidingView, TouchableOpacity, Image} from 'react-native';
 import { Content } from 'native-base';
 import firebaseApp from '../firebase';
 import { NavigationActions } from 'react-navigation';
@@ -74,6 +74,10 @@ export class LoginScreen extends React.Component {
 
         <View style={{flex:1}}>
           <Text style={styles.logo}>Family Friendly Brewery Trackr</Text>
+              <View style = {{alignItems: 'center'}}>
+                  <Image
+                    source={require('../resources/beerBottle.png')} />
+              </View>
         </View>
 
 
