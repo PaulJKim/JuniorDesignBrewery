@@ -26,7 +26,7 @@ export class ReviewCard extends React.Component {
                                 </View>
 
                                 <View style={{flexDirection:'column', justifyContent:'center'}}>
-                                    <View style={{marginBottom:5}}>
+                                    <View style={{marginBottom:5, flex:1, flexDirection:"row"}}>
                                         <Text style={{fontWeight:'bold'}}>{this.props.user.username}</Text>
                                     </View>
                                     <View style={{flexDirection:'row', justifyContent:'flex-start'}}>
@@ -47,8 +47,8 @@ export class ReviewCard extends React.Component {
                             <Button transparent dark>
                                 <Icon name="beer" type="Ionicons" />
                             </Button>
-                            <Button transparent dark onPress={() => reportReview(this.props.review.revId)}>
-                                <Icon name="flag" type="simpleLineIcons" />
+                            <Button transparent dark onPress={() => this.props.reportFunction(this.props.review.revId)}>
+                                <Icon name="flag" type="simpleLineIcons" style={{color:'#FF4136'}}/>
                             </Button>
                         </View>
                     </View>
