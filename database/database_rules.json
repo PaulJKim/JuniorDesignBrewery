@@ -1,0 +1,109 @@
+{
+  "rules": {
+    ".read": "auth != null && root.child('Admins').child(auth.uid).exists()",
+    ".write": "auth != null && root.child('Admins').child(auth.uid).exists()",
+
+    "Admins": {
+      ".read": true
+    },
+
+    "Breweries": {
+      ".read": true,
+      "$breweryId": {
+        "reviews": {
+          "$reviewId": {
+            ".write": "auth != null && !data.exists()",
+            ".validate": "newData.val() == true"
+          }
+        }
+      }
+    },
+
+    "Users": {
+      "$userId": {
+        ".write": "!data.exists() && auth != null && auth.uid == $userId",
+        "metadata": {
+          ".read": true,
+          "reports": {
+            "$reportUid": {
+              ".write": "auth != null && auth.uid == $reportUid",
+              ".validate": "newData.val() == true"
+            }
+          },
+          "viewable": {
+            ".write": "auth != null && auth.uid == $userId && !data.exists()",
+            ".validate": "newData.isBoolean()"
+          }
+        },
+        "publicData": {
+          ".read": "data.parent().child('metadata').child('viewable').val() == true",
+          ".write": "auth != null && auth.uid == $userId",
+          "age": {
+            ".validate": "newData.isNumber() && newData.val() % 1 == 0 && newData.val() >= -1"
+          },
+          "description": {
+            ".validate": "newData.isString()"
+          },
+          "num_children": {
+            ".validate": "newData.isNumber() && newData.val() % 1 == 0 && newData.val() >= 0"
+          },
+          "num_pet": {
+            ".validate": "newData.isNumber() && newData.val() % 1 == 0 && newData.val() >= 0"
+          },
+          "reviews": {
+            ".validate": "newData.isNumber() && newData.val() % 1 == 0 && newData.val() >= 0"
+          },
+          "username": {
+            ".validate": "newData.isString()"
+          }
+        },
+        "privateData": {
+					".read": "auth != null && auth.uid == $userId",
+          ".write": "auth != null && auth.uid == $userId"
+        }
+      }
+    },
+
+    "Reviews": {
+      "$reviewId": {
+        "metadata": {
+            ".read": true,
+            "reports": {
+              "$reportUid": {
+                ".write": "auth != null && auth.uid == $reportUid",
+                ".validate": "newData.val() == true"
+              }
+            },
+            "viewable": {
+              ".write": "auth != null && !data.exists()",
+              ".validate": "newData.isBoolean()"
+            },
+            "breweryId": {
+              ".write": "auth != null && !data.exists()"
+            },
+            "userId": {
+              ".write": "auth != null && newData.val() == auth.uid"
+            }
+        },
+        "data": {
+            ".read": "data.parent().child('metadata').child('viewable').val() == true",
+            ".write": "auth != null && (!data.exists() || data.parent().child('metadata').child('userId').val() == auth.uid)"
+        }
+      }
+    },
+
+    "ReportedReviews": {
+  		"$reviewId": {
+        ".write": "auth != null",
+        ".validate": "newData.val() == true"
+      }
+    },
+
+    "ReportedUsers": {
+      "$userId": {
+        ".write": "auth != null",
+        ".validate": "newData.val() == true"
+      }
+    }
+  }
+}

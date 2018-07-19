@@ -202,22 +202,22 @@ export class ProfileScreen extends React.Component {
                     </View>
                     <View style={{width: '100%', paddingLeft: 10, display: 'flex', flexDirection: 'row'}}>
                         <Text style={[styles.subtitle_style, {marginTop: 3, color:'black', flex: 5}]}>Age: </Text>
-                        <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.age + ""} onChangeText={(age) => {this.state.user.age = age.replace(/[^0-9]/g, ''); this.setState({user: this.state.user})}}></TextInput>
+                        <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.age + ""} onChangeText={(age) => {this.state.user.age = Number(age.replace(/[^0-9]/g, '')); this.setState({user: this.state.user})}}></TextInput>
                         <View style={{flex: 9}}></View>
                     </View>
                     <View style={{width: '100%', paddingLeft: 10, display: 'flex', flexDirection: 'row'}}>
                         <Text style={[styles.subtitle_style, {marginTop: 3, color:'black', flex: 5}]}>Pet: </Text>
-                        <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.num_pet + ""} onChangeText={(num_pet) => {this.state.user.num_pet = num_pet.replace(/[^0-9]/g, ''); this.setState({user: this.state.user})}}></TextInput>
+                        <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.num_pet + ""} onChangeText={(num_pet) => {this.state.user.num_pet = Number(num_pet.replace(/[^0-9]/g, '')); this.setState({user: this.state.user})}}></TextInput>
                         <View style={{flex: 9}}></View>
                     </View>
                     <View style={{width: '100%', paddingLeft: 10, display: 'flex', flexDirection: 'row'}}>
                         <Text style={[styles.subtitle_style, {marginTop: 3, color:'black', flex: 5}]}>Children: </Text>
-                        <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.num_children + ""} onChangeText={(num_children) => {this.state.user.num_children = num_children.replace(/[^0-9]/g, ''); this.setState({user: this.state.user})}}></TextInput>
+                        <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.num_children + ""} onChangeText={(num_children) => {this.state.user.num_children = Number(num_children.replace(/[^0-9]/g, '')); this.setState({user: this.state.user})}}></TextInput>
                         <View style={{flex: 9}}></View>
                     </View>
                     <View style={{width: '100%', paddingLeft: 10, display: 'flex', flexDirection: 'row'}}>
                         <Text style={[styles.subtitle_style, {marginTop: 3, color:'black', flex: 5}]}>Reviews: </Text>
-                        <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.reviews + ""} onChangeText={(reviews) => {this.state.user.reviews = reviews.replace(/[^0-9]/g, ''); this.setState({user: this.state.user})}}></TextInput>
+                        <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.reviews + ""} onChangeText={(reviews) => {this.state.user.reviews = Number(reviews.replace(/[^0-9]/g, '')); this.setState({user: this.state.user})}}></TextInput>
                         <View style={{flex: 9}}></View>
                     </View>
                 </View>
