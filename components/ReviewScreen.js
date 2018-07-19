@@ -196,11 +196,19 @@ export class ReviewScreen extends React.Component {
                                       this.state.review.petFriendly &&
                                       <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/dog.png')} />
                                     }
+                                    {
+                                      !this.state.review.petFriendly &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/noPets.png')} />
+                                    }
                                 </View>
                                 <View style={{flex:1, marginBottom: 5}}>
                                     {
                                       this.state.review.isWheelchairAccessible &&
                                       <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/disability.png')} />
+                                    }
+                                    {
+                                      !this.state.review.isWheelchairAccessible &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/noWheelChair.png')} />
                                     }
                                 </View>
                             </View>
@@ -209,6 +217,10 @@ export class ReviewScreen extends React.Component {
                                     {
                                       this.state.review.overallFood &&
                                       <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode:'contain'}} source={require('../resources/hamburger.png')} />
+                                    }
+                                    {
+                                      !this.state.review.overallFood &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode:'contain'}} source={require('../resources/noFood.png')} />
                                     }
                                 </View>
                                 <View style={{flex:1}}>
