@@ -31,6 +31,7 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import firebaseApp from '../firebase';
 import { NavigationActions } from 'react-navigation';
 import { isLoggedIn } from '../lib/FirebaseHelpers';
+import { LoginScreen } from './LoginScreen';
 
 const MAP_TAB = "Breweries";
 const FAVORITES_TAB = "Your Favorites";
@@ -137,12 +138,34 @@ export class MainScreen extends React.Component {
     this.forceUpdate()
   }
 
-  signOutUser = async () => {
-    try {
-        await firebaseApp.auth().signOut();
+  signOutUser = () => {
+    // const resetAction = NavigationActions.reset({
+    //   index: 1,
+    //   key: null,
+    //   actions: [
+    //     // NavigationActions.navigate({ routeName: 'Main' }),
+    //     NavigationActions.navigate({ routeName: 'MapScreen' }),
+    //     NavigationActions.navigate({ routeName: 'Login' }),
+    //   ],
+    // });
+
+    // firebaseApp.auth().signOut().then(() => {
+    //     this.props.navigation.dispatch(resetAction);
+    // }).catch(function(error) {
+    //     //An error occured on signout
+    // });
+    console.log("BACK TO HOME1");
+    firebaseApp.auth().signOut().then(() => {
+        console.log("BACK TO HOME2");
+        this.props.navigation.popToTop();
+        this.props.navigation.navigate("Main", {navigation: this.props.navigation});
         this.props.navigation.navigate("Login", {navigation: this.props.navigation});
-    } catch (e) {
-    }
+        console.log("BACK TO HOME3");
+    }).catch(function(error) {
+        //An error occured on signout
+    });
+    
+    // this.props.navigation.navigate("Login", {navigation: this.props.navigation});
 }
   render() {
     return (
