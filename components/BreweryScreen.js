@@ -362,16 +362,19 @@ export class BreweryScreen extends React.Component {
                       <Text style={styles.radio_title_top}>Photos </Text>
                   </View>
 
-                  <View style={{width:'100%', height:'10%'}}>
+                  <View style={{flexDirection:'column', width:'100%'}}>
                       <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
-                        scrollEventThrottle={10}
-                        pagingEnabled>
-                              <Image
-                                  source={{uri: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&key=AIzaSyBCDrIwmnP8wy528KFOz7I7NhVE7DeV_cI&photoreference=' + this.state.brewery.photo}}
-                              />
-
+                        scrollEventThrottle={10}>
+                        {
+                            this.state.reviews &&
+                            this.state.reviews.map((review) => {
+                                if (review.image) {
+                                    return <Image source={{ uri: review.image }}  style={styles.image} />
+                                }
+                            })
+                        }
                       </ScrollView>
                   </View>
 
@@ -633,5 +636,11 @@ const styles = StyleSheet.create({
   radio_title_top: {
     marginTop: 5,
     fontWeight: 'bold',
-  }
+  },
+  image: {
+    width: 240,
+    height: 180,
+    resizeMode: 'contain',
+    margin: 10
+}
 });
