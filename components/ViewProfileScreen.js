@@ -87,7 +87,7 @@ export class ViewProfileScreen extends React.Component {
                             </View>
                                 {this.state.user.age > 0 && <Text style={[styles.subtitle_style]}>
                                 <Text style={[styles.subtitle_style2]}>Age: </Text>
-                                {this.state.user.age < 18 ? " You entered an invalid age. To use the app you must be 18 years old minimum " : " " + this.state.user.age + " Years Old"}
+                                {this.state.user.age < 18 ? " You entered an invalid age. To use the app you must be 18 years old minimum " : " " + this.state.user.age.toString() + " Years Old"}
                             </Text>}
                             <View style = {{flexDirection: 'row'}}>
                                 <Text style={[styles.subtitle_style2]}>Children: </Text>
@@ -145,7 +145,8 @@ const styles = StyleSheet.create({
       },
       subtitle_style: {
           fontSize: 15,
-          color: 'rgba(255, 255, 255, 0.95)',
+          color: 'rgba(0, 0, 0, 0.7)',
+          marginTop: 10,
       },
       subtitle_style2: {
         fontSize: 15,
