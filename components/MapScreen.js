@@ -21,7 +21,7 @@
 
 import React from 'react';
 import { MapView, Constants, Location, Permissions } from 'expo';
-import { StyleSheet, View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button, Dimensions } from 'react-native';
 import { Footer, Container, Icon, List, ListItem, Button as BaseButton} from 'native-base';
 import firebaseApp from '../firebase';
 import FAB from 'react-native-fab';
@@ -70,6 +70,7 @@ export class MapScreen extends React.Component {
 
     render() {
         global.mapState = this.state;
+        let breweryCardMargin = this.determineBreweryCardMargin();
         return (
             <Container>
                 <Spinner overlayColor={"rgba(0, 0, 0, 0.3)"}
@@ -136,7 +137,7 @@ export class MapScreen extends React.Component {
 
 
                 {this.state.selectedBrewery != null && global.mapVisible &&
-                    <View style={{bottom:50, position: 'absolute', width:'100%'}}>
+                    <View style={{bottom:breweryCardMargin, position: 'absolute', width:'100%'}}>
                         <View style={{flexDirection:'column'}}>
                             <View style={{flexDirection:'row', justifyContent:"flex-end"}}>
                                 <TouchableOpacity
@@ -163,7 +164,6 @@ export class MapScreen extends React.Component {
                         </View>
                     </View>
                 }
-
                 <Footer style={{width: '100%'}}>
                     {this.props.renderTabs()}
                 </Footer>
@@ -187,6 +187,16 @@ export class MapScreen extends React.Component {
                     )
                 })
             )
+        }
+    }
+
+    determineBreweryCardMargin() {
+        const {height, width} = Dimensions.get('window');
+        const aspectRatio = height / width;
+        if (aspectRatio > 2.0) {
+          return 85;
+        } else {
+          return 50;
         }
     }
 
