@@ -318,15 +318,6 @@ export class ReviewScreen extends React.Component {
                 </View>}
             </View>
             </ScrollView>
-
-            {this.state.review.userId === firebaseApp.auth().currentUser.uid && <View>
-            <FAB
-                buttonColor="green"
-                iconTextColor="#FFFFFF"
-                onClickAction={() => this.props.navigation.navigate("AddReview", {navigation: this.props.navigation, brewery: new Brewery(), review: this.state.review})}
-                visible={true}
-                iconTextComponent={<Icon name="md-create"/>} />
-            </View>}
             </View>
         )
     }
