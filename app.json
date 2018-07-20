@@ -2,7 +2,8 @@
   "expo": {
     "name": "FFBT",
     "sdkVersion": "27.0.0",
-    "version": "1.0.0",
+    "version": "2.0.0",
+    "icon": "./resources/beerBottle.png",
     "slug": "native-component-list",
     "android": {
       "config": {
