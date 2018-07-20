@@ -251,11 +251,19 @@ export class BreweryScreen extends React.Component {
                                       this.state.revsAvg.petFriendly &&
                                       <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/dog.png')} />
                                     }
+                                    {
+                                      !this.state.revsAvg.petFriendly &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/noPets.png')} />
+                                    }
                                 </View>
                                 <View style={{flex:1, marginBottom: 5}}>
                                     {
                                       this.state.revsAvg.isWheelchairAccessible &&
                                       <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/disability.png')} />
+                                    }
+                                    {
+                                      !this.state.revsAvg.isWheelchairAccessible &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode: 'contain'}} source={require('../resources/noWheelChair.png')} />
                                     }
                                 </View>
                             </View>
@@ -264,6 +272,10 @@ export class BreweryScreen extends React.Component {
                                     {
                                       this.state.revsAvg.overallFood &&
                                       <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode:'contain'}} source={require('../resources/hamburger.png')} />
+                                    }
+                                    {
+                                      !this.state.revsAvg.overallFood &&
+                                      <Image style={{flex:1, alignSelf:'stretch', width:undefined, height:undefined, resizeMode:'contain'}} source={require('../resources/noFood.png')} />
                                     }
                                 </View>
                                 <View style={{flex:1}}>
