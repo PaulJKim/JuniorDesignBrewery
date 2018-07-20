@@ -74,9 +74,14 @@ export class MainScreen extends React.Component {
         ),
          headerRight: (
             <View style={{display:'flex', flexDirection:'row', marginRight: 30}}>
-                <TouchableOpacity style={{flex: 1}}
+                {navigation.state.params.tab == MAP_TAB &&
+                    <TouchableOpacity style={{flex: 1}}
                     onPress={() => {global.mapVisible = !global.mapVisible; navigation.state.params.parent.setState({}); navigation.setParams({});}}>
-                <Icon name={(global.mapVisible) ? "list" : "md-map"} style={{color: [(navigation.state.params.tab == MAP_TAB) ? 'white' : '#2196F3']}}/>
+                <Icon name={(global.mapVisible) ? "list" : "md-map"} style={{color:"white"}}/>
+                </TouchableOpacity>}
+                <TouchableOpacity style={{flex: 1, marginLeft:20}}
+                    onPress={()=>{navigation.navigate("Policy", {navigation: navigation, policyType: "License"});}}>
+                <Icon name="md-information-circle" style={{color: "white"}}/>
                 </TouchableOpacity>
             </View>),
     });

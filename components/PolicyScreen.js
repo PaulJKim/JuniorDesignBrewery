@@ -23,6 +23,7 @@ import React, { Component } from 'react';
 import { ScrollView, Text } from 'react-native';
 import PrivacyPolicy from '../resources/PrivacyPolicy.json';
 import TermsAndConditions from '../resources/TermsAndConditions.json';
+import License from '../resources/License.json';
 
 export class PolicyScreen extends React.Component {
 
@@ -41,8 +42,15 @@ export class PolicyScreen extends React.Component {
             <Text style={{fontSize:12}}>{policy}</Text>
           </ScrollView>
         );
-      } else {
+      } else if (this.props.navigation.state.params.policyType === 'Terms and Conditions')  {
         var policy = TermsAndConditions.TermsAndConditions;
+        return (
+          <ScrollView>
+            <Text style={{fontSize:12}}>{policy}</Text>
+          </ScrollView>
+        );
+    } else if (this.props.navigation.state.params.policyType === 'License')  {
+        var policy = License.License;
         return (
           <ScrollView>
             <Text style={{fontSize:12}}>{policy}</Text>
