@@ -20,12 +20,12 @@
 */
 
 import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableHighlight, TouchableOpacity, ScrollView, Button } from 'react-native';
-import { Footer, Container, List, ListItem } from 'native-base';
+import { StyleSheet, View, Text, Image, TouchableHighlight, TouchableOpacity, ScrollView, Button, Alert } from 'react-native';
+import { Footer, Container, List, ListItem, Button as BaseButton, Icon } from 'native-base';
 import { ImagePicker, LinearGradient } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
 import StarRating from 'react-native-star-rating';
-import { getUserData, reportUser } from '../lib/FirebaseHelpers'
+import { getUserData, reportUser, isLoggedIn } from '../lib/FirebaseHelpers'
 console.disableYellowBox = true;
 
 export class ViewProfileScreen extends React.Component {
@@ -104,17 +104,39 @@ export class ViewProfileScreen extends React.Component {
                         </View>
 
                     </View>
-                    <Button
-                        title="Report"
-                        onPress={() => reportUser(this.state.user.uid)}
-                    >
-                    </Button>
+                    <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+                        <BaseButton danger bordered style={{margin:20}} onPress={this.reportFunction.bind(this)}>
+                            <Icon name="flag" type="simpleLineIcons" style={{color:'#FF4136'}}/>
+                        </BaseButton>
+                    </View>
                 </View> }
                 {this.state.user == null && <View style={{flex:1}}/>}
 
             </Container>
             </ScrollView>
         );
+    }
+
+    reportFunction() {
+        if (isLoggedIn()) {
+            Alert.alert(
+                'Report User',
+                'Do you wish to report this review for inappropriate content?',
+                [
+                {text: 'No', style: 'cancel'},
+                {text: 'Yes', onPress: () => reportUser(this.state.user.uid)},
+                ],
+                { cancelable: false });
+        } else {
+            Alert.alert(
+                'You must be logged in to use this feature',
+                'Login?',
+                [
+                {text: 'No', style: 'cancel'},
+                {text: 'Yes', onPress: () => {this.props.navigation.navigate("Login", {brewery: ""})}},
+                ],
+                { cancelable: false });
+        }
     }
 }
 
