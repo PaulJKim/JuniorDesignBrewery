@@ -41,15 +41,6 @@ export class ResetPassword extends React.Component {
     };
   }
 
-  componentWillMount() {
-    t = this;
-    if(Platform.OS === 'android') {
-        BackHandler.addEventListener('hardwareBackPress', function() {
-          this.props.navigation.dispatch(NavigationActions.back());
-          return true;
-        }.bind(this));
-    }
-  }
 
   render() {
     return (
