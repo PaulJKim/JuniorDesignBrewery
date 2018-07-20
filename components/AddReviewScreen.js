@@ -165,7 +165,9 @@ export class AddReviewScreen extends React.Component {
                                             maxStars={5}
                                             rating={this.state.overallRating}
                                             selectedStar={(rating) => this.setState({overallRating: rating})}
-                                            fullStarColor={'#eaaa00'}
+                                            fullStar={require('../resources/beer.png')}
+                                            emptyStar={require('../resources/empty_beer.png')}
+                                            halfStar={require('../resources/half_beer.png')}
                                             starSize={30}
                                         />
                                         </View>
@@ -242,7 +244,9 @@ export class AddReviewScreen extends React.Component {
                                                         maxStars={5}
                                                         rating={this.state.seatingArrangements}
                                                         selectedStar={(rating) => this.setState({seatingArrangements: rating})}
-                                                        fullStarColor={'#eaaa00'}
+                                                        fullStar={require('../resources/beer.png')}
+                                                        emptyStar={require('../resources/empty_beer.png')}
+                                                        halfStar={require('../resources/half_beer.png')}
                                                         containerStyle={{width: '30%'}}
                                                         starSize={18}                    />
                                                 </View>
@@ -252,7 +256,9 @@ export class AddReviewScreen extends React.Component {
                                                         maxStars={5}
                                                         rating={this.state.safety}
                                                         selectedStar={(rating) => this.setState({safety: rating})}
-                                                        fullStarColor={'#eaaa00'}
+                                                        fullStar={require('../resources/beer.png')}
+                                                        emptyStar={require('../resources/empty_beer.png')}
+                                                        halfStar={require('../resources/half_beer.png')}
                                                         containerStyle={{width: '30%'}}
                                                         starSize={18}                    />
                                                 </View>
@@ -268,7 +274,9 @@ export class AddReviewScreen extends React.Component {
                                                         maxStars={5}
                                                         rating={this.state.cleanliness}
                                                         selectedStar={(rating) => this.setState({cleanliness: rating})}
-                                                        fullStarColor={'#eaaa00'}
+                                                        fullStar={require('../resources/beer.png')}
+                                                        emptyStar={require('../resources/empty_beer.png')}
+                                                        halfStar={require('../resources/half_beer.png')}
                                                         containerStyle={{width: '30%'}}
                                                         starSize={18}                    />
                                                 </View>
@@ -278,7 +286,9 @@ export class AddReviewScreen extends React.Component {
                                                         maxStars={5}
                                                         rating={this.state.soundLevel}
                                                         selectedStar={(rating) => this.setState({soundLevel: rating})}
-                                                        fullStarColor={'#eaaa00'}
+                                                        fullStar={require('../resources/beer.png')}
+                                                        emptyStar={require('../resources/empty_beer.png')}
+                                                        halfStar={require('../resources/half_beer.png')}
                                                         containerStyle={{width: '30%'}}
                                                         starSize={18}                    />
                                                 </View>
@@ -288,7 +298,9 @@ export class AddReviewScreen extends React.Component {
                                                         maxStars={5}
                                                         rating={this.state.parking}
                                                         selectedStar={(rating) => this.setState({parking: rating})}
-                                                        fullStarColor={'#eaaa00'}
+                                                        fullStar={require('../resources/beer.png')}
+                                                        emptyStar={require('../resources/empty_beer.png')}
+                                                        halfStar={require('../resources/half_beer.png')}
                                                         containerStyle={{width: '30%'}}
                                                         starSize={18}                    />
                                                 </View>
@@ -319,7 +331,9 @@ export class AddReviewScreen extends React.Component {
                                                 maxStars={5}
                                                 rating={this.state.foodOptionDiversity}
                                                 selectedStar={(rating) => this.setState({foodOptionDiversity: rating})}
-                                                fullStarColor={'#eaaa00'}
+                                                fullStar={require('../resources/beer.png')}
+                                                emptyStar={require('../resources/empty_beer.png')}
+                                                halfStar={require('../resources/half_beer.png')}
                                                 containerStyle={{width: '30%'}}
                                                 starSize={18}                    />
                                         </View>
