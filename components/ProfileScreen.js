@@ -113,7 +113,7 @@ export class ProfileScreen extends React.Component {
                             </Text>
                         </View>
                         <View style = {{flexDirection: 'row'}}>
-                            <Text style={[styles.subtitle_style2]}>Pet: </Text>
+                            <Text style={[styles.subtitle_style2]}>Pets: </Text>
                             <Text style={[styles.subtitle_style]}>{(this.state.user.num_pet == 0) ? "No Pets" :
                                 this.state.user.num_pet == 1 ? " 1 Pet" : " " + this.state.user.num_pet + " pets"}
                             </Text>
@@ -206,7 +206,7 @@ export class ProfileScreen extends React.Component {
                         <View style={{flex: 9}}></View>
                     </View>
                     <View style={{width: '100%', paddingLeft: 10, display: 'flex', flexDirection: 'row'}}>
-                        <Text style={[styles.subtitle_style, {marginTop: 3, color:'black', flex: 5}]}>Pet: </Text>
+                        <Text style={[styles.subtitle_style, {marginTop: 3, color:'black', flex: 5}]}>Pets: </Text>
                         <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.num_pet + ""} onChangeText={(num_pet) => {this.state.user.num_pet = Number(num_pet.replace(/[^0-9]/g, '')); this.setState({user: this.state.user})}}></TextInput>
                         <View style={{flex: 9}}></View>
                     </View>
