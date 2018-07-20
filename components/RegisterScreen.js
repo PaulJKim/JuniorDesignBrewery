@@ -101,7 +101,8 @@ export class RegisterScreen extends React.Component {
             <CheckBox checked={this.state.userPolicyChecked}
                       onPress={()=>this.setState({userPolicyChecked: !this.state.userPolicyChecked})} />
             <Text style={styles.checkboxText}>I have read and agree to the&nbsp;
-              <Text onPress={()=>{this.props.navigation.navigate("Policy", {navigation: this.props.navigation, policyType: "Privacy Policy"});}} style={styles.policyLinks}>privacy</Text>&nbsp;policy
+              <Text onPress={()=>{this.props.navigation.navigate("Policy", {navigation: this.props.navigation, policyType: "Privacy Policy"});}} style={styles.policyLinks}>privacy</Text>&nbsp;policy and&nbsp;
+              <Text onPress={()=>{this.props.navigation.navigate("Policy", {navigation: this.props.navigation, policyType: "Terms and Conditions"});}} style={styles.policyLinks}>Terms and Conditions</Text>
             </Text>
           </View>
 
@@ -161,7 +162,6 @@ export class RegisterScreen extends React.Component {
             description: "None",
             num_children: 0,
             num_pet: 0,
-            reviews: 0,
             username: this.state.username.trim()
           },
           privateData:{
@@ -176,7 +176,6 @@ export class RegisterScreen extends React.Component {
           age: 18,
           num_children: 0,
           num_pet: 0,
-          reviews: 0,
         }
         this.state.registerClicked = false;
         this.setState({});

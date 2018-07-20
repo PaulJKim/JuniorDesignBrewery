@@ -118,12 +118,6 @@ export class ProfileScreen extends React.Component {
                                 this.state.user.num_pet == 1 ? " 1 Pet" : " " + this.state.user.num_pet + " pets"}
                             </Text>
                         </View>
-                        <View style = {{flexDirection: 'row'}}>
-                            <Text style={[styles.subtitle_style2]}>Reviews: </Text>
-                            <Text style={[styles.subtitle_style]}>{(this.state.user.reviews == 0) ? "No Reviews" :
-                                this.state.user.reviews == 1 ? " 1 Review" : " " + this.state.user.reviews + " Reviews"}
-                            </Text>
-                        </View>
                     </View>
 
                     <View>
@@ -213,11 +207,6 @@ export class ProfileScreen extends React.Component {
                     <View style={{width: '100%', paddingLeft: 10, display: 'flex', flexDirection: 'row'}}>
                         <Text style={[styles.subtitle_style, {marginTop: 3, color:'black', flex: 5}]}>Children: </Text>
                         <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.num_children + ""} onChangeText={(num_children) => {this.state.user.num_children = Number(num_children.replace(/[^0-9]/g, '')); this.setState({user: this.state.user})}}></TextInput>
-                        <View style={{flex: 9}}></View>
-                    </View>
-                    <View style={{width: '100%', paddingLeft: 10, display: 'flex', flexDirection: 'row'}}>
-                        <Text style={[styles.subtitle_style, {marginTop: 3, color:'black', flex: 5}]}>Reviews: </Text>
-                        <TextInput style={{flex: 1, paddingBottom: 5, paddingLeft: 5}} keyboardType='numeric' value={this.state.user.reviews + ""} onChangeText={(reviews) => {this.state.user.reviews = Number(reviews.replace(/[^0-9]/g, '')); this.setState({user: this.state.user})}}></TextInput>
                         <View style={{flex: 9}}></View>
                     </View>
                 </View>
