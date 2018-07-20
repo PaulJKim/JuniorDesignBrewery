@@ -29,7 +29,7 @@ import { YourReviewsScreen } from './YourReviewsScreen';
 import { ProfileScreen } from './ProfileScreen';
 import ModalDropdown from 'react-native-modal-dropdown';
 import firebaseApp from '../firebase';
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 import { isLoggedIn } from '../lib/FirebaseHelpers';
 import { LoginScreen } from './LoginScreen';
 
@@ -156,15 +156,17 @@ export class MainScreen extends React.Component {
     // });
     console.log("BACK TO HOME1");
     firebaseApp.auth().signOut().then(() => {
-        console.log("BACK TO HOME2");
-        this.props.navigation.popToTop();
-        this.props.navigation.navigate("Main", {navigation: this.props.navigation});
-        this.props.navigation.navigate("Login", {navigation: this.props.navigation});
-        console.log("BACK TO HOME3");
+        const mainAction = NavigationActions.navigate({routeName: "Main", params: {navigation: this.props.navigation}});
+        const loginAction = NavigationActions.navigate({routeName: "Login", params: {navigation: this.props.navigation}});
+        const resetAction = StackActions.reset({
+            index: 1,
+            actions: [mainAction, loginAction]
+        });
+        this.props.navigation.dispatch(resetAction);
     }).catch(function(error) {
         //An error occured on signout
     });
-    
+
     // this.props.navigation.navigate("Login", {navigation: this.props.navigation});
 }
   render() {

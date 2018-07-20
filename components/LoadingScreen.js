@@ -21,6 +21,7 @@
 
 import React, { Component } from 'react';
 import { Text } from 'react-native';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 export class LoadingScreen extends React.Component {
 
@@ -35,7 +36,13 @@ export class LoadingScreen extends React.Component {
   }
 
   componentDidMount() {
-      this.props.navigation.navigate("Main", {navigation: this.props.navigation});
+      const navAction = NavigationActions.navigate({routeName: "Main", params: {navigation: this.props.navigation}})
+      const resetAction = StackActions.reset({
+          index: 0,
+          actions: [navAction]
+      });
+
+      this.props.navigation.dispatch(resetAction);
   }
 
   render() {
