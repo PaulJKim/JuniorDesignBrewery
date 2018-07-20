@@ -161,7 +161,6 @@ export class RegisterScreen extends React.Component {
             description: "None",
             num_children: 0,
             num_pet: 0,
-            reviews: 0,
             username: this.state.username.trim()
           },
           privateData:{
@@ -176,7 +175,6 @@ export class RegisterScreen extends React.Component {
           age: 18,
           num_children: 0,
           num_pet: 0,
-          reviews: 0,
         }
         this.state.registerClicked = false;
         this.setState({});
