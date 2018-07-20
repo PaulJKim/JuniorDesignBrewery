@@ -59,7 +59,7 @@ export class ResetPassword extends React.Component {
         <View style={{flex:1}}/>
 
         <View style={{flex:1}}>
-          <Text style={styles.logo}>Family Friendly Brewery Tracker</Text>
+          <Text style={styles.logo}>Family Friendly Brewery Trackr</Text>
         </View>
 
 
