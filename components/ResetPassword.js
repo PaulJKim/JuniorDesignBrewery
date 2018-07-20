@@ -30,7 +30,7 @@ export class ResetPassword extends React.Component {
         title: "Reset Password",
         headerStyle:  { backgroundColor: "#2196F3", },
         headerTitleStyle: { color: "#FFFFFF" },
-        headerLeft: null,
+        headerTintColor: "white"
     });
 
 
