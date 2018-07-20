@@ -2,7 +2,7 @@
 
 Version 2.0
 
-Family Friendly Brewery Trackr allows users to view and contribute tocrowdsourced reviews for breweries based on family friendly criteria. 
+Family Friendly Brewery Trackr allows users to view and contribute to crowd sourced reviews for breweries based on family friendly criteria. 
 
 Coming Soon to the Apple Appstore and Google Play Store!
 
