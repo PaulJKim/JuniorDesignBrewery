@@ -29,8 +29,10 @@ import { YourReviewsScreen } from './YourReviewsScreen';
 import { ProfileScreen } from './ProfileScreen';
 import ModalDropdown from 'react-native-modal-dropdown';
 import firebaseApp from '../firebase';
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 import { isLoggedIn } from '../lib/FirebaseHelpers';
+import { LoginScreen } from './LoginScreen';
+import { AndroidBackHandler } from 'react-navigation-backhandler';
 
 const MAP_TAB = "Breweries";
 const FAVORITES_TAB = "Your Favorites";
@@ -105,28 +107,52 @@ export class MainScreen extends React.Component {
 
   }
 
-  componentWillMount() {
-    t = this;
-    if(Platform.OS === 'android') {
-        BackHandler.addEventListener('hardwareBackPress', function() {
-              if(isLoggedIn()) {
-                Alert.alert(
-                    'Log Out',
-                    'Are you sure you want to log out?',
-                    [
-                    {text: 'No', style: 'cancel'},
-                    {text: 'Yes', onPress: () => {t.signOutUser()}},
-                    ],
-                    { cancelable: false }
-                );
-            } else {
-                // Need to exit the app instead?
-                this.props.navigation.navigate("Login", {navigation: this.props.navigation, brewery: ""});
-            }
+  // componentWillMount() {
+  //   t = this;
+  //   if(Platform.OS === 'android') {
+  //       BackHandler.addEventListener('hardwareBackPress', function() {
+  //             if(isLoggedIn()) {
+  //               Alert.alert(
+  //                   'Log Out',
+  //                   'Are you sure you want to log out?',
+  //                   [
+  //                   {text: 'No', style: 'cancel'},
+  //                   {text: 'Yes', onPress: () => {t.signOutUser()}},
+  //                   ],
+  //                   { cancelable: false }
+  //               );
+  //           } else {
+  //               // Need to exit the app instead?
+  //               this.props.navigation.navigate("Login", {navigation: this.props.navigation, brewery: ""});
+  //           }
+  //           return true;
+  //       }.bind(this));
+  //   }
+  // }
+
+    onBackButtonPressAndroid() {
+        /*
+        *   Returning `true` from `onBackButtonPressAndroid` denotes that we have handled the event,
+        *   and react-navigation's lister will not get called, thus not popping the screen.
+        *
+        *   Returning `false` will cause the event to bubble up and react-navigation's listener will pop the screen.
+        * */
+        if(isLoggedIn()) {
+            Alert.alert(
+                'Log Out',
+                'Are you sure you want to log out?',
+                [
+                {text: 'No', style: 'cancel'},
+                {text: 'Yes', onPress: () => {this.signOutUser()}},
+                ],
+                { cancelable: false }
+            );
             return true;
-        }.bind(this));
-    }
-  }
+        } else {
+            return false;
+        }
+    };
+
   _sortClick(index) {
     if(index == 0)
         this.setState({sort:"Distance"})
@@ -137,12 +163,35 @@ export class MainScreen extends React.Component {
     this.forceUpdate()
   }
 
-  signOutUser = async () => {
-    try {
-        await firebaseApp.auth().signOut();
-        this.props.navigation.navigate("Login", {navigation: this.props.navigation});
-    } catch (e) {
-    }
+  signOutUser = () => {
+    // const resetAction = NavigationActions.reset({
+    //   index: 1,
+    //   key: null,
+    //   actions: [
+    //     // NavigationActions.navigate({ routeName: 'Main' }),
+    //     NavigationActions.navigate({ routeName: 'MapScreen' }),
+    //     NavigationActions.navigate({ routeName: 'Login' }),
+    //   ],
+    // });
+
+    // firebaseApp.auth().signOut().then(() => {
+    //     this.props.navigation.dispatch(resetAction);
+    // }).catch(function(error) {
+    //     //An error occured on signout
+    // });
+    firebaseApp.auth().signOut().then(() => {
+        const mainAction = NavigationActions.navigate({routeName: "Main", params: {navigation: this.props.navigation}});
+        const loginAction = NavigationActions.navigate({routeName: "Login", params: {navigation: this.props.navigation}});
+        const resetAction = StackActions.reset({
+            index: 1,
+            actions: [mainAction, loginAction]
+        });
+        this.props.navigation.dispatch(resetAction);
+    }).catch(function(error) {
+        //An error occured on signout
+    });
+
+    // this.props.navigation.navigate("Login", {navigation: this.props.navigation});
 }
   render() {
     return (
@@ -204,6 +253,7 @@ export class MainScreen extends React.Component {
 
   renderTabs() {
     return (
+    <AndroidBackHandler onBackPress={this.onBackButtonPressAndroid.bind(this)}>
       <Container>
         <Footer>
             <FooterTab tabActiveBgColor="#FFFFF" style={{backgroundColor: '#2196f3'}}>
@@ -291,6 +341,7 @@ export class MainScreen extends React.Component {
             </FooterTab>
         </Footer>
       </Container>
+  </AndroidBackHandler>
     );
   }
 

@@ -46,16 +46,6 @@ export class LoginScreen extends React.Component {
     global.main = false;
   }
 
-  componentWillMount() {
-    t = this;
-    if(Platform.OS === 'android') {
-        BackHandler.addEventListener('hardwareBackPress', function() {
-          this.props.navigation.dispatch(NavigationActions.back());
-          return true;
-        }.bind(this));
-    }
-  }
-
   render() {
     return (
         <Content style={{backgroundColor:"white"}}>
