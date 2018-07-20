@@ -33,6 +33,8 @@ Release Notes:
     - Social media integration
     - Upvote reviews
     - Make app icon and re-name app
+    - Limit users to one review per brewery
+    - Allow users to edit their reviews
     
 Installation/Build Guide:
 1. Install npm https://www.npmjs.com/get-npm
