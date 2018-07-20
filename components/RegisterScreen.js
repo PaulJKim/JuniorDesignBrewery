@@ -62,12 +62,13 @@ export class RegisterScreen extends React.Component {
 
   render() {
     return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
     <Content style={{backgroundColor:"white"}}>
-      <View style={{flex:1}}>
-        <Text style={styles.logo}>Family Friendly Brewery Trackr</Text>
-      </View>
       <View style={styles.container}>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={{flex:1}}>
+          <Text style={styles.logo}>Family Friendly Brewery Trackr</Text>
+        </View>
+
         <Text style={{textAlign:'left', color:'gray'}}>You'll use your email and password to login in</Text>
         <Text style={{textAlign:'left', color:'gray'}}>Your username will appear alongside your reviews</Text>
 
@@ -112,9 +113,9 @@ export class RegisterScreen extends React.Component {
             <Text style={{color:"#FFF", fontSize:16, fontWeight:'bold'}}>REGISTER</Text>
           </TouchableOpacity>
           { this.state.registerFailed && <Text style={{color: "#ff0000"}}>{this.state.errorMessage}</Text>}
+        </KeyboardAvoidingView>
       </View>
     </Content>
-    </KeyboardAvoidingView>
     );
   }
 
@@ -237,12 +238,12 @@ const styles = StyleSheet.create({
     borderRadius:3,
     alignItems:'center',
     justifyContent:'center'
-    },
-    logo: {
-      textAlign: 'center',
-      color:"#2196F3",
-      fontWeight: 'bold',
-      fontSize: 35,
-      marginVertical: 10,
-    }
+  },
+  logo: {
+    textAlign: 'center',
+    color:"#2196F3",
+    fontWeight: 'bold',
+    fontSize: 35,
+    marginVertical: 10,
+  }
 });
