@@ -8,27 +8,32 @@ Coming Soon to the Apple Appstore and Google Play Store!
 
 Release Notes:
 - Features:
-  - Breweries can be viewed from a map and selected to see aggregated as well as individual reviews for the brewery based on their family friendliness. This is based on current location or an input location
-  - Users can submit a review for a brewery which will be aggregated with the other reviews on a given brewery page. These reviews show up on the reviews tab of the application
-  - Users can favorite breweries and see the see their favorited breweries from the favorites screen
-  - Users can register with email and set a username, profile picture, description, age, and number of kids
+  - Find local breweries or search for one in another city
+  - Breweries are rated based on kid-friendliness, pet-friendliness, cleanliness, food options, etc
+  - Add your own reviews
+  - Favorite breweries
+  - Create a username and profile
   - Users can view other user's reviews and profiles in full 
   
  - Changelog:
-   - New Brewery Page
+   - Updated UI throughout app
    - Review comments are automatically screened for profanity
-   - Can add pictures to reviews
+   - add pictures to reviews
    - Updated in app icons to improve user experience
-   - Can reset password
+   - password reset
    
   - Known bug/defects
     - Keyboard can sometimes block on screen content
     - When a review is submitted, the brewery page's review list doesn't automatically update
     - Occasionally, icons on map do not display and are represented by default pin instead
   
-  -Future Works
+  - Future Works
     - No settings function - can't change search distance on map or color theme of app
-
+    - Add beer preferences to profile
+    - Social media integration
+    - Upvote reviews
+    - Make app icon and re-name app
+    
 Installation/Build Guide:
 1. Install npm https://www.npmjs.com/get-npm
 2. Download or clone the repository https://github.com/PaulJKim/JuniorDesignBrewery
