@@ -36,31 +36,42 @@ Release Notes:
     - Limit users to one review per brewery
     - Allow users to edit their reviews
     
-Installation/Build Guide:
-1. Install npm https://www.npmjs.com/get-npm
-2. Download or clone the repository https://github.com/PaulJKim/JuniorDesignBrewery
-3. Navigate to the folder containing the repository and run "npm install" - this will take a while and install all necessary libraries.
-4. Install expo (https://docs.expo.io/versions/latest/introduction/installation) 
-5. Obtain a Firebase key by going to console.firebase.google.com, signing in, and going to "Project Settings" (click the gear icon next to "Project Overview" and clicking "add firebase to your web app." Create a file called "firebase.js" and copy/paste the following into it. Then, copy over the values for each field in "config". 
+  
+App Installation and Build Guide:
 
-import * as firebase from 'firebase';
+1. Navigate to https://github.com/PaulJKim/JuniorDesignBrewery where you can find the code repository for the project
 
-var config = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: ""
-};
+2. Install npm (Node Package Manager), the steps to do this are located here along with some more information about npm - https://www.npmjs.com/get-npm
+  Note: Using npm requires basic familiarity with the terminal (Mac/Linux) or Command Line (Windows)
 
-export default firebaseApp = firebase.initializeApp(config);
+3. Download or clone the Git repository to your computer
+  If you are experienced not experienced with git, simply download the ZIP to your computer and extract its contents
 
-6. Open expo, create an account, and sign in
-7. Click "Open Existing Project" and open the folder containing the repository
-8. After the build completes in expo, click "share" and scan the barcode from the mobile application. If you run into an error while loading the app, try clicking the "restart" button - if this still doesn't fix the issue, close and reopen expo on your phone and computer. The app will take a while to load the first time it's loaded from your computer to your phone. 
-9. To build standalone android/ios app, follow the instructions found here: 
-  https://docs.expo.io/versions/latest/distribution/building-standalone-apps - App can then be submitted to the Apple appstore or Google Play store for review
+4. Navigate to the folder you created by cloning or downloading the repository using the terminal/command line and run ‘ npm install ‘ – this can take a long time
+
+5. Install the Expo XDE on your computer and the Mobile Client on your iOS or Android Device - https://docs.expo.io/versions/latest/introduction/installation
+
+6. Under the Local Development Tool header on the webpage select the appropriate download for your computer.
+
+7. Under Mobile Client select the appropriate download for your smartphone
+
+8. Obtain Firebase key and set up the firebase.js file (Please see the backend set-up guide for help with this)
+
+9. Open the Expo XDE on your computer and create an account. Then login to both your Expo XDE on the computer as well on your Expo mobile app. 
+
+10. In the Expo XDE, select the Open an Existing Project button
+  Navigate to the code repository folder on your computer in the pop-up file explorer and select Open
+  When you open the project in the Expo XDE it should start the build automatically
+  When the build is complete on iOS you will see the option to open the app on the Projects Screen
+  
+  On Android, select the Share button in the Expo XDE and scan the QR code from the Expo Mobile App on your Android phone to    open the app
+
+NOTE: If you run into errors with building on your Expo XDE or Expo Mobile Client, first try selecting the restart button in the Expo XDE. Then try fully closing the Expo XDE application and re-opening it. Also, fully closing the Expo Mobile Client and re-opening can help.
+
+11. To build the stand alone apps for submitting to the Apple Appstore and Google Play Store follow this guide as it is the most up to date - https://docs.expo.io/versions/latest/distribution/building-standalone-apps
+  NOTE: This step cannot be done from the Expo XDE and requires terminal/command line use
+
+
   
 This application is licensed under the GNU General Public License v3.0
   
