@@ -158,6 +158,7 @@ export class YourReviewsScreen extends React.Component {
                         user = {this.state.user}
                         breweryName = {fav.breweryName}
                         navigation = {this.props.navigation}
+                        reportFunction = {()=>null)}
                     />
                 );
             });

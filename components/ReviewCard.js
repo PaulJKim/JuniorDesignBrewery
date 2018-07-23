@@ -44,9 +44,12 @@ export class ReviewCard extends React.Component {
                             <Text>{this.props.review.comments}</Text>
                         </View>
                         <View style={{flex:1, justifyContent:'flex-end'}}>
-                            <Button transparent dark onPress={() => this.props.reportFunction(this.props.review.revId)}>
-                                <Icon name="flag" type="simpleLineIcons" style={{color:'#FF4136'}}/>
-                            </Button>
+                            {this.props.reportFunction &&
+                                <Button transparent dark onPress={() => this.props.reportFunction(this.props.review.revId)}>
+                                    <Icon name="flag" type="simpleLineIcons" style={{color:'#FF4136'}}/>
+                                </Button>
+                            }
+
                         </View>
                     </View>
                 </TouchableOpacity>
